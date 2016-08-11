@@ -1,0 +1,11 @@
+E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\exception\ErrorAddingDAOException.java
+E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\dbconectutils\ConnectionManager.java
+E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\exception\ErrorUpdatingDAOException.java
+E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\exception\NoExistUserDAOException.java
+E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\AbstractDAO.java
+E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\IEntityDAO.java
+E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\UserDAO.java
+E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\ProductCategoryDAO.java
+E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\ProductDAO.java
+E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\dbconectutils\ConnectionPool.java
+E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\OrderDAO.java

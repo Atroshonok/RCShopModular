@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/MRCShop">
+	<Resource 
+		name="jdbc/rcshopdb" 
+		auth="Container"
+		factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" 
+		type="javax.sql.DataSource"
+		driverClassName="com.mysql.jdbc.Driver" 
+		url="jdbc:mysql://localhost:3306/rcshopdb"
+		connectionProperties="useUnicode=yes;characterEncoding=UTF-8;useSSL=false"
+		username="root" 
+		password="golfik3" 
+		maxActive="10" 
+		maxIdle="5"
+		maxWait="10000" />
+</Context>

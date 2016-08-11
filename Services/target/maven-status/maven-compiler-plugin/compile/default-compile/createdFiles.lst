@@ -1,0 +1,8 @@
+com\atroshonok\services\exceptions\ErrorAddingUserServiceException.class
+com\atroshonok\services\exceptions\ErrorAddingPoductServiceException.class
+com\atroshonok\services\exceptions\ErrorUpdatingPoductServiceException.class
+com\atroshonok\services\OrderService.class
+com\atroshonok\services\ProductService.class
+com\atroshonok\services\exceptions\ErrorSavingOrderServiceException.class
+com\atroshonok\services\UserService.class
+com\atroshonok\services\exceptions\ErrorUpdatingUserServiceException.class
