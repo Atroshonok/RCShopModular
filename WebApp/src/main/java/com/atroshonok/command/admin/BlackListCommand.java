@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 import com.atroshonok.command.ActionCommand;
-import com.atroshonok.entities.User;
+import com.atroshonok.dao.entities.User;
 import com.atroshonok.services.UserService;
 import com.atroshonok.services.exceptions.ErrorUpdatingUserServiceException;
 import com.atroshonok.utilits.ConfigurationManager;

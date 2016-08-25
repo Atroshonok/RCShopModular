@@ -8,7 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.atroshonok.command.ActionCommand;
-import com.atroshonok.entities.User;
+import com.atroshonok.dao.entities.User;
 import com.atroshonok.services.UserService;
 import com.atroshonok.utilits.ConfigurationManager;
 

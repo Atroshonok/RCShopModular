@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.atroshonok.entities.Entity;
+import com.atroshonok.dao.entities.Entity;
 import com.atroshonok.jdbcdao.exception.ErrorAddingDAOException;
 import com.atroshonok.jdbcdao.exception.ErrorUpdatingDAOException;
 

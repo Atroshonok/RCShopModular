@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.atroshonok.entities;
+package com.atroshonok.dao.entities;
 
 /**
  * @author Atroshonok Ivan

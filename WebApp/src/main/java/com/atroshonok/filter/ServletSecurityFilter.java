@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import com.atroshonok.entities.UserType;
+import com.atroshonok.dao.entities.UserType;
 import com.atroshonok.utilits.ConfigurationManager;
 
 public class ServletSecurityFilter implements Filter {

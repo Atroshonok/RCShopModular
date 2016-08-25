@@ -1,6 +1,7 @@
-package com.atroshonok.entities;
+package com.atroshonok.dao.entities;
 
 import java.sql.Date;
+
 
 public class User extends Entity {
 

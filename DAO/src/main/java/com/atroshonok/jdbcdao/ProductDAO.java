@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.atroshonok.entities.Product;
+import com.atroshonok.dao.entities.Product;
 
 /**
  * @author Atroshonok Ivan

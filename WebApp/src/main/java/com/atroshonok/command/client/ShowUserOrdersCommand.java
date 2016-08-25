@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 import com.atroshonok.command.ActionCommand;
-import com.atroshonok.entities.Order;
+import com.atroshonok.dao.entities.Order;
 import com.atroshonok.services.OrderService;
 import com.atroshonok.utilits.ConfigurationManager;
 import com.atroshonok.utilits.MessageManager;

@@ -3,9 +3,9 @@ package com.atroshonok.command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.atroshonok.entities.Cart;
-import com.atroshonok.entities.User;
-import com.atroshonok.entities.UserType;
+import com.atroshonok.dao.entities.Cart;
+import com.atroshonok.dao.entities.User;
+import com.atroshonok.dao.entities.UserType;
 import com.atroshonok.services.UserService;
 import com.atroshonok.utilits.ConfigurationManager;
 import com.atroshonok.utilits.DataEncryptor;

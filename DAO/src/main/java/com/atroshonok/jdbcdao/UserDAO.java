@@ -8,8 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.atroshonok.entities.User;
-import com.atroshonok.entities.UserType;
+import com.atroshonok.dao.entities.User;
+import com.atroshonok.dao.entities.UserType;
 import com.atroshonok.jdbcdao.exception.NoExistUserDAOException;
 
 /**

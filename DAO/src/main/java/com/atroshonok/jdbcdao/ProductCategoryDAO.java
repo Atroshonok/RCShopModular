@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.atroshonok.entities.ProductCategory;
+import com.atroshonok.dao.entities.ProductCategory;
 
 /**
  * @author Atroshonok Ivan

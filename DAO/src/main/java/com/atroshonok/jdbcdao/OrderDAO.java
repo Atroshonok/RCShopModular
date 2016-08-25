@@ -13,9 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.atroshonok.entities.Order;
-import com.atroshonok.entities.OrderState;
-import com.atroshonok.entities.Product;
+import com.atroshonok.dao.entities.Order;
+import com.atroshonok.dao.entities.OrderState;
+import com.atroshonok.dao.entities.Product;
 
 /**
  * @author Atroshonok Ivan

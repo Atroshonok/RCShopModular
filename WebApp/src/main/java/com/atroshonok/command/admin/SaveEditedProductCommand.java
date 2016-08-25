@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 import com.atroshonok.command.ActionCommand;
-import com.atroshonok.entities.Product;
-import com.atroshonok.entities.ProductCategory;
+import com.atroshonok.dao.entities.Product;
+import com.atroshonok.dao.entities.ProductCategory;
 import com.atroshonok.services.ProductService;
 import com.atroshonok.services.exceptions.ErrorUpdatingPoductServiceException;
 import com.atroshonok.utilits.ConfigurationManager;

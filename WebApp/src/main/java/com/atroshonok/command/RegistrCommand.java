@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
-import com.atroshonok.entities.User;
-import com.atroshonok.entities.UserType;
+import com.atroshonok.dao.entities.User;
+import com.atroshonok.dao.entities.UserType;
 import com.atroshonok.services.UserService;
 import com.atroshonok.services.exceptions.ErrorAddingUserServiceException;
 import com.atroshonok.utilits.ConfigurationManager;

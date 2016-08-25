@@ -6,7 +6,7 @@ package com.atroshonok.command.admin;
 import javax.servlet.http.HttpServletRequest;
 
 import com.atroshonok.command.ActionCommand;
-import com.atroshonok.entities.Product;
+import com.atroshonok.dao.entities.Product;
 import com.atroshonok.services.ProductService;
 import com.atroshonok.utilits.ConfigurationManager;
 

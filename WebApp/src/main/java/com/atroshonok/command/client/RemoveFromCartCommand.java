@@ -8,9 +8,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.atroshonok.command.ActionCommand;
-import com.atroshonok.entities.Cart;
-import com.atroshonok.entities.Product;
-import com.atroshonok.entities.UserType;
+import com.atroshonok.dao.entities.Cart;
+import com.atroshonok.dao.entities.Product;
+import com.atroshonok.dao.entities.UserType;
 import com.atroshonok.utilits.ConfigurationManager;
 
 /**

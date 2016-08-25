@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 import com.atroshonok.command.ActionCommand;
-import com.atroshonok.entities.Cart;
-import com.atroshonok.entities.Order;
-import com.atroshonok.entities.OrderState;
-import com.atroshonok.entities.UserType;
+import com.atroshonok.dao.entities.Cart;
+import com.atroshonok.dao.entities.Order;
+import com.atroshonok.dao.entities.OrderState;
+import com.atroshonok.dao.entities.UserType;
 import com.atroshonok.services.OrderService;
 import com.atroshonok.services.exceptions.ErrorSavingOrderServiceException;
 import com.atroshonok.utilits.ConfigurationManager;
