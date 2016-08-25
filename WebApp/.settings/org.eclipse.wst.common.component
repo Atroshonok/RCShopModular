@@ -10,9 +10,6 @@
         <dependent-module archiveName="DAO-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/DAO/DAO">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="Beans-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Beans/Beans">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <property name="context-root" value="MRCShop"/>
         <property name="java-output-path" value="/WebApp/target/classes"/>
     </wb-module>
