@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.atroshonok.dao.dbconectutils;
+package com.atroshonok.jdbcdao.dbconectutils;
 
 import java.sql.Connection;
 import java.sql.SQLException;

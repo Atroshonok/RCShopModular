@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.atroshonok.dao;
+package com.atroshonok.jdbcdao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

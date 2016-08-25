@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.atroshonok.dao.exception;
+package com.atroshonok.jdbcdao.exception;
 
 /**
  * @author Atroshonok Ivan

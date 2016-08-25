@@ -1,4 +1,4 @@
-package com.atroshonok.dao.dbconectutils;
+package com.atroshonok.jdbcdao.dbconectutils;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

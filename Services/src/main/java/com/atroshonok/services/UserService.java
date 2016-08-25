@@ -9,12 +9,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.atroshonok.dao.UserDAO;
-import com.atroshonok.dao.exception.ErrorAddingDAOException;
-import com.atroshonok.dao.exception.ErrorUpdatingDAOException;
-import com.atroshonok.dao.exception.NoExistUserDAOException;
 import com.atroshonok.entities.User;
-import com.atroshonok.dao.dbconectutils.ConnectionPool;
+import com.atroshonok.jdbcdao.UserDAO;
+import com.atroshonok.jdbcdao.dbconectutils.ConnectionPool;
+import com.atroshonok.jdbcdao.exception.ErrorAddingDAOException;
+import com.atroshonok.jdbcdao.exception.ErrorUpdatingDAOException;
+import com.atroshonok.jdbcdao.exception.NoExistUserDAOException;
 import com.atroshonok.services.exceptions.ErrorAddingUserServiceException;
 import com.atroshonok.services.exceptions.ErrorUpdatingUserServiceException;
 

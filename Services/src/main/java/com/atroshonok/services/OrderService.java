@@ -10,10 +10,10 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.atroshonok.dao.OrderDAO;
-import com.atroshonok.dao.dbconectutils.ConnectionPool;
 import com.atroshonok.entities.Order;
 import com.atroshonok.entities.Product;
+import com.atroshonok.jdbcdao.OrderDAO;
+import com.atroshonok.jdbcdao.dbconectutils.ConnectionPool;
 import com.atroshonok.services.exceptions.ErrorSavingOrderServiceException;
 
 /**

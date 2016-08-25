@@ -1,9 +1,9 @@
-package com.atroshonok.dao;
+package com.atroshonok.jdbcdao;
 
 import java.util.List;
 
-import com.atroshonok.dao.exception.ErrorAddingDAOException;
-import com.atroshonok.dao.exception.ErrorUpdatingDAOException;
+import com.atroshonok.jdbcdao.exception.ErrorAddingDAOException;
+import com.atroshonok.jdbcdao.exception.ErrorUpdatingDAOException;
 
 
 
