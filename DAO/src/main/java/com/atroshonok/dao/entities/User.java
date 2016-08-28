@@ -1,273 +1,278 @@
 package com.atroshonok.dao.entities;
 
-import java.sql.Date;
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.*;
 
+import org.hibernate.annotations.Type;
 
-public class User extends Entity {
+/**
+ * @author Ivan Atroshonok
+ *
+ */
+@Entity
+@Table(name = "users", catalog = "rcshopdb")
+public class User implements Serializable {
 
-	private static final long serialVersionUID = -6275039642563625669L;
+    private static final long serialVersionUID = -6275039642563625669L;
 
-	private Date registrDate;
-	private String login;
-	private String password;
-	private String email;
-	private String firstname;
-	private String lastname;
-	private String shippingAddress;
-	private int age;
-	private UserType role;
-	private boolean isInBlackList;
+    private Long id;
+    @Id
+    @Column(name = "userID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
+	return id;
+    }
 
-	public User() {
+    private Date registrDate;
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(name = "registrDate")
+    public Date getRegistrDate() {
+	return registrDate;
+    }
 
-	}
+    private String login;
+    @Column(name = "login")
+    public String getLogin() {
+	return login;
+    }
 
-	/**
-	 * @param id
-	 */
-	public User(long id) {
-		super(id);
-	}
+    private String password;
+    @Column(name = "password")
+    public String getPassword() {
+	return password;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "User [login=" + login + ", password=" + password + ", email=" + email + ", firstname=" + firstname
-				+ ", lastname=" + lastname + ", role=" + role + ", id=" + id + "]";
-	}
+    private String email;
+    @Column(name = "email")
+    public String getEmail() {
+        return email;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + age;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
-		result = prime * result + (isInBlackList ? 1231 : 1237);
-		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
-		result = prime * result + ((login == null) ? 0 : login.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((registrDate == null) ? 0 : registrDate.hashCode());
-		result = prime * result + ((role == null) ? 0 : role.hashCode());
-		result = prime * result + ((shippingAddress == null) ? 0 : shippingAddress.hashCode());
-		return result;
-	}
+    private String firstname;
+    @Column(name = "firstName")
+    public String getFirstname() {
+	return firstname;
+    }
+    
+    private String lastname;
+    @Column(name = "lastName")
+    public String getLastname() {
+        return lastname;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (age != other.age)
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (firstname == null) {
-			if (other.firstname != null)
-				return false;
-		} else if (!firstname.equals(other.firstname))
-			return false;
-		if (isInBlackList != other.isInBlackList)
-			return false;
-		if (lastname == null) {
-			if (other.lastname != null)
-				return false;
-		} else if (!lastname.equals(other.lastname))
-			return false;
-		if (login == null) {
-			if (other.login != null)
-				return false;
-		} else if (!login.equals(other.login))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (registrDate == null) {
-			if (other.registrDate != null)
-				return false;
-		} else if (!registrDate.equals(other.registrDate))
-			return false;
-		if (role != other.role)
-			return false;
-		if (shippingAddress == null) {
-			if (other.shippingAddress != null)
-				return false;
-		} else if (!shippingAddress.equals(other.shippingAddress))
-			return false;
-		return true;
-	}
+    private String shippingAddress;
+    @Column(name = "shippingAddress")    
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
 
-	/**
-	 * @return the registrDate
-	 */
-	public Date getRegistrDate() {
-		return registrDate;
-	}
+    private Integer age;
+    @Column(name = "age")
+    public int getAge() {
+        return age;
+    }
+    
+    private UserType userType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "userType", columnDefinition = "enum('ADMIN', 'CLIENT')")
+    public UserType getUserType() {
+        return userType;
+    }
 
-	/**
-	 * @param date
-	 *            the registrDate to set
-	 */
-	public void setRegistrDate(Date date) {
-		this.registrDate = date;
-	}
+    private Boolean isInBlackList;
+    @Column(name = "isInBlackList")
+    @Type(type = "true_false")
+    public boolean isInBlackList() {
+        return isInBlackList;
+    }
 
-	/**
-	 * @return the login
-	 */
-	public String getLogin() {
-		return login;
-	}
+    public User() {
+    }
+    
 
-	/**
-	 * @param login
-	 *            the login to set
-	 */
-	public void setLogin(String login) {
-		this.login = login;
-	}
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+	return "User [id=" + id + ", login=" + login + ", email=" + email + ", firstname=" + firstname + "]";
+    }
 
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((age == null) ? 0 : age.hashCode());
+	result = prime * result + ((email == null) ? 0 : email.hashCode());
+	result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
+	result = prime * result + ((id == null) ? 0 : id.hashCode());
+	result = prime * result + ((isInBlackList == null) ? 0 : isInBlackList.hashCode());
+	result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
+	result = prime * result + ((login == null) ? 0 : login.hashCode());
+	result = prime * result + ((password == null) ? 0 : password.hashCode());
+	result = prime * result + ((registrDate == null) ? 0 : registrDate.hashCode());
+	result = prime * result + ((shippingAddress == null) ? 0 : shippingAddress.hashCode());
+	result = prime * result + ((userType == null) ? 0 : userType.hashCode());
+	return result;
+    }
 
-	/**
-	 * @param password
-	 *            the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	User other = (User) obj;
+	if (age == null) {
+	    if (other.age != null)
+		return false;
+	} else if (!age.equals(other.age))
+	    return false;
+	if (email == null) {
+	    if (other.email != null)
+		return false;
+	} else if (!email.equals(other.email))
+	    return false;
+	if (firstname == null) {
+	    if (other.firstname != null)
+		return false;
+	} else if (!firstname.equals(other.firstname))
+	    return false;
+	if (id == null) {
+	    if (other.id != null)
+		return false;
+	} else if (!id.equals(other.id))
+	    return false;
+	if (isInBlackList == null) {
+	    if (other.isInBlackList != null)
+		return false;
+	} else if (!isInBlackList.equals(other.isInBlackList))
+	    return false;
+	if (lastname == null) {
+	    if (other.lastname != null)
+		return false;
+	} else if (!lastname.equals(other.lastname))
+	    return false;
+	if (login == null) {
+	    if (other.login != null)
+		return false;
+	} else if (!login.equals(other.login))
+	    return false;
+	if (password == null) {
+	    if (other.password != null)
+		return false;
+	} else if (!password.equals(other.password))
+	    return false;
+	if (registrDate == null) {
+	    if (other.registrDate != null)
+		return false;
+	} else if (!registrDate.equals(other.registrDate))
+	    return false;
+	if (shippingAddress == null) {
+	    if (other.shippingAddress != null)
+		return false;
+	} else if (!shippingAddress.equals(other.shippingAddress))
+	    return false;
+	if (userType != other.userType)
+	    return false;
+	return true;
+    }
 
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
+    /**
+     * @return the isInBlackList
+     */
+    public Boolean getIsInBlackList() {
+        return isInBlackList;
+    }
 
-	/**
-	 * @param email
-	 *            the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    /**
+     * @param isInBlackList the isInBlackList to set
+     */
+    public void setIsInBlackList(Boolean isInBlackList) {
+        this.isInBlackList = isInBlackList;
+    }
 
-	/**
-	 * @return the firstname
-	 */
-	public String getFirstname() {
-		return firstname;
-	}
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/**
-	 * @param firstname
-	 *            the firstname to set
-	 */
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
+    /**
+     * @param registrDate the registrDate to set
+     */
+    public void setRegistrDate(Date registrDate) {
+        this.registrDate = registrDate;
+    }
 
-	/**
-	 * @return the lastname
-	 */
-	public String getLastname() {
-		return lastname;
-	}
+    /**
+     * @param login the login to set
+     */
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
-	/**
-	 * @param lastname
-	 *            the lastname to set
-	 */
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	/**
-	 * @return the age
-	 */
-	public int getAge() {
-		return age;
-	}
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	/**
-	 * @param age
-	 *            the age to set
-	 */
-	public void setAge(int age) {
-		this.age = age;
-	}
+    /**
+     * @param firstname the firstname to set
+     */
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
 
-	/**
-	 * @return the role
-	 */
-	public UserType getRole() {
-		return role;
-	}
+    /**
+     * @param lastname the lastname to set
+     */
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
 
-	/**
-	 * @param role
-	 *            the role to set
-	 */
-	public void setRole(UserType role) {
-		this.role = role;
-	}
+    /**
+     * @param shippingAddress the shippingAddress to set
+     */
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
 
-	/**
-	 * @return the shippingAddress
-	 */
-	public String getShippingAddress() {
-		return shippingAddress;
-	}
+    /**
+     * @param age the age to set
+     */
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 
-	/**
-	 * @param shippingAddress
-	 *            the shippingAddress to set
-	 */
-	public void setShippingAddress(String shippingAddress) {
-		this.shippingAddress = shippingAddress;
-	}
-
-	/**
-	 * @return the isInBlackList
-	 */
-	public boolean isInBlackList() {
-		return isInBlackList;
-	}
-
-	/**
-	 * @param isInBlackList
-	 *            the isInBlackList to set
-	 */
-	public void setInBlackList(boolean isInBlackList) {
-		this.isInBlackList = isInBlackList;
-	}
+    /**
+     * @param userType the userType to set
+     */
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+    
+    
+    
+    
 
 }
