@@ -60,7 +60,6 @@
   </build>
   
   <modules>
-    <module>Beans</module>
     <module>DAO</module>
     <module>Services</module>
     <module>WebApp</module>

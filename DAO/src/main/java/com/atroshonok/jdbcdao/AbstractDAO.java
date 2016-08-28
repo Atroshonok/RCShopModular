@@ -10,9 +10,9 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.atroshonok.dao.entities.Entity;
 import com.atroshonok.jdbcdao.exception.ErrorAddingDAOException;
 import com.atroshonok.jdbcdao.exception.ErrorUpdatingDAOException;
+import com.atroshonok.tests.dao.entities.Entity;
 
 public abstract class AbstractDAO<T extends Entity> implements IEntityDAO<T> {
 	protected Logger log = Logger.getLogger(getClass());

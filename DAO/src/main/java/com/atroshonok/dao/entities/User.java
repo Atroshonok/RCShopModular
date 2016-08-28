@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
+import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
 
 /**
@@ -11,7 +12,8 @@ import org.hibernate.annotations.Type;
  *
  */
 @Entity
-@Table(name = "users", catalog = "rcshopdb")
+@Table(name = "users")
+@Proxy(lazy = false)
 public class User implements Serializable {
 
     private static final long serialVersionUID = -6275039642563625669L;
@@ -83,7 +85,7 @@ public class User implements Serializable {
     private Boolean isInBlackList;
     @Column(name = "isInBlackList")
     @Type(type = "true_false")
-    public boolean isInBlackList() {
+    public Boolean getIsInBlackList() {
         return isInBlackList;
     }
 
@@ -91,14 +93,19 @@ public class User implements Serializable {
     }
     
 
+
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-	return "User [id=" + id + ", login=" + login + ", email=" + email + ", firstname=" + firstname + "]";
+	return "User [id=" + id + ", registrDate=" + registrDate + ", login=" + login + ", password=" + password
+		+ ", email=" + email + ", firstname=" + firstname + ", lastname=" + lastname + ", shippingAddress="
+		+ shippingAddress + ", age=" + age + ", userType=" + userType + ", isInBlackList=" + isInBlackList
+		+ "]";
     }
 
+    
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
@@ -114,7 +121,6 @@ public class User implements Serializable {
 	result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
 	result = prime * result + ((login == null) ? 0 : login.hashCode());
 	result = prime * result + ((password == null) ? 0 : password.hashCode());
-	result = prime * result + ((registrDate == null) ? 0 : registrDate.hashCode());
 	result = prime * result + ((shippingAddress == null) ? 0 : shippingAddress.hashCode());
 	result = prime * result + ((userType == null) ? 0 : userType.hashCode());
 	return result;
@@ -172,11 +178,6 @@ public class User implements Serializable {
 		return false;
 	} else if (!password.equals(other.password))
 	    return false;
-	if (registrDate == null) {
-	    if (other.registrDate != null)
-		return false;
-	} else if (!registrDate.equals(other.registrDate))
-	    return false;
 	if (shippingAddress == null) {
 	    if (other.shippingAddress != null)
 		return false;
@@ -185,13 +186,6 @@ public class User implements Serializable {
 	if (userType != other.userType)
 	    return false;
 	return true;
-    }
-
-    /**
-     * @return the isInBlackList
-     */
-    public Boolean getIsInBlackList() {
-        return isInBlackList;
     }
 
     /**
