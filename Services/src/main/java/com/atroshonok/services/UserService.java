@@ -3,18 +3,19 @@
  */
 package com.atroshonok.services;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
+import com.atroshonok.dao.UserDao;
+import com.atroshonok.dao.dbutils.ErrorMessageManager;
+import com.atroshonok.dao.dbutils.HibernateUtil;
 import com.atroshonok.dao.entities.User;
-import com.atroshonok.jdbcdao.UserDAO;
-import com.atroshonok.jdbcdao.dbconectutils.ConnectionPool;
-import com.atroshonok.jdbcdao.exception.ErrorAddingDAOException;
-import com.atroshonok.jdbcdao.exception.ErrorUpdatingDAOException;
-import com.atroshonok.jdbcdao.exception.NoExistUserDAOException;
+import com.atroshonok.dao.exceptions.DaoException;
 import com.atroshonok.services.exceptions.ErrorAddingUserServiceException;
 import com.atroshonok.services.exceptions.ErrorUpdatingUserServiceException;
 
@@ -23,89 +24,92 @@ import com.atroshonok.services.exceptions.ErrorUpdatingUserServiceException;
  *
  */
 public class UserService {
-	private Logger log = Logger.getLogger(getClass());
+    private Logger log = Logger.getLogger(getClass());
+    private UserDao userDao = new UserDao();
+    private HibernateUtil util = HibernateUtil.getInstance();
+    private Session session;
+    private Transaction transaction;
 
-	public User getUserByLoginPassword(String login, String password) {
-		User user = null;
-		Connection connection = null;
-		try {
-			connection = ConnectionPool.getConnection();
-			UserDAO userDAO = new UserDAO(connection);
-			user = userDAO.getByLoginPassword(login, password);
+    /**
+     * Returns an object of user class by login and password. If user is not
+     * found in a database this method returns null
+     */
+    public User getUserByLoginPassword(String login, String password) {
+	log.info("Starting method getUserByLoginPassword(String login, String password)");
+	User user = null;
+	try {
+	    session = util.getSession();
+	    transaction = session.beginTransaction();
+	    user = userDao.getUserByLoginPassword(login, password);
+	    transaction.commit();
+	} catch (HibernateException e) {
+	    log.error("Error getting user by login and password in class: " + UserService.class, e);
+	} // TODO HibernateExcepion в классе service-в?
+	log.info("Ending method getUserByLoginPassword(String login, String password)");
+	return user;
+    }
 
-		} catch (NoExistUserDAOException e) {
-			log.error("That user is not found in the database: " + e);
-		} catch (SQLException e) {
-			log.error("Can't get connection from ConnectionPool: " + e);
-		} finally {
-			ConnectionPool.releaseConnection(connection);
-		}
-		return user;
+    public void saveUserToDataBase(User user) throws ErrorAddingUserServiceException {
+	log.info("Starting method saveUserToDataBase(User user)");
+	try {
+	    session = util.getSession();
+	    transaction = session.beginTransaction();
+	    userDao.saveOrUpdate(user);
+	    transaction.commit();
+	    log.info("Saved user to DB: " + user);
+	} catch (DaoException e) {
+	    log.error("Error saving user to database in class: " + UserService.class, e);
+	    transaction.rollback();
+	    throw new ErrorAddingUserServiceException(ErrorMessageManager.getProperty("error.save.user"));
 	}
-	
-	public void saveUserToDataBase(User user) throws ErrorAddingUserServiceException {
-		Connection connection = null;
-		try {
-			connection = ConnectionPool.getConnection();
-			UserDAO userDAO = new UserDAO(connection);
-			userDAO.addNew(user);
+	log.info("Ending method saveUserToDataBase(User user)");
+    }
 
-		} catch (SQLException e) {
-			log.error("Can't get connection from ConnectionPool: " + e); 
-		} catch (ErrorAddingDAOException e) {
-			throw new ErrorAddingUserServiceException(e);
-		} finally {
-			ConnectionPool.releaseConnection(connection);
-		}
+    public List<User> getAllUsers() {
+	log.info("Starting method getAllUsers()");
+	List<User> users = null;
+	try {
+	    session = util.getSession();
+	    transaction = session.beginTransaction();
+	    users = userDao.getAllUsers();
+	    transaction.commit();
+	} catch (HibernateException e) {
+	    log.error("Error getting all users from database in class: " + UserService.class, e);
+	    transaction.rollback();
+	} // TODO
+	log.info("Ending method getAllUsers()");
+	return users;
+    }
+
+    public User getUserByID(Serializable userId) {
+	log.info("Starting method getUserByID(long userID)");
+	User user = null;
+	try {
+	    session = util.getSession();
+	    transaction = session.beginTransaction();
+	    user = userDao.get(userId);
+	    transaction.commit();
+	    log.info("Got user: " + user);
+	} catch (DaoException e) {
+	    log.error("Error getting user by id = " + userId + " in class: " + UserService.class, e);
+	    transaction.rollback();
 	}
+	log.info("Ending method getUserByID(long userID)");
+	return user;
+    }
 
-	public List<User> getAllUsers() {
-		Connection connection = null;
-		List<User> users = null;
-		try {
-			connection = ConnectionPool.getConnection();
-			UserDAO userDAO = new UserDAO(connection);
-			users = userDAO.getAll();
-
-		} catch (SQLException e) {
-			log.error("Can't get connection from ConnectionPool: " + e); 
-		} finally {
-			ConnectionPool.releaseConnection(connection);
-		}
-		return users;
+    public void updateUserData(User user) throws ErrorUpdatingUserServiceException {
+	log.info("Starting method updateUserData(User user)");
+	try {
+	    session = util.getSession();
+	    transaction = session.beginTransaction();
+	    userDao.saveOrUpdate(user);
+	    transaction.commit();
+	    log.info("Updated user: " + user);
+	} catch (DaoException e) {
+	    log.error("Error updating user in class: " + UserService.class, e);
+	    transaction.rollback();
+	    throw new ErrorUpdatingUserServiceException(ErrorMessageManager.getProperty("error.update.user"));
 	}
-
-	public User getUserByID(long userID) {
-		Connection connection = null;
-		User user = null;
-		try {
-			connection = ConnectionPool.getConnection();
-			UserDAO userDAO = new UserDAO(connection);
-			user = userDAO.getById(userID);
-
-		} catch (SQLException e) {
-			log.error("Can't get connection from ConnectionPool: " + e); 
-		} finally {
-			ConnectionPool.releaseConnection(connection);
-		}
-		return user;
-	}
-
-	public void updateUserData(User user) throws ErrorUpdatingUserServiceException {
-		Connection connection = null;
-		try {
-			connection = ConnectionPool.getConnection();
-			UserDAO userDAO = new UserDAO(connection);
-			userDAO.update(user);
-
-		} catch (SQLException e) {
-			log.error("Can't get connection from ConnectionPool: " + e); 
-		} catch (ErrorUpdatingDAOException e) {
-			throw new ErrorUpdatingUserServiceException(e);
-		} finally {
-			ConnectionPool.releaseConnection(connection);
-		}
-		
-	}
-
+    }
 }

@@ -11,10 +11,10 @@ import org.hibernate.annotations.Type;
  * @author Ivan Atroshonok
  *
  */
-@Entity
+@javax.persistence.Entity
 @Table(name = "users")
 @Proxy(lazy = false)
-public class User implements Serializable {
+public class User implements Serializable, Entity {
 
     private static final long serialVersionUID = -6275039642563625669L;
 
@@ -48,7 +48,7 @@ public class User implements Serializable {
     private String email;
     @Column(name = "email")
     public String getEmail() {
-        return email;
+	return email;
     }
 
     private String firstname;
@@ -56,45 +56,45 @@ public class User implements Serializable {
     public String getFirstname() {
 	return firstname;
     }
-    
+
     private String lastname;
     @Column(name = "lastName")
     public String getLastname() {
-        return lastname;
+	return lastname;
     }
 
     private String shippingAddress;
-    @Column(name = "shippingAddress")    
+    @Column(name = "shippingAddress")
     public String getShippingAddress() {
-        return shippingAddress;
+	return shippingAddress;
     }
 
     private Integer age;
     @Column(name = "age")
-    public int getAge() {
-        return age;
+    public Integer getAge() {
+	return age;
     }
-    
+
     private UserType userType;
     @Enumerated(EnumType.STRING)
     @Column(name = "userType", columnDefinition = "enum('ADMIN', 'CLIENT')")
     public UserType getUserType() {
-        return userType;
+	return userType;
     }
 
     private Boolean isInBlackList;
     @Column(name = "isInBlackList")
-    @Type(type = "true_false")
+    @Type(type = "yes_no")
     public Boolean getIsInBlackList() {
-        return isInBlackList;
+	return isInBlackList;
     }
 
     public User() {
     }
-    
 
-
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
@@ -105,8 +105,9 @@ public class User implements Serializable {
 		+ "]";
     }
 
-    
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -126,7 +127,9 @@ public class User implements Serializable {
 	return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -189,84 +192,91 @@ public class User implements Serializable {
     }
 
     /**
-     * @param isInBlackList the isInBlackList to set
+     * @param isInBlackList
+     *            the isInBlackList to set
      */
     public void setIsInBlackList(Boolean isInBlackList) {
-        this.isInBlackList = isInBlackList;
+	this.isInBlackList = isInBlackList;
     }
 
     /**
-     * @param id the id to set
+     * @param id
+     *            the id to set
      */
     public void setId(Long id) {
-        this.id = id;
+	this.id = id;
     }
 
     /**
-     * @param registrDate the registrDate to set
+     * @param registrDate
+     *            the registrDate to set
      */
     public void setRegistrDate(Date registrDate) {
-        this.registrDate = registrDate;
+	this.registrDate = registrDate;
     }
 
     /**
-     * @param login the login to set
+     * @param login
+     *            the login to set
      */
     public void setLogin(String login) {
-        this.login = login;
+	this.login = login;
     }
 
     /**
-     * @param password the password to set
+     * @param password
+     *            the password to set
      */
     public void setPassword(String password) {
-        this.password = password;
+	this.password = password;
     }
 
     /**
-     * @param email the email to set
+     * @param email
+     *            the email to set
      */
     public void setEmail(String email) {
-        this.email = email;
+	this.email = email;
     }
 
     /**
-     * @param firstname the firstname to set
+     * @param firstname
+     *            the firstname to set
      */
     public void setFirstname(String firstname) {
-        this.firstname = firstname;
+	this.firstname = firstname;
     }
 
     /**
-     * @param lastname the lastname to set
+     * @param lastname
+     *            the lastname to set
      */
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+	this.lastname = lastname;
     }
 
     /**
-     * @param shippingAddress the shippingAddress to set
+     * @param shippingAddress
+     *            the shippingAddress to set
      */
     public void setShippingAddress(String shippingAddress) {
-        this.shippingAddress = shippingAddress;
+	this.shippingAddress = shippingAddress;
     }
 
     /**
-     * @param age the age to set
+     * @param age
+     *            the age to set
      */
     public void setAge(Integer age) {
-        this.age = age;
+	this.age = age;
     }
 
     /**
-     * @param userType the userType to set
+     * @param userType
+     *            the userType to set
      */
     public void setUserType(UserType userType) {
-        this.userType = userType;
+	this.userType = userType;
     }
-    
-    
-    
-    
 
 }

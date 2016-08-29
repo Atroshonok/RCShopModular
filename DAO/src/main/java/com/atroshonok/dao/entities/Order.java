@@ -3,159 +3,129 @@
  */
 package com.atroshonok.dao.entities;
 
+import java.util.List;
 import java.util.Map;
+
+import javax.persistence.*;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Proxy;
 
 /**
  * @author Atroshonok Ivan
  *
  */
-public class Order extends Entity {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2178928344941296596L;
+@javax.persistence.Entity
+@Table(name = "orders")
+@Proxy(lazy = false)
+public class Order implements Entity {
 
-	private long userId;
-	private double sumPrice;
-	private OrderState state;
-	private Map<Product, Integer> orderedProducts;
+    private static final long serialVersionUID = 2178928344941296596L;
 
-	/**
-	 * 
-	 */
-	public Order() {
-		super();
-	}
+    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "orderID")
+    public Long getId() {
+        return id;
+    }
+    
+    private User user;
+    @OneToOne
+    @JoinColumn(name = "userID_FK", referencedColumnName = "userID")    
+    public User getUser() {
+        return user;
+    }
 
-	/**
-	 * @param id
-	 */
-	public Order(long id) {
-		super(id);
-	}
+    private Double sumPrice;
+    @Column(name = "sumPrice", precision = 10, scale = 2)
+    public Double getSumPrice() {
+        return sumPrice;
+    }
 
-	/**
-	 * @param userId
-	 * @param sumPrice
-	 * @param state
-	 * @param products
-	 */
-	public Order(long userId, double sumPrice, OrderState state) {
-		super();
-		this.userId = userId;
-		this.sumPrice = sumPrice;
-		this.state = state;
-	}
+    private OrderState orderState;
+    @Column(name = "orderState", columnDefinition = "enum('PROCESSING','PROCESSED','OPEN')")
+    @Enumerated(EnumType.STRING)
+    public OrderState getOrderState() {
+        return orderState;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Order [userId=" + userId + ", sumPrice=" + sumPrice + ", state=" + state + ", id=" + id + "]";
-	}
+//    private Map<Product, Integer> orderedProducts;
+    private List<OrderedProduct> orderedProducts;
+    @OneToMany
+    @Cascade(value = {CascadeType.SAVE_UPDATE})
+    public List<OrderedProduct> getOrderedProducts() {
+        return orderedProducts;
+    }
+   
+    public Order() {
+	super();
+    }
 
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((orderedProducts == null) ? 0 : orderedProducts.hashCode());
-		result = prime * result + ((state == null) ? 0 : state.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(sumPrice);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + (int) (userId ^ (userId >>> 32));
-		return result;
-	}
+    @Override
+    public String toString() {
+	return "Order [orderId=" + id + ", userId=" + user.getId() + ", sumPrice=" + sumPrice + ", orderState=" + orderState + "]";
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Order other = (Order) obj;
-		if (orderedProducts == null) {
-			if (other.orderedProducts != null)
-				return false;
-		} else if (!orderedProducts.equals(other.orderedProducts))
-			return false;
-		if (state != other.state)
-			return false;
-		if (Double.doubleToLongBits(sumPrice) != Double.doubleToLongBits(other.sumPrice))
-			return false;
-		if (userId != other.userId)
-			return false;
-		return true;
-	}
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + (int) (id ^ (id >>> 32));
+	result = prime * result + ((orderedProducts == null) ? 0 : orderedProducts.hashCode());
+	result = prime * result + ((sumPrice == null) ? 0 : sumPrice.hashCode());
+	result = prime * result + ((user == null) ? 0 : user.hashCode());
+	return result;
+    }
 
-	/**
-	 * @return the sumPrice
-	 */
-	public double getSumPrice() {
-		return sumPrice;
-	}
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	Order other = (Order) obj;
+	if (id != other.id)
+	    return false;
+	if (orderedProducts == null) {
+	    if (other.orderedProducts != null)
+		return false;
+	} else if (!orderedProducts.equals(other.orderedProducts))
+	    return false;
+	if (sumPrice == null) {
+	    if (other.sumPrice != null)
+		return false;
+	} else if (!sumPrice.equals(other.sumPrice))
+	    return false;
+	if (user == null) {
+	    if (other.user != null)
+		return false;
+	} else if (!user.equals(other.user))
+	    return false;
+	return true;
+    }
 
-	/**
-	 * @param sumPrice
-	 *            the sumPrice to set
-	 */
-	public void setSumPrice(double sumPrice) {
-		this.sumPrice = sumPrice;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/**
-	 * @return the state
-	 */
-	public OrderState getState() {
-		return state;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	/**
-	 * @param state
-	 *            the state to set
-	 */
-	public void setState(OrderState state) {
-		this.state = state;
-	}
+    public void setSumPrice(Double sumPrice) {
+        this.sumPrice = sumPrice;
+    }
 
-	/**
-	 * @return the userId
-	 */
-	public long getUserId() {
-		return userId;
-	}
+    public void setOrderState(OrderState orderState) {
+        this.orderState = orderState;
+    }
 
-	/**
-	 * @param userId
-	 *            the userId to set
-	 */
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-
-	/**
-	 * @return the orderedProducts
-	 */
-	public Map<Product, Integer> getOrderedProducts() {
-		return orderedProducts;
-	}
-
-	/**
-	 * @param orderedProducts the orderedProducts to set
-	 */
-	public void setOrderedProducts(Map<Product, Integer> orderedProducts) {
-		this.orderedProducts = orderedProducts;
-	}
-
+    public void setOrderedProducts(List<OrderedProduct> orderedProducts) {
+        this.orderedProducts = orderedProducts;
+    }
 }

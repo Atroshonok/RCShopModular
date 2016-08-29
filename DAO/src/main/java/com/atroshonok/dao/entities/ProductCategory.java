@@ -3,92 +3,86 @@
  */
 package com.atroshonok.dao.entities;
 
+import javax.persistence.*;
+
+import org.hibernate.annotations.Proxy;
+
 /**
  * @author Atroshonok Ivan
  *
  */
-public class ProductCategory extends Entity {
 
-	private static final long serialVersionUID = 2438212583980527672L;
+@javax.persistence.Entity
+@Table(name = "product_categories")
+@Proxy(lazy = false)
+public class ProductCategory implements Entity {
 
-	private String name;
+    private static final long serialVersionUID = 2438212583980527672L;
 
-	public ProductCategory() {
-	}
+    private Long id;
+    @Id
+    @Column(name = "categoryID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
+	return id;
+    }
 
-	/**
-	 * @param id
-	 */
-	public ProductCategory(long id) {
-		super(id);
-	}
+    private String categoryName;
+    @Column(name = "categoryName")
+    public String getCategoryName() {
+	return categoryName;
+    }
 
-	/**
-	 * @param name
-	 */
-	public ProductCategory(String name) {
-		super();
-		this.name = name;
-	}
+    public ProductCategory() {
+    }
+    
+    public ProductCategory(String categoryName) {
+	super();
+	this.categoryName = categoryName;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "ProductCategory [id=" + id + ", name=" + name + "]";
-	}
+    @Override
+    public String toString() {
+	return "ProductCategory [id=" + id + ", categoryName=" + categoryName + "]";
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((categoryName == null) ? 0 : categoryName.hashCode());
+	result = prime * result + ((id == null) ? 0 : id.hashCode());
+	return result;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ProductCategory other = (ProductCategory) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
-	}
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	ProductCategory other = (ProductCategory) obj;
+	if (categoryName == null) {
+	    if (other.categoryName != null)
+		return false;
+	} else if (!categoryName.equals(other.categoryName))
+	    return false;
+	if (id == null) {
+	    if (other.id != null)
+		return false;
+	} else if (!id.equals(other.id))
+	    return false;
+	return true;
+    }
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
+    public void setId(Long id) {
+	this.id = id;
+    }
 
-	/**
-	 * @param name
-	 *            the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setCategoryName(String categoryName) {
+	this.categoryName = categoryName;
+    }
 
 }

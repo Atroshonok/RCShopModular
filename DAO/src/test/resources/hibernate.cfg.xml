@@ -14,6 +14,10 @@
  -->	<property name="hibernate.hbm2ddl.auto">create</property>
 		
 		<mapping class="com.atroshonok.dao.entities.User"/>
+		<mapping class="com.atroshonok.dao.entities.Product"/>
+		<mapping class="com.atroshonok.dao.entities.ProductCategory"/>
+		<mapping class="com.atroshonok.dao.entities.Order"/>
+		<mapping class="com.atroshonok.dao.entities.OrderedProduct"/>
 	</session-factory>
 </hibernate-configuration>
 

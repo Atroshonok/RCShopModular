@@ -14,6 +14,8 @@ public interface Dao<T> {
     T load(Serializable id) throws DaoException;
 
     void delete(T t) throws DaoException;
+
+    Serializable save(T entity) throws DaoException;
 }
 
 

@@ -15,6 +15,7 @@ import java.lang.reflect.ParameterizedType;
  */
 public class BaseDao<T> implements Dao<T> {
     private static Logger log = Logger.getLogger(BaseDao.class);
+    protected HibernateUtil util = HibernateUtil.getInstance();
 
     public BaseDao() {
 
@@ -23,7 +24,7 @@ public class BaseDao<T> implements Dao<T> {
     public void saveOrUpdate(T t) throws DaoException {
 	log.info("SaveOrUpdate entity: " + t.getClass().getName());
 	try {
-	    Session session = HibernateUtil.getInstance().getSession();
+	    Session session = util.getSession();
 	    session.saveOrUpdate(t);
 	    log.info("Saved or updated entity: " + t);
 	} catch (HibernateException e) {
@@ -36,7 +37,7 @@ public class BaseDao<T> implements Dao<T> {
 	log.info("Save entity: " + t.getClass().getName());
 	Serializable id = null;
 	try {
-	    Session session = HibernateUtil.getInstance().getSession();
+	    Session session = util.getSession();
 	    id = session.save(t);
 	    log.info("Saved entity: " + t);
 	} catch (HibernateException e) {
@@ -50,7 +51,7 @@ public class BaseDao<T> implements Dao<T> {
 	log.info("Get entity by id: " + id);
 	T t = null;
 	try {
-	    Session session = HibernateUtil.getInstance().getSession();
+	    Session session = util.getSession();
 	    t = (T) session.get(getPersistentClass(), id);
 	    log.info("Got entity: " + t);
 	} catch (HibernateException e) {
@@ -64,7 +65,7 @@ public class BaseDao<T> implements Dao<T> {
 	log.info("Load entity by id: " + id);
 	T t = null;
 	try {
-	    Session session = HibernateUtil.getInstance().getSession();
+	    Session session = util.getSession();
 	    t = (T) session.load(getPersistentClass(), id);
 	    log.info("Loaded entity: " + t);
 	} catch (HibernateException e) {
@@ -77,7 +78,7 @@ public class BaseDao<T> implements Dao<T> {
     public void delete(T t) throws DaoException {
 	log.info("Delete entity: " + t);
 	try {
-	    Session session = HibernateUtil.getInstance().getSession();
+	    Session session = util.getSession();
 	    session.delete(t);
 	    log.info("Deleted entity: " + t);
 	} catch (HibernateException e) {
