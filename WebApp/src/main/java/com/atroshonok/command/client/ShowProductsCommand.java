@@ -17,21 +17,23 @@ import com.atroshonok.utilits.ConfigurationManager;
  *
  */
 public class ShowProductsCommand implements ActionCommand {
-	
-	private static final String REQUEST_PARAM_CATEGORYID = "categoryid";
 
-	/* (non-Javadoc)
-	 * @see atroshonok.command.ActionCommand#execute(javax.servlet.http.HttpServletRequest)
-	 */
-	@Override
-	public String execute(HttpServletRequest request) {
-		int categoryID = Integer.parseInt(request.getParameter(REQUEST_PARAM_CATEGORYID));
-		ProductService productService = new ProductService();
-		List<Product> products = productService.getProductsByCategoryID(categoryID);
-		request.getSession().setAttribute("productsList", products);
-		
-		String page = ConfigurationManager.getProperty("path.page.products");
-		return page;
-	}
+    private static final String REQUEST_PARAM_CATEGORYID = "categoryid";
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see atroshonok.command.ActionCommand#execute(javax.servlet.http.
+     * HttpServletRequest)
+     */
+    @Override
+    public String execute(HttpServletRequest request) {
+	int categoryId = Integer.parseInt(request.getParameter(REQUEST_PARAM_CATEGORYID));
+	List<Product> products = ProductService.getInstatnce().getProductsByCategoryId(categoryId);
+	
+	request.getSession().setAttribute("productsList", products);
+	String page = ConfigurationManager.getProperty("path.page.products");
+	return page;
+    }
 
 }

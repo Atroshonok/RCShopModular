@@ -30,10 +30,10 @@ public class LoginCommand implements ActionCommand {
 		User user = userService.getUserByLoginPassword(login, pass);
 		HttpSession session = request.getSession(true);
 		
-		if ((user != null) && user.getRole().equals(UserType.ADMIN)) {
+		if ((user != null) && user.getUserType().equals(UserType.ADMIN)) {
 			setAdminSessionAttributs(user, session);
 			page = ConfigurationManager.getProperty("path.page.admin");
-		} else if (( user != null) && user.getRole().equals(UserType.CLIENT)) {
+		} else if (( user != null) && user.getUserType().equals(UserType.CLIENT)) {
 			setClientSessionAttribute(login, user, session);
 			page = ConfigurationManager.getProperty("path.page.products");
 		} else {

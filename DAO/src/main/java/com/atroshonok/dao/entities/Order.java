@@ -52,7 +52,6 @@ public class Order implements Entity {
         return orderState;
     }
 
-//    private Map<Product, Integer> orderedProducts;
     private List<OrderedProduct> orderedProducts;
     @OneToMany
     @Cascade(value = {CascadeType.SAVE_UPDATE})

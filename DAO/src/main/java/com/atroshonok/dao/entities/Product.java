@@ -22,47 +22,51 @@ import org.hibernate.annotations.Proxy;
 public class Product implements Serializable, Entity {
 
     private static final long serialVersionUID = 1029931528433287929L;
-    
+
     private Long id;
+
     @Id
     @Column(name = "productID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
-        return id;
+	return id;
     }
 
     private String name;
+
     @Column(name = "name")
     public String getName() {
-        return name;
+	return name;
     }
 
     private Double price;
+
     @Column(name = "price", precision = 10, scale = 2)
     public Double getPrice() {
-        return price;
+	return price;
     }
-    
+
     private ProductCategory category;
     @OneToOne
-    @Cascade(value = {CascadeType.SAVE_UPDATE})
+    @Cascade(value = { CascadeType.SAVE_UPDATE })
     @JoinColumn(name = "categoryID")
     public ProductCategory getCategory() {
-        return category;
+	return category;
     }
 
     private Integer count;
+
     @Column(name = "count")
     public Integer getCount() {
-        return count;
+	return count;
     }
 
     private String description;
+
     @Column(name = "description")
     public String getDescription() {
-        return description;
+	return description;
     }
-
 
     public Product() {
 	super();
@@ -73,12 +77,17 @@ public class Product implements Serializable, Entity {
 	this.name = name;
     }
 
+    public Product(Long id, String name, Double price) {
+	super();
+	this.id = id;
+	this.name = name;
+	this.price = price;
+    }
 
     @Override
     public String toString() {
 	return "Product [id=" + id + ", name=" + name + ", price=" + price + ", category=" + category + "]";
     }
-
 
     @Override
     public int hashCode() {
@@ -92,7 +101,6 @@ public class Product implements Serializable, Entity {
 	result = prime * result + ((price == null) ? 0 : price.hashCode());
 	return result;
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -136,37 +144,28 @@ public class Product implements Serializable, Entity {
 	return true;
     }
 
-
     public void setId(Long id) {
-        this.id = id;
+	this.id = id;
     }
-
 
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
-
 
     public void setPrice(Double price) {
-        this.price = price;
+	this.price = price;
     }
-
 
     public void setCategory(ProductCategory category) {
-        this.category = category;
+	this.category = category;
     }
-
 
     public void setCount(Integer count) {
-        this.count = count;
+	this.count = count;
     }
-
 
     public void setDescription(String description) {
-        this.description = description;
+	this.description = description;
     }
-    
-    
 
-   
 }

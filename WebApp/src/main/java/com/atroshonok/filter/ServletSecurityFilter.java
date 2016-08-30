@@ -22,7 +22,7 @@ public class ServletSecurityFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		log.debug("ServletSecurityFilter: method doFilter works");
+		log.debug("ServletSecurityFilter: method doFilter working");
 
 		
 		HttpServletRequest req = (HttpServletRequest) request;

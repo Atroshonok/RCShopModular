@@ -15,105 +15,105 @@ import com.atroshonok.command.client.ShowProductsCommand;
 import com.atroshonok.command.client.ShowUserOrdersCommand;
 
 public enum CommandEnum {
-	LOGIN {
-		{
-			this.command = new LoginCommand();
-		}
-	},
-	LOGOUT {
-		{
-			this.command = new LogoutCommand();
-		}
-	},
-	REGISTRATION {
-		{
-			this.command = new RegistrCommand();
-		}
-	},
-	SHOWPRODUCTS {
-		{
-			this.command = new ShowProductsCommand();
-		}
-	},
-	GETREGISTRFORM {
-		{
-			this.command = new GetRegistrFormCommand();
-		}
-	},
-	GETMAINPAGE {
-		{
-			this.command = new GetMainPageCommand();
-		}
-	},
-	SHOWCART {
-		{
-			this.command = new ShowCartCommand();
-		}
-	},
-	ADDTOCART {
-		{
-			this.command = new AddToCartCommand();
-		}
-	},
-	REMOVEFROMCART {
-		{
-			this.command = new RemoveFromCartCommand();
-		}
-	},
-	ORDER {
-		{
-			this.command = new OrderCommand();
-		}
-	},
-	SHOWUSERORDERS {
-		{
-			this.command = new ShowUserOrdersCommand();
-		}
-	},
-	SHOWALLPRODUCTS {
-		{
-			this.command = new ShowAllProductsCommand();
-		}
-	},
-	EDITPRODUCT  {
-		{
-			this.command = new EditProductCommand();
-		}
-	},
-	SAVEEDITEDPRODUCT {
-		{
-			this.command = new SaveEditedProductCommand();
-		}
-	},
-	SHOWALLUSERS {
-		{
-			this.command = new ShowAllUsersCommand();
-		}
-	},
-	BLACKLIST {
-		{
-			this.command = new BlackListCommand();
-		}
-	},
-	ADDNEWPRODUCT {
-		{
-			this.command = new AddNewProductCommand();
-		}
-	},
-	SAVEPRODUCT {
-		{
-			this.command = new SaveNewProductCommand();
-		}
-	},
-	SETLANGUAGE {
-		{
-			this.command = new SetLanguageCommand();
-		}
-	};
-
-	ActionCommand command;
-
-	public ActionCommand getCurrentCommand() {
-		return command;
+    LOGIN {
+	{
+	    this.command = new LoginCommand();
 	}
+    },
+    LOGOUT {
+	{
+	    this.command = new LogoutCommand();
+	}
+    },
+    REGISTRATION {
+	{
+	    this.command = new RegistrCommand();
+	}
+    },
+    SHOWPRODUCTS {
+	{
+	    this.command = new ShowProductsCommand();
+	}
+    },
+    GETREGISTRFORM {
+	{
+	    this.command = new GetRegistrFormCommand();
+	}
+    },
+    GETMAINPAGE {
+	{
+	    this.command = new GetMainPageCommand();
+	}
+    },
+    SHOWCART {
+	{
+	    this.command = new ShowCartCommand();
+	}
+    },
+    ADDTOCART {
+	{
+	    this.command = new AddToCartCommand();
+	}
+    },
+    REMOVEFROMCART {
+	{
+	    this.command = new RemoveFromCartCommand();
+	}
+    },
+    ORDER {
+	{
+	    this.command = new OrderCommand();
+	}
+    },
+    SHOWUSERORDERS {
+	{
+	    this.command = new ShowUserOrdersCommand();
+	}
+    },
+    SHOWALLPRODUCTS {
+	{
+	    this.command = new ShowAllProductsCommand();
+	}
+    },
+    EDITPRODUCT {
+	{
+	    this.command = new EditProductCommand();
+	}
+    },
+    SAVEEDITEDPRODUCT {
+	{
+	    this.command = new SaveEditedProductCommand();
+	}
+    },
+    SHOWALLUSERS {
+	{
+	    this.command = new ShowAllUsersCommand();
+	}
+    },
+    BLACKLIST {
+	{
+	    this.command = new BlackListCommand();
+	}
+    },
+    ADDNEWPRODUCT {
+	{
+	    this.command = new AddNewProductCommand();
+	}
+    },
+    SAVEPRODUCT {
+	{
+	    this.command = new SaveNewProductCommand();
+	}
+    },
+    SETLANGUAGE {
+	{
+	    this.command = new SetLanguageCommand();
+	}
+    };
+
+    ActionCommand command;
+
+    public ActionCommand getCurrentCommand() {
+	return command;
+    }
 }

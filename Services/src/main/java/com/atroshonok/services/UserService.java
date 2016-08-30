@@ -24,11 +24,24 @@ import com.atroshonok.services.exceptions.ErrorUpdatingUserServiceException;
  *
  */
 public class UserService {
+    private static UserService userService;
     private Logger log = Logger.getLogger(getClass());
     private UserDao userDao = new UserDao();
     private HibernateUtil util = HibernateUtil.getInstance();
     private Session session;
     private Transaction transaction;
+
+    
+    public UserService() {
+	super();
+    }
+    
+    public static UserService getInstance() {
+	if (userService == null) {
+	    userService = new UserService();
+	}
+	return userService;
+    }
 
     /**
      * Returns an object of user class by login and password. If user is not
@@ -81,8 +94,8 @@ public class UserService {
 	return users;
     }
 
-    public User getUserByID(Serializable userId) {
-	log.info("Starting method getUserByID(long userID)");
+    public User getUserById(Serializable userId) {
+	log.info("Starting method getUserById(long userId)");
 	User user = null;
 	try {
 	    session = util.getSession();
@@ -94,7 +107,7 @@ public class UserService {
 	    log.error("Error getting user by id = " + userId + " in class: " + UserService.class, e);
 	    transaction.rollback();
 	}
-	log.info("Ending method getUserByID(long userID)");
+	log.info("Ending method getUserById(long userId)");
 	return user;
     }
 
@@ -111,5 +124,6 @@ public class UserService {
 	    transaction.rollback();
 	    throw new ErrorUpdatingUserServiceException(ErrorMessageManager.getProperty("error.update.user"));
 	}
+	log.info("Ending method updateUserData(User user)");
     }
 }

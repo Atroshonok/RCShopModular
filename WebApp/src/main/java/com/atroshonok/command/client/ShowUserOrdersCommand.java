@@ -21,28 +21,27 @@ import com.atroshonok.utilits.MessageManager;
  */
 public class ShowUserOrdersCommand implements ActionCommand {
 
-	private static final String SESSION_ATTR_NAME_USERID = "userID";
-	private Logger log = Logger.getLogger(getClass());
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see atroshonok.command.ActionCommand#execute(javax.servlet.http.
-	 * HttpServletRequest)
-	 */
+    private static final String SESSION_ATTR_NAME_USERID = "userID";
+    private Logger log = Logger.getLogger(getClass());
+    /*
+     * (non-Javadoc)
+     * 
+     * @see atroshonok.command.ActionCommand#execute(javax.servlet.http.
+     * HttpServletRequest)
+     */
 
-	@Override
-	public String execute(HttpServletRequest request) {
-		long userID = (Long) request.getSession().getAttribute(SESSION_ATTR_NAME_USERID);
-		log.debug("UserID = " + userID);
-		OrderService orderService = new OrderService();
-		List<Order> orders = orderService.getAllUserOrders(userID);
-		
-		if (!orders.isEmpty() && (orders !=null)) {
-			request.setAttribute("orders", orders);
-		} else {
-			request.setAttribute("noOrdersMassage", MessageManager.getProperty("message.noorders"));
-		}
-		return ConfigurationManager.getProperty("path.page.orders");
+    @Override
+    public String execute(HttpServletRequest request) {
+	long userId = (Long) request.getSession().getAttribute(SESSION_ATTR_NAME_USERID);
+	List<Order> orders = OrderService.getInstance().getAllUserOrders(userId);
+
+	if (!orders.isEmpty() && (orders != null)) {
+	    request.setAttribute("orders", orders);
+	} else {
+	    request.setAttribute("noOrdersMessage", MessageManager.getProperty("message.noorders"));
 	}
+
+	return ConfigurationManager.getProperty("path.page.orders");
+    }
 
 }

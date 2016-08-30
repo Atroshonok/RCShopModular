@@ -3,17 +3,19 @@
  */
 package com.atroshonok.services;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
+import com.atroshonok.dao.OrderDao;
+import com.atroshonok.dao.dbutils.ErrorMessageManager;
+import com.atroshonok.dao.dbutils.HibernateUtil;
 import com.atroshonok.dao.entities.Order;
-import com.atroshonok.dao.entities.Product;
-import com.atroshonok.jdbcdao.OrderDAO;
-import com.atroshonok.jdbcdao.dbconectutils.ConnectionPool;
+import com.atroshonok.dao.exceptions.DaoException;
 import com.atroshonok.services.exceptions.ErrorSavingOrderServiceException;
 
 /**
@@ -21,59 +23,57 @@ import com.atroshonok.services.exceptions.ErrorSavingOrderServiceException;
  *
  */
 public class OrderService {
-	private Logger log = Logger.getLogger(getClass());
+    private static OrderService orderService;
+    private Logger log = Logger.getLogger(getClass());
+    private HibernateUtil util = HibernateUtil.getInstance();
+    private OrderDao orderDao = new OrderDao();
+    private Session session = null;
+    private Transaction transaction = null;
 
-	public List<Order> getAllUserOrders(long userID) {
-		Connection connection = null;
-		List<Order> orders = null;
-		try {
-			connection = ConnectionPool.getConnection();
-			OrderDAO orderDAO = new OrderDAO(connection);
-			orders = orderDAO.getOrdersByUserID(userID);
-
-		} catch (SQLException e) {
-			log.error("Can't get connection from ConnectionPool: " + e);
-		}
-		return orders;
-
+    public OrderService() {
+	super();
+    }
+    
+    public static OrderService getInstance() {
+	if (orderService == null) {
+	    orderService = new OrderService();
 	}
+	return orderService;
+    }
 
-
-	public void saveOrderDataToDatabase(Order order) throws ErrorSavingOrderServiceException {
-		Connection connection = null;
-		try {
-			connection = ConnectionPool.getConnection();
-		} catch (SQLException e) {
-			log.error("Can't get connection from ConnectionPool: " + e);
-		}
-
-		if (connection != null) {
-			try {
-				connection.setAutoCommit(false);
-				OrderDAO orderDAO = new OrderDAO(connection);
-				long orderID = orderDAO.saveOrderAndGetItID(order);
-
-				saveAllOrderedProducts(order, orderDAO, orderID);
-				connection.commit();
-
-			} catch (SQLException e) {
-				try {
-					connection.rollback();
-				} catch (SQLException e1) {
-					log.error("Error by rollback transaction: " + e1);
-				}
-				throw new ErrorSavingOrderServiceException(e);
-			} finally {
-				ConnectionPool.releaseConnection(connection);
-			}
-		} else {
-			throw new ErrorSavingOrderServiceException();
-		}
+    public List<Order> getAllUserOrders(long userId) {
+	log.info("Starting method getAllUserOrders(long userId) in " + OrderService.class);
+	List<Order> orders = null;
+	try {
+	    session = util.getSession();
+	    transaction = session.beginTransaction();
+	    String hql = "FROM Order o WHERE o.user.id=:userId";
+	    Query query = session.createQuery(hql);
+	    query.setParameter("userId", userId);
+	    orders = query.list();
+	    transaction.commit();
+	} catch (HibernateException e) {
+	    log.error("Error getting user orders by user id = " + userId + " in class: " + OrderService.class, e);
+	    transaction.rollback();
 	}
+	log.info("Ending method getAllUserOrders(long userId) in " + OrderService.class);
+	return orders;
 
-	private void saveAllOrderedProducts(Order order, OrderDAO orderDAO, long orderID) {
-		for (Map.Entry<Product, Integer> pair : order.getOrderedProducts().entrySet()) {
-			orderDAO.saveOrderedProduct(orderID, pair.getKey(), pair.getValue());
-		}
+    }
+
+    public void saveOrderData(Order order) throws ErrorSavingOrderServiceException {
+	log.info("Starting method saveOrderData(Order order) in class: " + OrderService.class);
+	try {
+	    session = util.getSession();
+	    transaction = session.beginTransaction();
+	    orderDao.saveOrUpdate(order);
+	    transaction.commit();
+	    log.info("Saved order: " + order);
+	} catch (DaoException e) {
+	    log.error("Error saving order in class: " + OrderService.class, e);
+	    transaction.rollback();
+	    throw new ErrorSavingOrderServiceException(ErrorMessageManager.getProperty("error.save.order"));
 	}
+	log.info("Ending method saveOrderData(Order order) in class: " + OrderService.class);
+    }
 }

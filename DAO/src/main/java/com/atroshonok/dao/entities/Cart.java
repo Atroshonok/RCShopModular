@@ -16,28 +16,14 @@ import java.util.Map;
 public class Cart implements Serializable {
     private static final long serialVersionUID = -8683532932268654018L;
 
-    private Map<Product, Integer> orderedProducts;
     private int allProductsCount;
     private List<Order> orders;
+    private List<OrderedProduct> orderedProducts;
+    private Double sumPrice = 0.0;
 
     public Cart() {
-	this.orderedProducts = new HashMap<>();
 	this.orders = new ArrayList<>();
-    }
-
-    /**
-     * @return the orderedProducts
-     */
-    public Map<Product, Integer> getOrderedProducts() {
-	return orderedProducts;
-    }
-
-    /**
-     * @param orderedProducts
-     *            the orderedProducts to set
-     */
-    public void setOrderedProducts(Map<Product, Integer> orderedProducts) {
-	this.orderedProducts = orderedProducts;
+	this.orderedProducts = new ArrayList<>();
     }
 
     /**
@@ -56,17 +42,6 @@ public class Cart implements Serializable {
     }
 
     /**
-     * @return the sumPrice
-     */
-    public double getSumPrice() {
-	double sumPrice = 0.0;
-	for (Map.Entry<Product, Integer> pair : orderedProducts.entrySet()) {
-	    sumPrice = sumPrice + pair.getKey().getPrice() * pair.getValue();
-	}
-	return sumPrice;
-    }
-
-    /**
      * @return the orders
      */
     public List<Order> getOrders() {
@@ -79,6 +54,22 @@ public class Cart implements Serializable {
      */
     public void setOrders(List<Order> orders) {
 	this.orders = orders;
+    }
+
+    public List<OrderedProduct> getOrderedProducts() {
+	return orderedProducts;
+    }
+
+    public void setOrderedProducts(List<OrderedProduct> orderedProducts) {
+	this.orderedProducts = orderedProducts;
+    }
+
+    public Double getSumPrice() {
+	return sumPrice;
+    }
+
+    public void setSumPrice(Double sumPrice) {
+	this.sumPrice = sumPrice;
     }
 
 }

@@ -14,14 +14,14 @@
 			<tr>
 				<td><c:out value="${order.id}" /></td>
 				<td><c:out value="${order.sumPrice}" /></td>
-				<td><c:out value="${order.state}" /></td>
+				<td><c:out value="${order.orderState}" /></td>
 				<td>
-					<c:forEach var="productsPair" items="${order.orderedProducts.entrySet()}" >
-						<c:out value="[${productsPair.getKey().getName()} - " />
-						<c:out value="${productsPair.getValue()} pc.] " />
+					<c:forEach var="orderLine" items="${order.orderedProducts}" >
+						<c:out value="[${orderLine.product.name} - " />
+						<c:out value="${orderLine.product.count} pc.] " />
 					</c:forEach>
 				</td>
 			</tr>
 		</c:forEach>
 	</table>
- </div>
+</div>

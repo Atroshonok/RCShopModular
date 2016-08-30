@@ -2,13 +2,16 @@ package com.atroshonok.dao;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.atroshonok.dao.dbutils.HibernateUtil;
+import com.atroshonok.dao.entities.User;
 import com.atroshonok.dao.exceptions.DaoException;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 /**
  * @author Atroshonok Ivan
@@ -86,7 +89,7 @@ public class BaseDao<T> implements Dao<T> {
 	    throw new DaoException(e);
 	}
     }
-
+    
     private Class<T> getPersistentClass() {
 	return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }

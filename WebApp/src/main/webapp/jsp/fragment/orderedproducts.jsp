@@ -12,22 +12,21 @@
 				<th>Count</th>
 				<th>Action</th>
 			</tr>
-		<c:forEach var="product" items="${sessionScope.cart.orderedProducts.keySet()}" varStatus="status">
+		<c:forEach var="orderLine" items="${sessionScope.cart.orderedProducts}" varStatus="status">
 			<tr>
-				<td><c:out value="${product.name}" /></td>
-				<td><c:out value="${product.price}" /></td>
-				<c:set var="count" value="${sessionScope.cart.orderedProducts.get(product)}" />
-				<td><c:out value="${count}" /></td>
+				<td><c:out value="${orderLine.product.name}" /></td>
+				<td><c:out value="${orderLine.product.price}" /></td>
+				<td><c:out value="${orderLine.count}" /></td>
 				<td>
-				<form id="removeProductButton" action="controller" method="POST" >
-					<input type="hidden" name="command" value="removefromcart" />
-					<input type="hidden" name="productid" value="${product.id}" />
-					<input type="hidden" name="productname" value="${product.name}" />
-					<input type="hidden" name="productprice" value="${product.price}" />
-					<button class="btn btn-info" type="submit">
-						<span class="glyphicon glyphicon-minus"></span> <fmt:message key="orderedproducts.buttons.remove"/>
-					</button>
-				</form>
+					<form id="removeProductButton" action="controller" method="POST" >
+						<input type="hidden" name="command" value="removefromcart" />
+						<input type="hidden" name="productid" value="${orderLine.product.id}" />
+						<%-- <input type="hidden" name="productname" value="${product.name}" />
+						<input type="hidden" name="productprice" value="${product.price}" /> --%>
+						<button class="btn btn-info" type="submit">
+							<span class="glyphicon glyphicon-minus"></span> <fmt:message key="orderedproducts.buttons.remove"/>
+						</button>
+					</form>
 				</td>
 			</tr>
 		</c:forEach>
