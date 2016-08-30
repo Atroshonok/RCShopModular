@@ -14,15 +14,16 @@ import com.atroshonok.utilits.ConfigurationManager;
  */
 public class ShowCartCommand implements ActionCommand {
 
-
-	/* (non-Javadoc)
-	 * @see atroshonok.command.ActionCommand#execute(javax.servlet.http.HttpServletRequest)
-	 */
-	@Override
-	public String execute(HttpServletRequest request) {
-		String page = ConfigurationManager.getProperty("path.page.cart");
-		return page;
-	}
-
+    /*
+     * (non-Javadoc)
+     * 
+     * @see atroshonok.command.ActionCommand#execute(javax.servlet.http.
+     * HttpServletRequest)
+     */
+    @Override
+    public String execute(HttpServletRequest request) {
+	String page = ConfigurationManager.getProperty("path.page.cart");
+	return page;
+    }
 
 }

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.atroshonok.command.ActionCommand;
 import com.atroshonok.dao.entities.Cart;
-import com.atroshonok.dao.entities.OrderedProduct;
+import com.atroshonok.dao.entities.OrderLine;
 import com.atroshonok.dao.entities.Product;
 import com.atroshonok.dao.entities.UserType;
 import com.atroshonok.services.ProductService;
@@ -51,31 +51,31 @@ public class RemoveFromCartCommand implements ActionCommand {
 
 
     private void removeOrderedProduct(Product product, Cart cart) {
-	List<OrderedProduct> orderedProducts = cart.getOrderedProducts();
-	OrderedProduct orderedProduct = getOrderedProductByProduct(orderedProducts, product);
-	if (orderedProduct != null) {
-	    if (orderedProduct.getCount() > 1) {
-		decreaseCount(orderedProduct);
+	List<OrderLine> orderLines = cart.getOrderLines();
+	OrderLine orderLine = getOrderLineByProduct(orderLines, product);
+	if (orderLine != null) {
+	    if (orderLine.getCount() > 1) {
+		decreaseCount(orderLine);
 	    } else {
-		orderedProducts.remove(orderedProduct);
+		orderLines.remove(orderLine);
 	    } 
 	}
 	cart.setSumPrice(cart.getSumPrice() - product.getPrice());
     }
 
 
-    private OrderedProduct getOrderedProductByProduct(List<OrderedProduct> orderedProducts, Product product) {
-	for (OrderedProduct orderedProduct : orderedProducts) {
-	    if (orderedProduct.getProduct().getId() == product.getId()) {
-		return orderedProduct;
+    private OrderLine getOrderLineByProduct(List<OrderLine> orderLines, Product product) {
+	for (OrderLine orderLine : orderLines) {
+	    if (orderLine.getProduct().getId() == product.getId()) {
+		return orderLine;
 	    }
 	}
 	return null;
     }
 
-    private void decreaseCount(OrderedProduct orderedProduct) {
-	int oldCount = orderedProduct.getCount();
-	orderedProduct.setCount(oldCount - 1);
+    private void decreaseCount(OrderLine orderLine) {
+	int oldCount = orderLine.getCount();
+	orderLine.setCount(oldCount - 1);
     }
 
     private void decreaseAllProductsCount(Cart cart) {

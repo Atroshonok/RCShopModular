@@ -12,7 +12,7 @@
 				<th>Count</th>
 				<th>Action</th>
 			</tr>
-		<c:forEach var="orderLine" items="${sessionScope.cart.orderedProducts}" varStatus="status">
+		<c:forEach var="orderLine" items="${sessionScope.cart.orderLines}" varStatus="status">
 			<tr>
 				<td><c:out value="${orderLine.product.name}" /></td>
 				<td><c:out value="${orderLine.product.price}" /></td>
@@ -21,8 +21,6 @@
 					<form id="removeProductButton" action="controller" method="POST" >
 						<input type="hidden" name="command" value="removefromcart" />
 						<input type="hidden" name="productid" value="${orderLine.product.id}" />
-						<%-- <input type="hidden" name="productname" value="${product.name}" />
-						<input type="hidden" name="productprice" value="${product.price}" /> --%>
 						<button class="btn btn-info" type="submit">
 							<span class="glyphicon glyphicon-minus"></span> <fmt:message key="orderedproducts.buttons.remove"/>
 						</button>

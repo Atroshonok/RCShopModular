@@ -77,7 +77,7 @@ public class OrderCommand implements ActionCommand {
 	order.setUser(user);
 	order.setSumPrice(cart.getSumPrice());
 	order.setOrderState(OrderState.OPEN);
-	order.setOrderedProducts(cart.getOrderedProducts());
+	order.setOrderLines(cart.getOrderLines());
 	return order;
     }
 

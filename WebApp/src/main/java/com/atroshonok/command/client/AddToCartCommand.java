@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.atroshonok.command.ActionCommand;
 import com.atroshonok.dao.entities.Cart;
-import com.atroshonok.dao.entities.OrderedProduct;
+import com.atroshonok.dao.entities.OrderLine;
 import com.atroshonok.dao.entities.Product;
 import com.atroshonok.services.ProductService;
 import com.atroshonok.utilits.ConfigurationManager;
@@ -53,35 +53,35 @@ public class AddToCartCommand implements ActionCommand {
     }
 
     private void addProductToCart(Cart cart, Product product) {
-	List<OrderedProduct> orderedProducts = cart.getOrderedProducts();
-	OrderedProduct orderedProduct = getOrderLineByProduct(orderedProducts, product);
+	List<OrderLine> orderLines = cart.getOrderLines();
+	OrderLine orderLine = getOrderLineByProduct(orderLines, product);
 	
-	if (orderedProduct != null) {
-	    increaseProductCount(orderedProduct);
+	if (orderLine != null) {
+	    increaseProductCount(orderLine);
 	} else {
-	    addNewProductToList(product, orderedProducts);
+	    addNewProductToOrderLines(product, orderLines);
 	}
 	cart.setSumPrice(cart.getSumPrice() + product.getPrice());
     }
 
-    private OrderedProduct getOrderLineByProduct(List<OrderedProduct> orderedProducts, Product product) {
-	for (OrderedProduct orderedProduct : orderedProducts) {
-	    if (orderedProduct.getProduct().getId() == product.getId()) {
-		return orderedProduct;
+    private OrderLine getOrderLineByProduct(List<OrderLine> orderLines, Product product) {
+	for (OrderLine orderLine : orderLines) {
+	    if (orderLine.getProduct().getId() == product.getId()) {
+		return orderLine;
 	    }
 	}
 	return null;
     }
 
-    private void increaseProductCount(OrderedProduct orderedProduct) {
-	int oldCount = orderedProduct.getCount();
-	orderedProduct.setCount(oldCount + 1);
+    private void increaseProductCount(OrderLine orderLine) {
+	int oldCount = orderLine.getCount();
+	orderLine.setCount(oldCount + 1);
     }
 
-    private void addNewProductToList(Product product, List<OrderedProduct> orderedProducts) {
-	OrderedProduct newOrderedProduct = new OrderedProduct();
-	newOrderedProduct.setCount(1);
-	newOrderedProduct.setProduct(product);
-	orderedProducts.add(newOrderedProduct);
+    private void addNewProductToOrderLines(Product product, List<OrderLine> orderLines) {
+	OrderLine newOrderLine = new OrderLine();
+	newOrderLine.setCount(1);
+	newOrderLine.setProduct(product);
+	orderLines.add(newOrderLine);
     }
 }

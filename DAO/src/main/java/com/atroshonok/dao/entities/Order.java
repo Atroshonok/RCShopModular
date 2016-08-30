@@ -51,12 +51,18 @@ public class Order implements Entity {
     public OrderState getOrderState() {
         return orderState;
     }
-
-    private List<OrderedProduct> orderedProducts;
+   
+    private List<OrderLine> orderLines;
     @OneToMany
+    @JoinTable(
+	    name = "orders_orderlines", 
+	    joinColumns = 
+	    @JoinColumn(name = "orderID_FK", referencedColumnName = "orderID"),
+	    inverseJoinColumns =
+	    @JoinColumn(name = "orderLineID_FK", referencedColumnName = "ID"))
     @Cascade(value = {CascadeType.SAVE_UPDATE})
-    public List<OrderedProduct> getOrderedProducts() {
-        return orderedProducts;
+    public List<OrderLine> getOrderLines() {
+        return orderLines;
     }
    
     public Order() {
@@ -73,7 +79,7 @@ public class Order implements Entity {
 	final int prime = 31;
 	int result = 1;
 	result = prime * result + (int) (id ^ (id >>> 32));
-	result = prime * result + ((orderedProducts == null) ? 0 : orderedProducts.hashCode());
+	result = prime * result + ((orderLines == null) ? 0 : orderLines.hashCode());
 	result = prime * result + ((sumPrice == null) ? 0 : sumPrice.hashCode());
 	result = prime * result + ((user == null) ? 0 : user.hashCode());
 	return result;
@@ -90,10 +96,10 @@ public class Order implements Entity {
 	Order other = (Order) obj;
 	if (id != other.id)
 	    return false;
-	if (orderedProducts == null) {
-	    if (other.orderedProducts != null)
+	if (orderLines == null) {
+	    if (other.orderLines != null)
 		return false;
-	} else if (!orderedProducts.equals(other.orderedProducts))
+	} else if (!orderLines.equals(other.orderLines))
 	    return false;
 	if (sumPrice == null) {
 	    if (other.sumPrice != null)
@@ -124,7 +130,7 @@ public class Order implements Entity {
         this.orderState = orderState;
     }
 
-    public void setOrderedProducts(List<OrderedProduct> orderedProducts) {
-        this.orderedProducts = orderedProducts;
+    public void setOrderLines(List<OrderLine> orderLines) {
+        this.orderLines = orderLines;
     }
 }

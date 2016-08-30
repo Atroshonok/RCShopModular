@@ -18,12 +18,12 @@ public class Cart implements Serializable {
 
     private int allProductsCount;
     private List<Order> orders;
-    private List<OrderedProduct> orderedProducts;
+    private List<OrderLine> orderLines;
     private Double sumPrice = 0.0;
 
     public Cart() {
 	this.orders = new ArrayList<>();
-	this.orderedProducts = new ArrayList<>();
+	this.orderLines = new ArrayList<>();
     }
 
     /**
@@ -56,12 +56,12 @@ public class Cart implements Serializable {
 	this.orders = orders;
     }
 
-    public List<OrderedProduct> getOrderedProducts() {
-	return orderedProducts;
+    public List<OrderLine> getOrderLines() {
+	return orderLines;
     }
 
-    public void setOrderedProducts(List<OrderedProduct> orderedProducts) {
-	this.orderedProducts = orderedProducts;
+    public void setOrderLines(List<OrderLine> orderLines) {
+	this.orderLines = orderLines;
     }
 
     public Double getSumPrice() {

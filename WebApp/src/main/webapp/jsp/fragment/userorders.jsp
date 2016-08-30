@@ -16,7 +16,7 @@
 				<td><c:out value="${order.sumPrice}" /></td>
 				<td><c:out value="${order.orderState}" /></td>
 				<td>
-					<c:forEach var="orderLine" items="${order.orderedProducts}" >
+					<c:forEach var="orderLine" items="${order.orderLines}" >
 						<c:out value="[${orderLine.product.name} - " />
 						<c:out value="${orderLine.product.count} pc.] " />
 					</c:forEach>

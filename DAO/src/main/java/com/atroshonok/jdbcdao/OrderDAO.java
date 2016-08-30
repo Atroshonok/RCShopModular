@@ -48,7 +48,7 @@ public class OrderDAO extends AbstractDAO<Order> {
 		order.setUserId(resultSet.getLong(2));
 		order.setSumPrice(resultSet.getDouble(3));
 		order.setState(OrderState.valueOf(resultSet.getString(4).trim()));
-		order.setOrderedProducts(getPoductsMapByOrderID(order.getId()));
+		order.setOrderLines(getPoductsMapByOrderID(order.getId()));
 		return order;
 	}
 
