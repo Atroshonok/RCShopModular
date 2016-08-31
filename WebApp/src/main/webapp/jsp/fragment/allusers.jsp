@@ -33,8 +33,8 @@
 				</c:if>
 			</td>
 			<td><c:out value="${user.age}"/></td>
-			<td><c:out value="${user.role}"/></td>
-			<td><c:out value="${user.isInBlackList()}"/></td>
+			<td><c:out value="${user.userType}"/></td>
+			<td><c:out value="${user.isInBlackList}"/></td>
 			<td>
 				<form id="addInBlackListButton" action="controller" method="POST" >
 					<input type="hidden" name="command" value="blacklist" />

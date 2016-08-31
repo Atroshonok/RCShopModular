@@ -41,6 +41,13 @@ public class ProductCategory implements Entity {
 	this.categoryName = categoryName;
     }
 
+    
+    public ProductCategory(Long id) {
+	super();
+	this.id = id;
+    }
+
+
     @Override
     public String toString() {
 	return "ProductCategory [id=" + id + ", categoryName=" + categoryName + "]";

@@ -16,27 +16,28 @@ import com.atroshonok.utilits.ConfigurationManager;
  */
 public class EditProductCommand implements ActionCommand {
 
-	private static final String PARAM_NAME_PRODUCTID = "productid";
+    private static final String PARAM_NAME_PRODUCTID = "productid";
 
-	/* (non-Javadoc)
-	 * @see atroshonok.command.ActionCommand#execute(javax.servlet.http.HttpServletRequest)
-	 */
-	@Override
-	public String execute(HttpServletRequest request) {
-		
-		ProductService productService = new ProductService();
-		long productID = Long.parseLong(request.getParameter(PARAM_NAME_PRODUCTID));
-		Product product = productService.getProductByID(productID);
-		
-		request.setAttribute("product", product);
-		request.setAttribute("fragmentPath", ConfigurationManager.getProperty("path.fragment.editproductform"));
-		
-		String page = ConfigurationManager.getProperty("path.page.admin"); 
-		
-		return page;
-	}
-	
-	String page = null;
-	
+    /*
+     * (non-Javadoc)
+     * 
+     * @see atroshonok.command.ActionCommand#execute(javax.servlet.http.
+     * HttpServletRequest)
+     */
+    @Override
+    public String execute(HttpServletRequest request) {
+
+	long productId = Long.parseLong(request.getParameter(PARAM_NAME_PRODUCTID));
+	Product product = ProductService.getInstatnce().getProductById(productId);
+
+	request.setAttribute("product", product);
+	request.setAttribute("fragmentPath", ConfigurationManager.getProperty("path.fragment.editproductform"));
+
+	String page = ConfigurationManager.getProperty("path.page.admin");
+
+	return page;
+    }
+
+//    String page = null;
 
 }

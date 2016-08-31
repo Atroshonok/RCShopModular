@@ -25,7 +25,6 @@ import com.atroshonok.services.exceptions.ErrorUpdatingPoductServiceException;
  */
 public class ProductService {
     private static ProductService productService;
-
     private Logger log = Logger.getLogger(getClass());
     private HibernateUtil util = HibernateUtil.getInstance();
     private ProductDao productDao = new ProductDao();
@@ -95,7 +94,7 @@ public class ProductService {
 	return product;
     }
 
-    public void updateProductInDatabase(Product product) throws ErrorUpdatingPoductServiceException {
+    public void updateProduct(Product product) throws ErrorUpdatingPoductServiceException {
 	log.info("Starting method updateProductInDatabase(Product product)");
 	try {
 	    session = util.getSession();

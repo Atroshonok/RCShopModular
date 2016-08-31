@@ -26,8 +26,7 @@ public class ShowAllProductsCommand implements ActionCommand {
 	@Override
 	public String execute(HttpServletRequest request) {
 		
-		ProductService productService = new ProductService();
-		List<Product> products = productService.getAllProducts();
+		List<Product> products = ProductService.getInstatnce().getAllProducts();
 		
 		request.setAttribute("fragmentPath", ConfigurationManager.getProperty("path.fragment.allproducts"));
 		request.getSession().setAttribute(SESSION_ATTR_NAME_PRODUCTSLIST, products);

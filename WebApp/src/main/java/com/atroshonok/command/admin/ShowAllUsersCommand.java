@@ -25,8 +25,7 @@ public class ShowAllUsersCommand implements ActionCommand {
 	@Override
 	public String execute(HttpServletRequest request) {
 		
-		UserService userService = new UserService();
-		List<User> users = userService.getAllUsers();
+		List<User> users = UserService.getInstance().getAllUsers();
 		
 		request.setAttribute("usersList", users);
 		request.setAttribute("fragmentPath", ConfigurationManager.getProperty("path.fragment.allusers"));

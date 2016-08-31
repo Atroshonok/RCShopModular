@@ -10,6 +10,7 @@ import javax.persistence.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Proxy;
+import org.hibernate.annotations.Type;
 
 /**
  * @author Atroshonok Ivan
@@ -64,6 +65,7 @@ public class Product implements Serializable, Entity {
     private String description;
 
     @Column(name = "description")
+    @Type(type = "text")
     public String getDescription() {
 	return description;
     }
@@ -83,6 +85,17 @@ public class Product implements Serializable, Entity {
 	this.name = name;
 	this.price = price;
     }
+
+    
+    public Product(String name, Double price, ProductCategory category, Integer count, String description) {
+	super();
+	this.name = name;
+	this.price = price;
+	this.category = category;
+	this.count = count;
+	this.description = description;
+    }
+
 
     @Override
     public String toString() {

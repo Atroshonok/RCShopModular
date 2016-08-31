@@ -24,28 +24,27 @@ import com.atroshonok.utilits.ConfigurationManager;
  *
  */
 public class PageRedirectSecurityFilter implements Filter {
-	private Logger log = Logger.getLogger(getClass());
+    private Logger log = Logger.getLogger(getClass());
 
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-	}
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
 
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		log.debug("PageRedirectSecurityFilter: method doFilter works");
-		
-		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		
-		httpRequest.getSession().setAttribute("userType", UserType.GUEST);
-		httpResponse.sendRedirect(httpRequest.getContextPath() + ConfigurationManager.getProperty("path.page.index"));
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	log.debug("PageRedirectSecurityFilter: method doFilter works");
 
-		chain.doFilter(request, response);
-	}
+	HttpServletRequest httpRequest = (HttpServletRequest) request;
+	HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-	@Override
-	public void destroy() {
-	}
+	httpRequest.getSession().setAttribute("userType", UserType.GUEST);
+	httpResponse.sendRedirect(httpRequest.getContextPath() + ConfigurationManager.getProperty("path.page.index"));
+
+	chain.doFilter(request, response);
+    }
+
+    @Override
+    public void destroy() {
+    }
 
 }

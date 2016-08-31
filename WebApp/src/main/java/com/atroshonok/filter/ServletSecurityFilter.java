@@ -18,34 +18,32 @@ import com.atroshonok.dao.entities.UserType;
 import com.atroshonok.utilits.ConfigurationManager;
 
 public class ServletSecurityFilter implements Filter {
-	private Logger log = Logger.getLogger(getClass());
+    private Logger log = Logger.getLogger(getClass());
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		log.debug("ServletSecurityFilter: method doFilter working");
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	log.debug("ServletSecurityFilter: method doFilter working");
 
-		
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse resp = (HttpServletResponse) response;
-		HttpSession session = req.getSession();
+	HttpServletRequest req = (HttpServletRequest) request;
+	HttpServletResponse resp = (HttpServletResponse) response;
+	HttpSession session = req.getSession();
 
-		UserType type = (UserType) session.getAttribute("userType");
+	UserType type = (UserType) session.getAttribute("userType");
 
-		if (type == null) {
-			type = UserType.GUEST;
-			session.setAttribute("userType", type);
-			resp.sendRedirect(req.getContextPath() + ConfigurationManager.getProperty("path.page.main"));
-			return;
-		}
-		chain.doFilter(request, response);
+	if (type == null) {
+	    type = UserType.GUEST;
+	    session.setAttribute("userType", type);
+	    resp.sendRedirect(req.getContextPath() + ConfigurationManager.getProperty("path.page.main"));
+	    return;
 	}
+	chain.doFilter(request, response);
+    }
 
-	@Override
-	public void destroy() {
-	}
+    @Override
+    public void destroy() {
+    }
 
-	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-	}
+    @Override
+    public void init(FilterConfig arg0) throws ServletException {
+    }
 
 }

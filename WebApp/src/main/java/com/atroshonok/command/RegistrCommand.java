@@ -55,12 +55,11 @@ public class RegistrCommand implements ActionCommand {
 	User user = new User();
 	initUserFields(request, user);
 
-	UserService userService = new UserService();
 
 	synchronized (this) {
-	    if (checkLoginFree(user.getLogin(), userService)) {
+	    if (checkLoginFree(user.getLogin())) {
 		try {
-		    userService.saveUserToDataBase(user);
+		    UserService.getInstance().saveUserToDataBase(user);
 		    request.setAttribute("mainInfoMessage", MessageManager.getProperty("message.goodregistration"));
 		    page = ConfigurationManager.getProperty("path.page.main");
 		} catch (ErrorAddingUserServiceException e) {
@@ -98,8 +97,8 @@ public class RegistrCommand implements ActionCommand {
 	return true;
     }
 
-    private boolean checkLoginFree(String login, UserService userService) {
-	List<User> users = userService.getAllUsers();
+    private boolean checkLoginFree(String login) {
+	List<User> users = UserService.getInstance().getAllUsers();
 	boolean isloginFree = true;
 	for (User user : users) {
 	    if (user.getLogin().equals(login)) {
@@ -122,8 +121,6 @@ public class RegistrCommand implements ActionCommand {
 	int age = Integer.parseInt(request.getParameter(PARAM_NAME_AGE));
 	user.setAge(age);
 	user.setUserType(UserType.CLIENT);
-
-	// long registrDate = new GregorianCalendar().getTimeInMillis();
 	user.setRegistrDate(new Date());
     }
 

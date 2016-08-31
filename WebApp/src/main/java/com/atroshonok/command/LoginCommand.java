@@ -26,8 +26,7 @@ public class LoginCommand implements ActionCommand {
 		String login = request.getParameter(PARAM_NAME_LOGIN);
 		String pass = DataEncryptor.getPasswordHashCode(request.getParameter(PARAM_NAME_PASSWORD));
 		
-		UserService userService = new UserService();
-		User user = userService.getUserByLoginPassword(login, pass);
+		User user = UserService.getInstance().getUserByLoginPassword(login, pass);
 		HttpSession session = request.getSession(true);
 		
 		if ((user != null) && user.getUserType().equals(UserType.ADMIN)) {

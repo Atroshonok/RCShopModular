@@ -32,7 +32,7 @@ public class UserService {
     private Transaction transaction;
 
     
-    public UserService() {
+    private UserService() {
 	super();
     }
     
