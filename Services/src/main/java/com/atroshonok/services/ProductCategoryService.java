@@ -3,13 +3,17 @@
  */
 package com.atroshonok.services;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.atroshonok.dao.ProductCategoryDao;
 import com.atroshonok.dao.dbutils.HibernateUtil;
 import com.atroshonok.dao.entities.ProductCategory;
+import com.atroshonok.dao.entities.User;
 import com.atroshonok.dao.exceptions.DaoException;
 
 /**
@@ -49,4 +53,20 @@ public class ProductCategoryService {
 	return productCategory;
     }
 
+    public List<ProductCategory> getAllProductCategories() {
+	log.info("Starting method getAllProductCategories()");
+	List<ProductCategory> categories = null;
+	try {
+	    session = util.getSession();
+	    transaction = session.beginTransaction();
+	    categories = productCategoryDao.getAllProductCategories();
+	    transaction.commit();
+	} catch (HibernateException e) {
+	    log.error("Error getting all product categories from database: ", e);
+	    transaction.rollback();
+	} // TODO
+	log.info("Ending method getAllProductCategories()");
+	return categories;
+
+    }
 }

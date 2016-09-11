@@ -63,4 +63,13 @@ public class HibernateUtil {
 	return session;
     }
 
+    /**
+     * @return the sessions
+     */
+    public ThreadLocal<Session> getSessions() {
+        return sessions;
+    }
+    
+    
+
 }

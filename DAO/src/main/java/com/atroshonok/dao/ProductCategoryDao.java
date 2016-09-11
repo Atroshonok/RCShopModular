@@ -3,6 +3,10 @@
  */
 package com.atroshonok.dao;
 
+import java.util.List;
+
+import org.hibernate.Query;
+
 import com.atroshonok.dao.entities.ProductCategory;
 
 /**
@@ -10,5 +14,12 @@ import com.atroshonok.dao.entities.ProductCategory;
  *
  */
 public class ProductCategoryDao extends BaseDao<ProductCategory> {
+
+    public List<ProductCategory> getAllProductCategories() {
+	String hql = "FROM ProductCategory c";
+	Query query = util.getSession().createQuery(hql);
+	List<ProductCategory> results = query.list();
+	return results;
+    }
 
 }

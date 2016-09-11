@@ -28,11 +28,13 @@
 				</div>
 			</c:if>
 			<c:if test="${fragmentPath ne null}">
-				<c:import url="/jsp/fragment${fragmentPath}" />
+				<c:import url="/jsp/fragment/${fragmentPath}" />
 			</c:if>
 		</div>
 	</div>
 </div>
 <c:import url="/jsp/fragment/footer.jsp" />
+<script type="text/javascript" src="js/jquery-3.1.0.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
 </body>
 </html>

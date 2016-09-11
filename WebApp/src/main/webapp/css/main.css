@@ -40,3 +40,13 @@ body {
 #addProductForm div.col-xs-2, #registrForm div.col-xs-2, #editProductForm div.col-xs-2 {
 	text-align: right;
 }
+
+.activve {
+	text-decoration: none;
+	background-color: #eeeeee;
+}
+
+#navbar li a:ACTIVE {
+	text-decoration: none;
+	background-color: #c0c0c0;
+}

@@ -25,8 +25,6 @@ public class GetMainPageCommand implements ActionCommand {
      */
     @Override
     public String execute(HttpServletRequest request) {
-	List<Product> products = ProductService.getInstatnce().getAllProducts();
-	request.getSession().setAttribute("productsList", products);
 	String page = ConfigurationManager.getProperty("path.page.main");
 	return page;
     }
