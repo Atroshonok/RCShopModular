@@ -13,7 +13,7 @@ import com.atroshonok.dao.entities.Cart;
 import com.atroshonok.dao.entities.OrderLine;
 import com.atroshonok.dao.entities.Product;
 import com.atroshonok.dao.entities.UserType;
-import com.atroshonok.services.ProductService;
+import com.atroshonok.services.ProductServiceImpl;
 import com.atroshonok.utilits.ConfigurationManager;
 
 /**
@@ -39,7 +39,7 @@ public class RemoveFromCartCommand implements ActionCommand {
 	String page = null;
 	Cart cart = (Cart) request.getSession().getAttribute(SESSION_ATTR_NAME_CART);
 	long productId = Long.parseLong(request.getParameter(REQUEST_PARAM_NAME_PRODUCTID));
-	Product product = ProductService.getInstatnce().getProductById(productId);
+	Product product = ProductServiceImpl.getInstatnce().getProductById(productId);
 	
 	removeOrderedProduct(product, cart);
 	decreaseAllProductsCount(cart);

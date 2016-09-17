@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 
 import com.atroshonok.command.ActionCommand;
 import com.atroshonok.dao.entities.Order;
-import com.atroshonok.services.OrderService;
+import com.atroshonok.services.OrderServiceImpl;
 import com.atroshonok.utilits.ConfigurationManager;
 import com.atroshonok.utilits.MessageManager;
 
@@ -33,7 +33,7 @@ public class ShowUserOrdersCommand implements ActionCommand {
     @Override
     public String execute(HttpServletRequest request) {
 	long userId = (Long) request.getSession().getAttribute(SESSION_ATTR_NAME_USERID);
-	List<Order> orders = OrderService.getInstance().getAllUserOrders(userId);
+	List<Order> orders = OrderServiceImpl.getInstance().getAllUserOrders(userId);
 
 	if (!orders.isEmpty() && (orders != null)) {
 	    request.setAttribute("orders", orders);

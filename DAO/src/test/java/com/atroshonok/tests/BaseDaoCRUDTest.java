@@ -11,11 +11,12 @@ import java.io.Serializable;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Transaction;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.atroshonok.dao.Dao;
+import com.atroshonok.dao.IDao;
 import com.atroshonok.dao.dbutils.HibernateUtil;
 import com.atroshonok.dao.entities.Entity;
 import com.atroshonok.dao.exceptions.DaoException;
@@ -28,20 +29,13 @@ public abstract class BaseDaoCRUDTest<T extends Entity> {
     protected static Logger log = Logger.getLogger(BaseDaoCRUDTest.class);
     protected static HibernateUtil util = HibernateUtil.getInstance();
     protected T entity = null;
-    protected Dao<T> baseDao = getEntityDao();
+    protected IDao<T> baseDao = getEntityDao();
     protected Transaction transaction;
-
-    /**
-     * @throws java.lang.Exception
-     */
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-    }
 
     /**
      * Returns a DAO object of needed class.
      */
-    abstract protected Dao<T> getEntityDao();
+    abstract protected IDao<T> getEntityDao();
 
     /**
      * Creates a new entity and initialize all its fields. First not abstract
@@ -52,28 +46,19 @@ public abstract class BaseDaoCRUDTest<T extends Entity> {
     /**
      * Changes the entity fields. First not abstract class that extends
      * BaseDaoCRUDTest<T> class must override this method.
-     * @param entity 
+     * 
+     * @param entity
      */
     abstract protected void changeEntity(T entity);
 
-//    protected static void dropEntityTable() {
-//	SQLQuery sqlQuery = util.getSession().createSQLQuery("DROP TABLE" + getEntityTableName() + ";");
-//	sqlQuery.executeUpdate();
-//    }
-
-//    /**
-//     * @throws java.lang.Exception
-//     */
-//    @AfterClass
-//    public static void tearDownAfterClass() throws Exception {
-//	dropEntityTable();
-//	util.getSession().close();
-//    }
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception {
+	util.closeCurrentSession();
+    }
 
     @Before
     public void setUp() {
 	entity = createAndInitEntity();
-	System.out.println("entity!!!! " + entity);
 	Long entityId = saveEntityToDB(entity);
 	entity.setId(entityId);
 	util.getSession().clear();
@@ -94,7 +79,7 @@ public abstract class BaseDaoCRUDTest<T extends Entity> {
 
     /**
      * Test method for
-     * {@link com.atroshonok.dao.BaseDao#saveOrUpdate(java.lang.Object)}.
+     * {@link com.atroshonok.dao.BaseDaoImpl#saveOrUpdate(java.lang.Object)}.
      */
     @Test
     public void testSaveOrUpdate() {
@@ -138,7 +123,7 @@ public abstract class BaseDaoCRUDTest<T extends Entity> {
 
     /**
      * Test method for
-     * {@link com.atroshonok.dao.BaseDao#load(java.io.Serializable)}.
+     * {@link com.atroshonok.dao.BaseDaoImpl#load(java.io.Serializable)}.
      */
     @Test
     public void testLoad() {
@@ -153,7 +138,7 @@ public abstract class BaseDaoCRUDTest<T extends Entity> {
 	    loadedEntity = baseDao.load(entityId);
 	    transaction.commit();
 	} catch (DaoException e) {
-	    log.error("Error loading entity in class: " + this.getClass(), e);
+	    log.error("Error loading entity: ", e);
 	    transaction.rollback();
 	}
 	return loadedEntity;
@@ -163,13 +148,13 @@ public abstract class BaseDaoCRUDTest<T extends Entity> {
 	if (loadedEntity != null) {
 	    assertEquals(entity, loadedEntity);
 	} else {
-	    fail("test method does't work right in class: " + this.getClass());
+	    fail("test method does't work right.");
 	}
     }
 
     /**
      * Test method for
-     * {@link com.atroshonok.dao.BaseDao#delete(java.lang.Object)}.
+     * {@link com.atroshonok.dao.BaseDaoImpl#delete(java.lang.Object)}.
      */
     @Test
     public void testDelete() {
@@ -185,7 +170,7 @@ public abstract class BaseDaoCRUDTest<T extends Entity> {
 	    baseDao.delete(entity);
 	    transaction.commit();
 	} catch (DaoException e) {
-	    log.error("Error deleting entity in class: " + this.getClass(), e);
+	    log.error("Error deleting entity. ", e);
 	    transaction.rollback();
 	}
     }

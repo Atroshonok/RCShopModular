@@ -12,8 +12,8 @@ import com.atroshonok.command.ActionCommand;
 import com.atroshonok.dao.entities.ClientFilter;
 import com.atroshonok.dao.entities.Product;
 import com.atroshonok.dao.entities.ProductCategory;
-import com.atroshonok.services.ProductCategoryService;
-import com.atroshonok.services.ProductService;
+import com.atroshonok.services.ProductCategoryServiceImpl;
+import com.atroshonok.services.ProductServiceImpl;
 import com.atroshonok.utilits.ConfigurationManager;
 
 /**
@@ -48,16 +48,16 @@ public class ShowProductsCommand implements ActionCommand {
     @Override
     public String execute(HttpServletRequest request) {
 	// for navbar and client filter in JSP
-	categories = ProductCategoryService.getInstance().getAllProductCategories();
+	categories = ProductCategoryServiceImpl.getInstance().getAllProductCategories();
 	request.getSession().setAttribute(SESSION_ATTR_PRODUCT_CATEGORIES, categories);
 
 	ClientFilter clientFilter = createClientFilterByRequestParam(request);
 
-	List<Product> products = ProductService.getInstatnce().getProductsByClientFilter(clientFilter);
+	List<Product> products = ProductServiceImpl.getInstatnce().getProductsByClientFilter(clientFilter);
 	request.getSession().setAttribute("productsList", products);
 
 	// for pagination
-	long totalPages = ProductService.getInstatnce().getCountAccordingClientFilter(clientFilter);
+	long totalPages = ProductServiceImpl.getInstatnce().getProductsCountAccordingClientFilter(clientFilter);
 	List<Integer> pageNumberList = createPageNumberList(totalPages, request, clientFilter);
 	request.getSession().setAttribute(SESSION_ATTR_PAGE_NUMBER_LIST, pageNumberList);
 

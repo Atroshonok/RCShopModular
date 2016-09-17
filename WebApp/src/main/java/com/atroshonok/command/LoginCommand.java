@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 import com.atroshonok.dao.entities.Cart;
 import com.atroshonok.dao.entities.User;
 import com.atroshonok.dao.entities.UserType;
-import com.atroshonok.services.UserService;
+import com.atroshonok.services.UserServiceImpl;
 import com.atroshonok.utilits.ConfigurationManager;
 import com.atroshonok.utilits.DataEncryptor;
 import com.atroshonok.utilits.MessageManager;
@@ -26,7 +26,7 @@ public class LoginCommand implements ActionCommand {
 	String login = request.getParameter(PARAM_NAME_LOGIN);
 	String pass = DataEncryptor.getPasswordHashCode(request.getParameter(PARAM_NAME_PASSWORD));
 
-	User user = UserService.getInstance().getUserByLoginPassword(login, pass);
+	User user = UserServiceImpl.getInstance().getUserByLoginPassword(login, pass);
 	HttpSession session = request.getSession(true);
 
 	if ((user != null) && user.getUserType().equals(UserType.ADMIN)) {

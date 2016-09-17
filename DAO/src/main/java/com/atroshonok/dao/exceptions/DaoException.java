@@ -3,18 +3,21 @@ package com.atroshonok.dao.exceptions;
 public class DaoException extends Exception {
 
     private static final long serialVersionUID = -4602088348418661671L;
-    
-    private Exception exception;
 
-    public DaoException(Exception exception) {
-        this.exception = exception;
+    public DaoException() {
+	super();
     }
 
-    public Exception getException() {
-        return exception;
+    public DaoException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+	super(message, cause, enableSuppression, writableStackTrace);
     }
 
-    public void setException(Exception exception) {
-        this.exception = exception;
+    public DaoException(String message, Throwable cause) {
+	super(message, cause);
     }
+
+    public DaoException(Throwable cause) {
+	super(cause);
+    }
+
 }

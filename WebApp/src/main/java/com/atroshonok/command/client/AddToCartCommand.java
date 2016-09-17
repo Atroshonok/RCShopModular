@@ -14,7 +14,7 @@ import com.atroshonok.command.ActionCommand;
 import com.atroshonok.dao.entities.Cart;
 import com.atroshonok.dao.entities.OrderLine;
 import com.atroshonok.dao.entities.Product;
-import com.atroshonok.services.ProductService;
+import com.atroshonok.services.ProductServiceImpl;
 import com.atroshonok.utilits.ConfigurationManager;
 import com.atroshonok.utilits.MessageManager;
 
@@ -40,7 +40,7 @@ public class AddToCartCommand implements ActionCommand {
 	Cart cart = (Cart) request.getSession().getAttribute(SESSION_ATTR_NAME_CART);
 
 	long productId = Long.parseLong(request.getParameter(REQUEST_PARAM_NAME_PRODUCTID));
-	Product product = ProductService.getInstatnce().getProductById(productId);
+	Product product = ProductServiceImpl.getInstatnce().getProductById(productId);
 	//TODO Добавить проверку на null и вывод сообщения об отсутствии товара
 	addProductToCart(cart, product);
 	cart.setAllProductsCount(cart.getAllProductsCount() + 1);

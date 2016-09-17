@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.atroshonok.dao.entities.User;
 import com.atroshonok.dao.entities.UserType;
-import com.atroshonok.services.UserService;
+import com.atroshonok.services.UserServiceImpl;
 import com.atroshonok.services.exceptions.ErrorAddingUserServiceException;
 import com.atroshonok.utilits.ConfigurationManager;
 import com.atroshonok.utilits.DataEncryptor;
@@ -59,7 +59,7 @@ public class RegistrCommand implements ActionCommand {
 	synchronized (this) {
 	    if (checkLoginFree(user.getLogin())) {
 		try {
-		    UserService.getInstance().saveUserToDataBase(user);
+		    UserServiceImpl.getInstance().saveUserToDataBase(user);
 		    request.setAttribute("mainInfoMessage", MessageManager.getProperty("message.goodregistration"));
 		    page = ConfigurationManager.getProperty("path.page.main");
 		} catch (ErrorAddingUserServiceException e) {
@@ -98,7 +98,7 @@ public class RegistrCommand implements ActionCommand {
     }
 
     private boolean checkLoginFree(String login) {
-	List<User> users = UserService.getInstance().getAllUsers();
+	List<User> users = UserServiceImpl.getInstance().getAllUsers();
 	boolean isloginFree = true;
 	for (User user : users) {
 	    if (user.getLogin().equals(login)) {

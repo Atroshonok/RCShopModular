@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import com.atroshonok.command.ActionCommand;
 import com.atroshonok.dao.entities.Product;
 import com.atroshonok.dao.entities.ProductCategory;
-import com.atroshonok.services.ProductService;
+import com.atroshonok.services.ProductServiceImpl;
 import com.atroshonok.services.exceptions.ErrorAddingPoductServiceException;
 import com.atroshonok.utilits.ConfigurationManager;
 import com.atroshonok.utilits.MessageManager;
@@ -40,7 +40,7 @@ public class SaveNewProductCommand implements ActionCommand {
 
 	Product product = createProductByRequestParam(request);
 	try {
-	    ProductService.getInstatnce().addNewProductToDatabase(product);
+	    ProductServiceImpl.getInstatnce().addNewProductToDatabase(product);
 	    request.setAttribute("adminInfoMessage", MessageManager.getProperty("message.productadded"));
 	} catch (ErrorAddingPoductServiceException e) {
 	    log.error("Error saving new product in class: " + SaveNewProductCommand.class, e);

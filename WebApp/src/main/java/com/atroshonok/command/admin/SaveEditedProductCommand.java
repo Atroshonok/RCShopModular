@@ -10,8 +10,8 @@ import org.apache.log4j.Logger;
 import com.atroshonok.command.ActionCommand;
 import com.atroshonok.dao.entities.Product;
 import com.atroshonok.dao.entities.ProductCategory;
-import com.atroshonok.services.ProductCategoryService;
-import com.atroshonok.services.ProductService;
+import com.atroshonok.services.ProductCategoryServiceImpl;
+import com.atroshonok.services.ProductServiceImpl;
 import com.atroshonok.services.exceptions.ErrorUpdatingPoductServiceException;
 import com.atroshonok.utilits.ConfigurationManager;
 import com.atroshonok.utilits.MessageManager;
@@ -41,7 +41,7 @@ public class SaveEditedProductCommand implements ActionCommand {
 	Product product = changeProductAccordingRequestParam(request);
 
 	try {
-	    ProductService.getInstatnce().updateProduct(product);
+	    ProductServiceImpl.getInstatnce().updateProduct(product);
 	    request.setAttribute("adminInfoMessage", MessageManager.getProperty("message.productupdated"));
 	} catch (ErrorUpdatingPoductServiceException e) {
 	    log.error("Error saving updated product in class:" + SaveEditedProductCommand.class,e);
@@ -55,13 +55,13 @@ public class SaveEditedProductCommand implements ActionCommand {
     private Product changeProductAccordingRequestParam(HttpServletRequest request) {
 	long productId = Long.parseLong(request.getParameter(REQUEST_PARAM_NAME_ID));
 //	Product product = (Product) request.getAttribute("product");
-	Product product = ProductService.getInstatnce().getProductById(productId);
+	Product product = ProductServiceImpl.getInstatnce().getProductById(productId);
 	product.setName(request.getParameter(REQUEST_PARAM_NAME_NAME));
 	product.setPrice(Double.parseDouble(request.getParameter(REQUEST_PARAM_NAME_PRICE)));
 	
 	long categoryId = Long.parseLong(request.getParameter(REQUEST_PARAM_NAME_CATEGORYID));
 	
-	ProductCategory category = ProductCategoryService.getInstance().getCategoryById(categoryId);
+	ProductCategory category = ProductCategoryServiceImpl.getInstance().getCategoryById(categoryId);
 	product.setCategory(category);
 	product.setCount(Integer.parseInt(request.getParameter(REQUEST_PARAM_NAME_COUNT)));
 	product.setDescription(request.getParameter(REQUEST_PARAM_NAME_DESCRIPTION));

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.atroshonok.command.ActionCommand;
 import com.atroshonok.dao.entities.User;
-import com.atroshonok.services.UserService;
+import com.atroshonok.services.UserServiceImpl;
 import com.atroshonok.utilits.ConfigurationManager;
 
 /**
@@ -25,7 +25,7 @@ public class ShowAllUsersCommand implements ActionCommand {
 	@Override
 	public String execute(HttpServletRequest request) {
 		
-		List<User> users = UserService.getInstance().getAllUsers();
+		List<User> users = UserServiceImpl.getInstance().getAllUsers();
 		
 		request.setAttribute("usersList", users);
 		request.setAttribute("fragmentPath", ConfigurationManager.getProperty("path.fragment.allusers"));

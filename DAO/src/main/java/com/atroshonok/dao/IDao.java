@@ -5,7 +5,7 @@ import java.io.Serializable;
 import com.atroshonok.dao.exceptions.DaoException;
 
 
-public interface Dao<T> {
+public interface IDao<T> {
     
     void saveOrUpdate(T t) throws DaoException;
 

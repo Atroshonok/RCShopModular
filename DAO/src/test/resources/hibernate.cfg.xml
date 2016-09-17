@@ -11,13 +11,13 @@
 		<property name="hibernate.connection.pool_size">10</property>
 		<property name="show_sql">true</property>
 <!-- 	<property name="hibernate.hbm2ddl.auto">validate</property>
- -->	<property name="hibernate.hbm2ddl.auto">create</property>
+ -->	<property name="hibernate.hbm2ddl.auto">create-drop</property>
 		
 		<mapping class="com.atroshonok.dao.entities.User"/>
 		<mapping class="com.atroshonok.dao.entities.Product"/>
 		<mapping class="com.atroshonok.dao.entities.ProductCategory"/>
 		<mapping class="com.atroshonok.dao.entities.Order"/>
-		<mapping class="com.atroshonok.dao.entities.OrderedProduct"/>
+		<mapping class="com.atroshonok.dao.entities.OrderLine"/>
 	</session-factory>
 </hibernate-configuration>
 

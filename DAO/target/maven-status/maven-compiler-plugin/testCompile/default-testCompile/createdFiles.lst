@@ -1,1 +1,3 @@
+com\atroshonok\tests\BaseDaoCRUDTest.class
 com\atroshonok\tests\UserDaoTest.class
+com\atroshonok\tests\ProductDaoTest.class

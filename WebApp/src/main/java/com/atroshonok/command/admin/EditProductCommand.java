@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.atroshonok.command.ActionCommand;
 import com.atroshonok.dao.entities.Product;
-import com.atroshonok.services.ProductService;
+import com.atroshonok.services.ProductServiceImpl;
 import com.atroshonok.utilits.ConfigurationManager;
 
 /**
@@ -28,7 +28,7 @@ public class EditProductCommand implements ActionCommand {
     public String execute(HttpServletRequest request) {
 
 	long productId = Long.parseLong(request.getParameter(PARAM_NAME_PRODUCTID));
-	Product product = ProductService.getInstatnce().getProductById(productId);
+	Product product = ProductServiceImpl.getInstatnce().getProductById(productId);
 
 	request.setAttribute("product", product);
 	request.setAttribute("fragmentPath", ConfigurationManager.getProperty("path.fragment.editproductform"));

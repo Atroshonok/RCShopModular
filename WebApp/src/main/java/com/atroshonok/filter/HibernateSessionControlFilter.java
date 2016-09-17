@@ -32,16 +32,7 @@ public class HibernateSessionControlFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 	chain.doFilter(request, response);
-	if (HibernateUtil.getInstance().getSessions().get() != null) {
-	    try {
-		HibernateUtil.getInstance().getSession().flush();
-		HibernateUtil.getInstance().getSession().clear();
-		HibernateUtil.getInstance().getSession().close();
-	    } catch (HibernateException e) {
-		log.error("Error closing of hibernate session", e);
-	    }
-	    HibernateUtil.getInstance().getSessions().set(null);
-	}
+	HibernateUtil.getInstance().closeCurrentSession();
     }
 
     @Override

@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 
 import com.atroshonok.command.ActionCommand;
 import com.atroshonok.dao.entities.User;
-import com.atroshonok.services.UserService;
+import com.atroshonok.services.UserServiceImpl;
 import com.atroshonok.services.exceptions.ErrorUpdatingUserServiceException;
 import com.atroshonok.utilits.ConfigurationManager;
 import com.atroshonok.utilits.MessageManager;
@@ -39,7 +39,7 @@ public class BlackListCommand implements ActionCommand {
 	long userId = Long.parseLong(request.getParameter(PARAM_NAME_USERID));
 	String action = request.getParameter(PARAM_NAME_ACTION);
 
-	User user = UserService.getInstance().getUserById(userId);
+	User user = UserServiceImpl.getInstance().getUserById(userId);
 
 	setBlackListUserParameter(action, user);
 	updateUserDataInDatabase(request, user, action);
@@ -59,7 +59,7 @@ public class BlackListCommand implements ActionCommand {
 
     private void updateUserDataInDatabase(HttpServletRequest request, User user, String action) {
 	try {
-	    UserService.getInstance().updateUserData(user);
+	    UserServiceImpl.getInstance().updateUserData(user);
 	    setRequestInfoMessage(request, action);
 	} catch (ErrorUpdatingUserServiceException e) {
 	    log.error("Error updating user:" + e);

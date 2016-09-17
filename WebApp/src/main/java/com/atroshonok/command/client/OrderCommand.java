@@ -15,8 +15,8 @@ import com.atroshonok.dao.entities.Order;
 import com.atroshonok.dao.entities.OrderState;
 import com.atroshonok.dao.entities.User;
 import com.atroshonok.dao.entities.UserType;
-import com.atroshonok.services.OrderService;
-import com.atroshonok.services.UserService;
+import com.atroshonok.services.OrderServiceImpl;
+import com.atroshonok.services.UserServiceImpl;
 import com.atroshonok.services.exceptions.ErrorSavingOrderServiceException;
 import com.atroshonok.utilits.ConfigurationManager;
 import com.atroshonok.utilits.MessageManager;
@@ -46,7 +46,7 @@ public class OrderCommand implements ActionCommand {
 	    Cart cart = (Cart) request.getSession().getAttribute(SESSION_ATTR_NAME_CART);
 	    if (cart.getAllProductsCount() > 0) {
 		Order order = initOrder(request, cart);
-		OrderService.getInstance().saveOrderData(order);
+		OrderServiceImpl.getInstance().saveOrderData(order);
 		cart = updateCart(cart, order);
 		request.getSession().setAttribute(SESSION_ATTR_NAME_CART, cart);
 	    } else {
@@ -73,7 +73,7 @@ public class OrderCommand implements ActionCommand {
     private Order initOrder(HttpServletRequest request, Cart cart) {
 	Order order = new Order();
 	long userId = (Long) request.getSession().getAttribute(SESSION_ATTR_NAME_USERID);
-	User user = UserService.getInstance().getUserById(userId);
+	User user = UserServiceImpl.getInstance().getUserById(userId);
 	order.setUser(user);
 	order.setSumPrice(cart.getSumPrice());
 	order.setOrderState(OrderState.OPEN);

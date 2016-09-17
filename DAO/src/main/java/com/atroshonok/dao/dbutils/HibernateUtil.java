@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.InitializingBean;
 
 /**
  * @author Atroshonok Ivan
@@ -18,14 +19,13 @@ public class HibernateUtil {
     private volatile static HibernateUtil util = null;
     private static Logger log = Logger.getLogger(HibernateUtil.class);
     private SessionFactory sessionFactory = null;
-    private final ThreadLocal<Session> sessions = new ThreadLocal<>();
+    private ThreadLocal<Session> sessions = new ThreadLocal<>();
 
     private HibernateUtil() {
 
 	try {
 	    Configuration configuration = new Configuration().configure();
-	    StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
-		    .applySettings(configuration.getProperties());
+	    StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
 	    sessionFactory = configuration.buildSessionFactory(builder.build());
 	} catch (Throwable e) {
 	    log.error("Initial SessionFactory creation failed: " + e);
@@ -35,6 +35,7 @@ public class HibernateUtil {
 
     /**
      * Returns single instance of com.atroshonok.dao.dbutils.HibernateUtil class
+     * 
      * @return object of com.atroshonok.dao.dbutils.HibernateUtil class
      */
     public static HibernateUtil getInstance() {
@@ -50,8 +51,9 @@ public class HibernateUtil {
     }
 
     /**
-     * Returns an instance of Hibernate Session which associated with itself
+     * Returns an instance of Hibernate Session which associated with current
      * Thread
+     * 
      * @return object of org.hibernate.Session class
      */
     public Session getSession() {
@@ -63,13 +65,19 @@ public class HibernateUtil {
 	return session;
     }
 
-    /**
-     * @return the sessions
-     */
-    public ThreadLocal<Session> getSessions() {
-        return sessions;
+    public void closeCurrentSession() {
+	Session currentSession = sessions.get();
+	if (currentSession != null) {
+	    currentSession.flush();
+	    currentSession.clear();
+	    currentSession.close();
+	    sessions.set(null);
+	}
     }
-    
-    
+
+    public void init() {
+	sessions = new ThreadLocal<>();
+
+    }
 
 }

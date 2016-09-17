@@ -50,7 +50,7 @@ public class Product implements Serializable, Entity {
     private ProductCategory category;
     @OneToOne
     @Cascade(value = { CascadeType.SAVE_UPDATE })
-    @JoinColumn(name = "categoryID")
+    @JoinColumn(name = "categoryID_FK", referencedColumnName = "categoryID")
     public ProductCategory getCategory() {
 	return category;
     }
