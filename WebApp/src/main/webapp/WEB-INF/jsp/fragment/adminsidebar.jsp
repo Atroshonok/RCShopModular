@@ -8,17 +8,17 @@
 	</div>
 	<div class="panel-body">
 	
-		<form id="showAllProductsButton" action="controller" method="POST" >
+		<form id="showAllProductsButton" action="" method="" >
 			<input type="hidden" name="command" value="showallproducts" />
 			<input class="btn btn-default btn-block btn-danger" type="submit" value="Show all products" />
 		</form><br/>	
 	
-		<form id="showAllUsersButton" action="controller" method="POST" >
+		<form id="showAllUsersButton" action="" method="" >
 			<input type="hidden" name="command" value="showallusers" />
 			<input class="btn btn-default btn-block btn-danger" type="submit" value="Show all users" />
 		</form><br/>	
 	
-		<form id="addNewProductButton" action="controller" method="POST" >
+		<form id="addNewProductButton" action="" method="" >
 			<input type="hidden" name="command" value="addnewproduct" />
 			<input class="btn btn-default btn-block btn-danger" type="submit" value="Add new product" />
 		</form><br/>

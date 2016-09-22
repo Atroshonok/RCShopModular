@@ -11,6 +11,22 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
+
+-- Дамп структуры базы данных rcshop_db
+CREATE DATABASE IF NOT EXISTS `rcshop_db` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
+USE `rcshop_db`;
+
+-- Дамп структуры для таблица rcshop_db.orders
+CREATE TABLE IF NOT EXISTS `orders` (
+  `orderID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `orderState` enum('PROCESSING','PROCESSED','OPEN') COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sumPrice` double DEFAULT NULL,
+  `userID_FK` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`orderID`),
+  KEY `userID_FK` (`userID_FK`),
+  CONSTRAINT `userID_FK` FOREIGN KEY (`userID_FK`) REFERENCES `users` (`userID`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 -- Дамп данных таблицы rcshop_db.orders: ~16 rows (приблизительно)
 DELETE FROM `orders`;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
@@ -32,6 +48,16 @@ INSERT INTO `orders` (`orderID`, `orderState`, `sumPrice`, `userID_FK`) VALUES
 	(18, 'OPEN', 1926.8, 2),
 	(19, 'OPEN', 707.36, 2);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+
+-- Дамп структуры для таблица rcshop_db.orders_orderlines
+CREATE TABLE IF NOT EXISTS `orders_orderlines` (
+  `orderID_FK` bigint(20) NOT NULL,
+  `orderLineID_FK` bigint(20) NOT NULL,
+  KEY `orderLineID_FK` (`orderLineID_FK`),
+  KEY `orderID_FK` (`orderID_FK`),
+  CONSTRAINT `orderID_FK` FOREIGN KEY (`orderID_FK`) REFERENCES `orders` (`orderID`),
+  CONSTRAINT `orderLineID_FK` FOREIGN KEY (`orderLineID_FK`) REFERENCES `order_lines` (`OrderLineID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Дамп данных таблицы rcshop_db.orders_orderlines: ~28 rows (приблизительно)
 DELETE FROM `orders_orderlines`;
@@ -67,6 +93,16 @@ INSERT INTO `orders_orderlines` (`orderID_FK`, `orderLineID_FK`) VALUES
 	(19, 24);
 /*!40000 ALTER TABLE `orders_orderlines` ENABLE KEYS */;
 
+-- Дамп структуры для таблица rcshop_db.order_lines
+CREATE TABLE IF NOT EXISTS `order_lines` (
+  `OrderLineID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `count` int(11) DEFAULT NULL,
+  `productID_FK` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`OrderLineID`),
+  KEY `productID_FK` (`productID_FK`),
+  CONSTRAINT `productID_FK` FOREIGN KEY (`productID_FK`) REFERENCES `products` (`productID`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 -- Дамп данных таблицы rcshop_db.order_lines: ~24 rows (приблизительно)
 DELETE FROM `order_lines`;
 /*!40000 ALTER TABLE `order_lines` DISABLE KEYS */;
@@ -97,6 +133,19 @@ INSERT INTO `order_lines` (`OrderLineID`, `count`, `productID_FK`) VALUES
 	(24, 1, 11);
 /*!40000 ALTER TABLE `order_lines` ENABLE KEYS */;
 
+-- Дамп структуры для таблица rcshop_db.products
+CREATE TABLE IF NOT EXISTS `products` (
+  `productID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `count` int(11) DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `price` double(10,2) DEFAULT NULL,
+  `categoryID_FK` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`productID`),
+  KEY `categoryID_FK` (`categoryID_FK`),
+  CONSTRAINT `categoryID_FK` FOREIGN KEY (`categoryID_FK`) REFERENCES `product_categories` (`categoryID`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 -- Дамп данных таблицы rcshop_db.products: ~12 rows (приблизительно)
 DELETE FROM `products`;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
@@ -115,6 +164,13 @@ INSERT INTO `products` (`productID`, `count`, `description`, `name`, `price`, `c
 	(12, 10, 'Racing quadrocopter.', 'ZMR250', 125.56, 2);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 
+-- Дамп структуры для таблица rcshop_db.product_categories
+CREATE TABLE IF NOT EXISTS `product_categories` (
+  `categoryID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `categoryName` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`categoryID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 -- Дамп данных таблицы rcshop_db.product_categories: ~4 rows (приблизительно)
 DELETE FROM `product_categories`;
 /*!40000 ALTER TABLE `product_categories` DISABLE KEYS */;
@@ -124,6 +180,23 @@ INSERT INTO `product_categories` (`categoryID`, `categoryName`) VALUES
 	(3, 'FPV'),
 	(4, 'Other');
 /*!40000 ALTER TABLE `product_categories` ENABLE KEYS */;
+
+-- Дамп структуры для таблица rcshop_db.users
+CREATE TABLE IF NOT EXISTS `users` (
+  `userID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `age` int(11) DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `firstName` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `isInBlackList` char(1) COLLATE utf8_unicode_ci DEFAULT 'N',
+  `lastName` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `login` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `registrDate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `shippingAddress` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `userType` enum('ADMIN','CLIENT') COLLATE utf8_unicode_ci DEFAULT 'CLIENT',
+  PRIMARY KEY (`userID`),
+  UNIQUE KEY `login` (`login`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Дамп данных таблицы rcshop_db.users: ~5 rows (приблизительно)
 DELETE FROM `users`;
