@@ -23,7 +23,7 @@ public class OrderLine implements Serializable, Entity {
     
     private Long id;
     @Id
-    @Column(name = "ID")
+    @Column(name = "OrderLineID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;

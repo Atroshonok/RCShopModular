@@ -18,9 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.atroshonok.command.CommandEnum;
 import com.atroshonok.dao.entities.UserType;
-import com.atroshonok.utilits.ConfigurationManager;
+import com.atroshonok.utilits.AdminPageConfigManager;
 import com.atroshonok.utilits.MessageManager;
 
 /**
@@ -30,81 +29,59 @@ import com.atroshonok.utilits.MessageManager;
 public class AccessLevelSecurityFilter implements Filter {
 
     private static final String SESSION_ATTR_NAME_USERTYPE = "userType";
-    private static final String REQUEST_PARAM_NAME_COMMAND = "command";
-    private static List<String> adminCommmands;
-    private static List<String> clientCommmands;
+    private static List<String> deniedAdminURIs;
+    private static List<String> deniedClientURIs;
+    private static List<String> deniedGuestURIs;
 
     private Logger log = Logger.getLogger(getClass());
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.servlet.Filter#destroy()
-     */
     @Override
     public void destroy() {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest,
-     * javax.servlet.ServletResponse, javax.servlet.FilterChain)
-     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
-	log.debug("AccessLevelSecurityFilter: method doFilter works");
+	log.info(AccessLevelSecurityFilter.class + ": method doFilter() works");
 
 	HttpServletRequest httpRequest = (HttpServletRequest) request;
 	HttpServletResponse httpResponse = (HttpServletResponse) response;
 
 	UserType userType = (UserType) httpRequest.getSession().getAttribute(SESSION_ATTR_NAME_USERTYPE);
-	String command = request.getParameter(REQUEST_PARAM_NAME_COMMAND);
+	String requestedURI = httpRequest.getRequestURI();
 
-	if ((adminCommmands.contains(command.toUpperCase()) && !userType.equals(UserType.ADMIN)) || (clientCommmands.contains(command.toUpperCase()) && !(userType.equals(UserType.CLIENT) || userType.equals(UserType.ADMIN)))) {
-
-	    httpRequest.getSession().setAttribute(SESSION_ATTR_NAME_USERTYPE, UserType.GUEST);
+	if ((deniedClientURIs.contains(requestedURI) && userType.equals(UserType.CLIENT)) ||
+			(deniedAdminURIs.contains(requestedURI) && userType.equals(UserType.ADMIN)) ||
+					(deniedGuestURIs.contains(requestedURI) && userType.equals(UserType.GUEST))) {
 	    httpRequest.getSession().setAttribute("errorAccessMessage", MessageManager.getProperty("message.accessdenied"));
-	    httpResponse.sendRedirect(httpRequest.getContextPath() + ConfigurationManager.getProperty("path.page.accessdenied"));
+	    httpResponse.sendRedirect(httpRequest.getContextPath() + "/access/denied");
 	    return;
 	}
-
 	chain.doFilter(request, response);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
-     */
     @Override
     public void init(FilterConfig config) throws ServletException {
-	adminCommmands = new ArrayList<>();
-	clientCommmands = new ArrayList<>();
+	deniedAdminURIs = new ArrayList<>();
+	deniedClientURIs = new ArrayList<>();
+	deniedGuestURIs = new ArrayList<>();
 
-	initClientCommandsList();
-	initAdminCommandsList();
+	initClientDeniedURIsList();
+	initAdminDeniedURIsList();
+	initGuestDeniedURIsList();
     }
 
-    private void initAdminCommandsList() {
-	adminCommmands.add(CommandEnum.ADDNEWPRODUCT.toString());
-	adminCommmands.add(CommandEnum.BLACKLIST.toString());
-	adminCommmands.add(CommandEnum.EDITPRODUCT.toString());
-	adminCommmands.add(CommandEnum.SAVEEDITEDPRODUCT.toString());
-	adminCommmands.add(CommandEnum.SAVEPRODUCT.toString());
-	adminCommmands.add(CommandEnum.SHOWALLPRODUCTS.toString());
-	adminCommmands.add(CommandEnum.SHOWALLUSERS.toString());
+    private void initGuestDeniedURIsList() {
+	deniedGuestURIs.add("/MRCShop/WEB-INF/jsp/cart.jsp");
+	deniedGuestURIs.add("/MRCShop/WEB-INF/jsp/admin.jsp");
+	deniedGuestURIs.add("/MRCShop/WEB-INF/jsp/orders.jsp");
     }
 
-    private void initClientCommandsList() {
-	clientCommmands.add(CommandEnum.ADDTOCART.toString());
-	clientCommmands.add(CommandEnum.ADDNEWPRODUCT.toString());
-	clientCommmands.add(CommandEnum.ORDER.toString());
-	clientCommmands.add(CommandEnum.REMOVEFROMCART.toString());
-	clientCommmands.add(CommandEnum.SHOWCART.toString());
-	clientCommmands.add(CommandEnum.SHOWUSERORDERS.toString());
+    private void initAdminDeniedURIsList() {
+    }
+
+    private void initClientDeniedURIsList() {
+	deniedAdminURIs.add("/MRCShop/WEB-INF/jsp/admin.jsp");
     }
 
 }

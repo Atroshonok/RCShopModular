@@ -4,10 +4,12 @@
 package com.atroshonok.services;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,15 +31,17 @@ public class OrderServiceImpl implements IOrderService {
 
     @Autowired
     private IOrderDao orderDao;
+    @Autowired
+    private MessageSource messageSource;
 
     @Override
     public List<Order> getAllUserOrders(long userId) {
 	log.info("Starting method getAllUserOrders(long userId).");
 	List<Order> orders = null;
 	try {
-	    orderDao.getOrdersByUserId(userId);
+	    orders = orderDao.getOrdersByUserId(userId);
 	} catch (HibernateException e) {
-	    log.error("Error getting user orders by user id = " + userId + " in class: " + OrderServiceImpl.class, e);
+	    log.error("Error getting user orders by user id = " + userId, e);
 	}
 	log.info("Ending method getAllUserOrders(long userId)");
 	return orders;
@@ -52,7 +56,7 @@ public class OrderServiceImpl implements IOrderService {
 	    log.info("Saved order: " + order);
 	} catch (DaoException e) {
 	    log.error("Error saving order");
-	    throw new ErrorSavingOrderServiceException(ErrorMessageManager.getProperty("error.save.order"));
+	    throw new ErrorSavingOrderServiceException(messageSource.getMessage("error.save.order", null, Locale.getDefault()), e);
 	}
 	log.info("Ending method saveOrderData(Order order)");
     }

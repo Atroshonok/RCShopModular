@@ -5,15 +5,16 @@ package com.atroshonok.services;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.atroshonok.dao.IUserDao;
-import com.atroshonok.dao.dbutils.ErrorMessageManager;
 import com.atroshonok.dao.entities.User;
 import com.atroshonok.dao.exceptions.DaoException;
 import com.atroshonok.services.exceptions.ErrorAddingUserServiceException;
@@ -31,6 +32,8 @@ public class UserServiceImpl implements IUserService {
     
     @Autowired
     private IUserDao userDao;
+    @Autowired
+    private MessageSource messageSource;
 
     /**
      * Returns an object of user class by login and password. If user is not
@@ -54,11 +57,11 @@ public class UserServiceImpl implements IUserService {
     public void saveUserToDataBase(User user) throws ErrorAddingUserServiceException {
 	log.info("Starting method saveUserToDataBase(User user)");
 	try {
-	    userDao.saveOrUpdate(user);
+	    userDao.save(user);
 	    log.info("Saved user to DB: " + user);
 	} catch (DaoException e) {
 	    log.error("Error saving user to database.");
-	    throw new ErrorAddingUserServiceException(ErrorMessageManager.getProperty("error.save.user"));
+	    throw new ErrorAddingUserServiceException(messageSource.getMessage("error.save.user", null, Locale.getDefault()), e);
 	}
 	log.info("Ending method saveUserToDataBase(User user)");
     }
@@ -98,7 +101,7 @@ public class UserServiceImpl implements IUserService {
 	    log.info("Updated user: " + user);
 	} catch (DaoException e) {
 	    log.error("Error updating user.");
-	    throw new ErrorUpdatingUserServiceException(ErrorMessageManager.getProperty("error.update.user"));
+	    throw new ErrorUpdatingUserServiceException(messageSource.getMessage("error.update.user", null, Locale.getDefault()), e);
 	}
 	log.info("Ending method updateUserData(User user)");
     }

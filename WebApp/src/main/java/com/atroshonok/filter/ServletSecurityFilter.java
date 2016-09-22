@@ -15,24 +15,24 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import com.atroshonok.dao.entities.UserType;
-import com.atroshonok.utilits.ConfigurationManager;
 
 public class ServletSecurityFilter implements Filter {
-    private Logger log = Logger.getLogger(getClass());
+    private static final String SESSION_ATTR_USER_TYPE = "userType";
+    private static Logger log = Logger.getLogger(ServletSecurityFilter.class);
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-	log.debug("ServletSecurityFilter: method doFilter working");
+	log.debug("method doFilter() works");
 
 	HttpServletRequest req = (HttpServletRequest) request;
 	HttpServletResponse resp = (HttpServletResponse) response;
 	HttpSession session = req.getSession();
 
-	UserType type = (UserType) session.getAttribute("userType");
+	UserType type = (UserType) session.getAttribute(SESSION_ATTR_USER_TYPE);
 
 	if (type == null) {
 	    type = UserType.GUEST;
-	    session.setAttribute("userType", type);
-	    resp.sendRedirect(req.getContextPath() + ConfigurationManager.getProperty("path.page.main"));
+	    session.setAttribute(SESSION_ATTR_USER_TYPE, type);
+	    resp.sendRedirect(req.getContextPath());
 	    return;
 	}
 	chain.doFilter(request, response);

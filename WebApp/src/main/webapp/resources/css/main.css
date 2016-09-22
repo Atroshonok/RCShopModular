@@ -1,0 +1,56 @@
+@CHARSET "UTF-8";
+
+
+
+body {
+	background-color: black;
+	background-image: url("../images/background-top.png");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+.body {
+	width: 100%;
+	display: inline-block;
+} 
+
+.leftPart {
+	width: 20%;
+	float: left; 
+}
+
+.rigthPart {
+	padding-left: 20px;
+	width: 80%;
+	float: left;
+}
+
+.container {
+	min-height: 1000px;
+	margin-top: 150px;
+	background-color:  rgba(255,255,255,.8);
+	box-shadow: 0 0 20px rgba(255,255,255,.4);
+	-webkit-box-shadow: 0 0 20px rgba(255,255,255,.4);
+}
+
+.footer {
+	text-align: center;
+	color: white;
+}
+
+#addProductForm div.col-xs-2, #registrForm div.col-xs-2, #editProductForm div.col-xs-2 {
+	text-align: right;
+}
+
+.activve {
+	text-decoration: none;
+	background-color: #eeeeee;
+}
+
+#navbar li a:ACTIVE {
+	text-decoration: none;
+	background-color: #c0c0c0;
+}
+
+.error {
+	color: red;
+}

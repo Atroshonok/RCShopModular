@@ -4,9 +4,12 @@
 package com.atroshonok.dao;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.hibernate.NonUniqueResultException;
 import org.hibernate.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Repository;
 
 import com.atroshonok.dao.dbutils.ErrorMessageManager;
@@ -21,6 +24,9 @@ import com.atroshonok.dao.exceptions.DaoException;
 @Repository
 public class UserDaoImpl extends BaseDaoImpl<User> implements IUserDao {
 
+    @Autowired
+    private MessageSource messageSourse;
+    
     public User getUserByLoginPassword(String login, String password) throws DaoException {
 	User result = null;
 	try {
@@ -31,7 +37,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements IUserDao {
 	    result = (User) query.uniqueResult();
 	} catch (NonUniqueResultException e) {
 	    log.error("Error getting user by login and password", e);
-	    throw new DaoException(ErrorMessageManager.getProperty("error.user.get"), e);
+	    throw new DaoException(messageSourse.getMessage("error.user.get", null, Locale.getDefault()), e);
 	}
 	return result;
     }

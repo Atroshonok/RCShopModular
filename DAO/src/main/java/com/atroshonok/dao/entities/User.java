@@ -3,6 +3,11 @@ package com.atroshonok.dao.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
@@ -19,6 +24,7 @@ public class User implements Serializable, Entity {
     private static final long serialVersionUID = -6275039642563625669L;
 
     private Long id;
+
     @Id
     @Column(name = "userID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,55 +33,75 @@ public class User implements Serializable, Entity {
     }
 
     private Date registrDate;
+
     @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name = "registrDate")
+    @Column(name = "registrDate", insertable = true, updatable = false)
     public Date getRegistrDate() {
 	return registrDate;
     }
 
+    @Size(min = 6, max = 45, message = "Login must be between 6 and 45 characters long.")
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Login must be alphanumeric without spaces.")
     private String login;
-    @Column(name = "login")
+
+    @Column(name = "login", unique = true)
     public String getLogin() {
 	return login;
     }
 
+    @Size(min = 6, max = 45, message = "Password must be between 6 and 45 characters long.")
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Password must be alphanumeric without spaces.")
     private String password;
+
     @Column(name = "password")
     public String getPassword() {
 	return password;
     }
 
+    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = "Invalid email address.")
     private String email;
+
     @Column(name = "email")
     public String getEmail() {
 	return email;
     }
 
+    @Size(min = 1, max = 45, message = "Firstname must be between 1 and 45 characters long.")
+    @Pattern(regexp = "[a-zA-Zа-яА-ЯёЁ -]+", message = "Firstname name can not have digits.")
     private String firstname;
+
     @Column(name = "firstName")
     public String getFirstname() {
 	return firstname;
     }
 
+    @Size(min = 1, max = 45, message = "Lastname must be between 1 and 45 characters long.")
+    @Pattern(regexp = "[a-zA-Zа-яА-ЯёЁ -]+", message = "Lastname name can not have digits.")
     private String lastname;
+
     @Column(name = "lastName")
     public String getLastname() {
 	return lastname;
     }
 
     private String shippingAddress;
+
     @Column(name = "shippingAddress")
     public String getShippingAddress() {
 	return shippingAddress;
     }
 
+    @Min(value = 10, message = "Your age must be greater than 10.")
+    @Max(value = 99, message = "Your age must be less than 99.")
     private Integer age;
+
     @Column(name = "age")
     public Integer getAge() {
 	return age;
     }
 
     private UserType userType;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "userType", columnDefinition = "enum('ADMIN', 'CLIENT')")
     public UserType getUserType() {
@@ -83,6 +109,7 @@ public class User implements Serializable, Entity {
     }
 
     private Boolean isInBlackList;
+
     @Column(name = "isInBlackList")
     @Type(type = "yes_no")
     public Boolean getIsInBlackList() {
@@ -92,24 +119,12 @@ public class User implements Serializable, Entity {
     public User() {
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
-	return "User [id=" + id + ", registrDate=" + registrDate + ", login=" + login + ", password=" + password
-		+ ", email=" + email + ", firstname=" + firstname + ", lastname=" + lastname + ", shippingAddress="
-		+ shippingAddress + ", age=" + age + ", userType=" + userType + ", isInBlackList=" + isInBlackList
-		+ "]";
+	return "User [id=" + id + ", registrDate=" + registrDate + ", login=" + login + ", password=" + password + ", email=" + email + ", firstname=" + firstname + ", lastname=" + lastname + ", shippingAddress=" + shippingAddress + ", age=" + age + ", userType=" + userType + ", isInBlackList="
+		+ isInBlackList + "]";
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode() {
 	final int prime = 31;
@@ -127,11 +142,6 @@ public class User implements Serializable, Entity {
 	return result;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(Object obj) {
 	if (this == obj)
@@ -191,92 +201,48 @@ public class User implements Serializable, Entity {
 	return true;
     }
 
-    /**
-     * @param isInBlackList
-     *            the isInBlackList to set
-     */
-    public void setIsInBlackList(Boolean isInBlackList) {
-	this.isInBlackList = isInBlackList;
-    }
-
-    /**
-     * @param id
-     *            the id to set
-     */
     public void setId(Long id) {
 	this.id = id;
     }
 
-    /**
-     * @param registrDate
-     *            the registrDate to set
-     */
     public void setRegistrDate(Date registrDate) {
 	this.registrDate = registrDate;
     }
 
-    /**
-     * @param login
-     *            the login to set
-     */
     public void setLogin(String login) {
 	this.login = login;
     }
 
-    /**
-     * @param password
-     *            the password to set
-     */
     public void setPassword(String password) {
 	this.password = password;
     }
 
-    /**
-     * @param email
-     *            the email to set
-     */
     public void setEmail(String email) {
 	this.email = email;
     }
 
-    /**
-     * @param firstname
-     *            the firstname to set
-     */
     public void setFirstname(String firstname) {
 	this.firstname = firstname;
     }
 
-    /**
-     * @param lastname
-     *            the lastname to set
-     */
     public void setLastname(String lastname) {
 	this.lastname = lastname;
     }
 
-    /**
-     * @param shippingAddress
-     *            the shippingAddress to set
-     */
     public void setShippingAddress(String shippingAddress) {
 	this.shippingAddress = shippingAddress;
     }
 
-    /**
-     * @param age
-     *            the age to set
-     */
     public void setAge(Integer age) {
 	this.age = age;
     }
 
-    /**
-     * @param userType
-     *            the userType to set
-     */
     public void setUserType(UserType userType) {
 	this.userType = userType;
+    }
+
+    public void setIsInBlackList(Boolean isInBlackList) {
+	this.isInBlackList = isInBlackList;
     }
 
 }

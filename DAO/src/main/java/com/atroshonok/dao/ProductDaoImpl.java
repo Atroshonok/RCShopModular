@@ -5,6 +5,7 @@ package com.atroshonok.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Locale;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -14,6 +15,8 @@ import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Repository;
 
 import com.atroshonok.dao.dbutils.ErrorMessageManager;
@@ -28,6 +31,9 @@ import com.atroshonok.dao.exceptions.DaoException;
 
 @Repository
 public class ProductDaoImpl extends BaseDaoImpl<Product> implements IProductDao {
+    
+    @Autowired
+    private MessageSource messageSource;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -49,7 +55,7 @@ public class ProductDaoImpl extends BaseDaoImpl<Product> implements IProductDao 
 	    products = query.list();
 	} catch (HibernateException e) {
 	    log.error("Error getting products by category = " + categoryId);
-	    throw new DaoException(ErrorMessageManager.getProperty("error.product.get"), e);
+	    throw new DaoException(messageSource.getMessage("error.product.get", null, Locale.getDefault()), e);
 	    // TODO to remake the exceptions handling
 	}
 	return products;

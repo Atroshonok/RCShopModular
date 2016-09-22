@@ -5,10 +5,14 @@ package com.atroshonok.dao.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
 
@@ -49,7 +53,6 @@ public class Product implements Serializable, Entity {
 
     private ProductCategory category;
     @OneToOne
-    @Cascade(value = { CascadeType.SAVE_UPDATE })
     @JoinColumn(name = "categoryID_FK", referencedColumnName = "categoryID")
     public ProductCategory getCategory() {
 	return category;

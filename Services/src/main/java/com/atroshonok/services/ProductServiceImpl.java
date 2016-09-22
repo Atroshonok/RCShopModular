@@ -5,14 +5,15 @@ package com.atroshonok.services;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.atroshonok.dao.IProductDao;
-import com.atroshonok.dao.dbutils.ErrorMessageManager;
 import com.atroshonok.dao.entities.ClientFilter;
 import com.atroshonok.dao.entities.Product;
 import com.atroshonok.dao.exceptions.DaoException;
@@ -32,7 +33,9 @@ public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private IProductDao productDao;
-
+    @Autowired
+    private MessageSource messageSource;
+    
     @Override
     public List<Product> getProductsByCategoryId(Serializable categoryId) {
 	log.info("Starting method getProductsByCategoryId(long categoryId)");
@@ -41,7 +44,6 @@ public class ProductServiceImpl implements IProductService {
 	    products = productDao.getProductsByCategoryId(categoryId);
 	} catch (DaoException e) {
 	    log.error("Error getting products by category = " + categoryId);
-	    // TODO exception handling
 	}
 	log.info("Ending method getProductsByCategoryId(long categoryId)");
 	return products;
@@ -77,7 +79,7 @@ public class ProductServiceImpl implements IProductService {
 	    log.info("Updated product: " + product);
 	} catch (DaoException e) {
 	    log.error("Error updating product in class: " + ProductServiceImpl.class, e);
-	    throw new ErrorUpdatingPoductServiceException(ErrorMessageManager.getProperty("error.update.product"));
+	    throw new ErrorUpdatingPoductServiceException(messageSource.getMessage("error.update.product", null, Locale.getDefault()), e);
 	}
 	log.info("Ending method updateProductInDatabase(Product product)");
     }
@@ -90,7 +92,7 @@ public class ProductServiceImpl implements IProductService {
 	    log.info("Saved product to DB: " + product);
 	} catch (DaoException e) {
 	    log.error("Error saving product to database: ", e);
-	    throw new ErrorAddingPoductServiceException(ErrorMessageManager.getProperty("error.save.product"));
+	    throw new ErrorAddingPoductServiceException(messageSource.getMessage("error.save.product", null, Locale.getDefault()), e);
 	}
 	log.info("Ending method addNewProductToDatabase(Product product)");
     }

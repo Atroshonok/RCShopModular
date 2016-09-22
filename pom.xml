@@ -20,7 +20,7 @@
         <aspectj.version>1.8.4</aspectj.version>
         <cglib.version>3.1</cglib.version>
         <dbcp.version>1.4</dbcp.version>
-        <jstl.version>1.2</jstl.version>
+        <!-- <jstl.version>1.2</jstl.version> -->
 	</properties>
 
 	<dependencies>
@@ -35,6 +35,11 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.2.4.Final</version>
 		</dependency>
 		
 	<!-- Spring -->
