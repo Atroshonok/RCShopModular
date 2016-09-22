@@ -20,5 +20,6 @@ com\atroshonok\dao\dbutils\DataBaseConnectionTest.class
 com\atroshonok\dao\IOrderDao.class
 com\atroshonok\dao\entities\Entity.class
 com\atroshonok\dao\entities\UserType.class
+com\atroshonok\dao\entities\ProductValueObject.class
 com\atroshonok\dao\BaseDaoImpl.class
 com\atroshonok\dao\entities\Cart.class

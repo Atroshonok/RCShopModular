@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.atroshonok.dao.entities.UserType;
-import com.atroshonok.utilits.AdminPageConfigManager;
 import com.atroshonok.utilits.MessageManager;
 
 /**
@@ -81,7 +80,7 @@ public class AccessLevelSecurityFilter implements Filter {
     }
 
     private void initClientDeniedURIsList() {
-	deniedAdminURIs.add("/MRCShop/WEB-INF/jsp/admin.jsp");
+	deniedClientURIs.add("/MRCShop/WEB-INF/jsp/admin.jsp");
     }
 
 }
