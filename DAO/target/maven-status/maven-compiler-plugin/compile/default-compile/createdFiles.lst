@@ -1,5 +1,4 @@
 com\atroshonok\dao\IDao.class
-com\atroshonok\dao\dbutils\HibernateUtil.class
 com\atroshonok\dao\entities\Product.class
 com\atroshonok\dao\OrderDaoImpl.class
 com\atroshonok\dao\entities\ProductCategory.class
@@ -16,7 +15,6 @@ com\atroshonok\dao\ProductDaoImpl.class
 com\atroshonok\dao\entities\OrderLine.class
 com\atroshonok\dao\entities\OrderState.class
 com\atroshonok\dao\IUserDao.class
-com\atroshonok\dao\dbutils\DataBaseConnectionTest.class
 com\atroshonok\dao\IOrderDao.class
 com\atroshonok\dao\entities\Entity.class
 com\atroshonok\dao\entities\UserType.class

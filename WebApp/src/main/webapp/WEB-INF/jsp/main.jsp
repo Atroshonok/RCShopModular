@@ -29,11 +29,6 @@
 					${mainInfoMessage}	
 				</div>
 			</c:if>
-			<c:if test="${mainInfoMessage != null}">
-				<div class="alert alert-info" role="alert">
-					${mainInfoMessage}	
-				</div>
-			</c:if>
 			<c:if test="${sessionScope.userType eq 'GUEST'}">
 				<h1><s:message code="message.welcome"/></h1><br/>
 				<h4 class="alert alert-danger"><s:message code="message.registerplease"/></h4><br/>

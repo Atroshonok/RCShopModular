@@ -57,11 +57,11 @@ public class UserController {
 	try {
 	    userService.saveUserToDataBase(user);
 	    log.info("User: " + user + "is saved to DB successfully.");
-	    request.getSession().setAttribute("mainInfoMessage",messageSource.getMessage("message.goodregistration", null, getUserLocale(request)));
+	    request.getSession().setAttribute("mainInfoMessage", messageSource.getMessage("message.goodregistration", null, getUserLocale(request)));
 	} catch (DataAccessException | ErrorAddingUserServiceException e) {
 	    log.error("Error adding new user: " + user + " to DB.", e);
 	    //TODO Проверка на некорректный логин?
-	    request.getSession().setAttribute("registrInfoMessage",messageSource.getMessage("message.error.registration", null, getUserLocale(request)));
+	    request.getSession().setAttribute("registrInfoMessage", messageSource.getMessage("message.error.registration", null, getUserLocale(request)));
 	    return "registration";
 	}
 	return "redirect:/main";

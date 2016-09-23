@@ -66,6 +66,7 @@ public class OrderController {
 	    if (cart.getAllProductsCount() > 0) {
 		Order order = initNewOrder(session, cart);
 		orderService.saveOrderData(order);
+		//TODO
 		cart = updateSessionCart(cart, order);
 		session.setAttribute(SESSION_ATTR_NAME_CART, cart);
 		request.setAttribute(REQUEST_ATTR_NAME_MESSAGE, messageSource.getMessage("message.orderadded", null, requestLocale));
