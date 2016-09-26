@@ -1,32 +1,23 @@
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
+
 <div id="filterForm">
-	<form id="productFilter" class="form-inline" action="${pageContext.request.contextPath}/products/all" method="GET">
-		<input type="hidden" name="command" value="showproducts">
+	<form id="productFilter" class="form-inline" action="${pageContext.request.contextPath}/products/all" method="GET" >
 		<input type="hidden" name="isFilterChanged" value="true">
 		
 		<strong><s:message code="filter.bar.product.category"/></strong> |
-		<label class="checkbox-inline">
-			<c:choose>
-				<c:when test="${!sessionScope.clientFilter.categoriesId.get(0).isEmpty()}">
-					<input id="all" type="checkbox" name="filterCategoriesId[0]" value="all" checked /> <s:message code="navbar.menuitem.all" /> |
-				</c:when>
-				<c:otherwise>
-					<input id="all" type="checkbox" name="filterCategoriesId[0]" value="all" /> <s:message code="navbar.menuitem.all" /> |
-				</c:otherwise>
-			</c:choose>
-		</label>
-		<c:forEach var="category" items="${sessionScope.categories}" varStatus="status">
+		<c:forEach var="category" items="${sessionScope.categories}" varStatus="status" >
 			<label class="checkbox-inline">
 				<c:choose>
-					<c:when test="${!sessionScope.clientFilter.categoriesId.get(category.id).isEmpty()}">
-						<input id="filterCategory${category.id}" type="checkbox" name="filterCategoriesId[${category.id}]" value="${category.id}" checked/> <s:message code="navbar.menuitem.${category.id}" /> |
+					<c:when test="${sessionScope.clientFilter.filterCategoriesId.contains(category.id)}">
+						<input id="filterCategory${category.id - 1}" type="checkbox" name="filterCategoriesId[${category.id - 1}]" value="${category.id}" checked/> <s:message  code="navbar.menuitem.${category.id}" text="${category.categoryName}" /> |
 					</c:when>
 					<c:otherwise>
-						<input id="filterCategory${category.id}" type="checkbox" name="filterCategoriesId[${category.id}]" value="${category.id}"/> <s:message code="navbar.menuitem.${category.id}" /> |
+						<input id="filterCategory${category.id - 1}" type="checkbox" name="filterCategoriesId[${category.id - 1}]" value="${category.id}"/> <s:message code="navbar.menuitem.${category.id}" text="${category.categoryName}" /> |
 					</c:otherwise>
 				</c:choose>
 			</label>
@@ -34,8 +25,8 @@
 		<br/>
 		<div class="form-group">
 			<label><s:message code="filter.bar.product.price"/>&nbsp;
-				<s:message code="filter.bar.price.from"/> <input class="form-control input-sm" type="text" name="filterPriceFrom" size="10" value="${sessionScope.clientFilter.priceFrom}"> -   
-				<s:message code="filter.bar.price.to"/> <input class="form-control input-sm" type="text" name="filterPriceTo" size="10" value="${sessionScope.clientFilter.priceTo}"> $
+				<s:message code="filter.bar.price.from"/> <input class="form-control input-sm" type="text" name="filterPriceFrom" size="10" value="${sessionScope.clientFilter.filterPriceFrom}"> -   
+				<s:message code="filter.bar.price.to"/> <input class="form-control input-sm" type="text" name="filterPriceTo" size="10" value="${sessionScope.clientFilter.filterPriceTo}"> $
 			</label>
 		</div>
 		<br/>
@@ -67,12 +58,15 @@
 		</label>
 		<br/>
 		<button type="submit" class="btn btn-primary">
-			<s:message code="filter.bar.button.accept" /> <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> 
+			<s:message code="filter.bar.button.accept" />
 		</button>
-		<button type="reset" class="btn btn-default">
-			<s:message code="filter.bar.button.reset" /> <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+		<button type="submit" class="btn btn-default" form="resetFilterForm">
+			<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> 
+			<s:message code="filter.bar.button.reset" />
 		</button>
 	</form>
+	<form id="resetFilterForm" action="${pageContext.request.contextPath}/products/reset" method="GET"></form>
 	<hr/>
 </div>
 
@@ -106,7 +100,7 @@
 		  			</div>
 		  			<div id="cartAddButton">
 		  				<c:if test="${sessionScope.userType eq 'CLIENT' or 'ADMIN'}">
-							<form id="addProductButton" action="${pageContext.request.contextPath}/products/add/${product.id}" method="GET" >
+							<form id="addProductButton" action="${pageContext.request.contextPath}/cart/add/${product.id}" method="GET" >
 								<input type="hidden" name="command" value="addtocart" />
 								<button class="btn btn-primary" type="submit">
 									<span class="glyphicon glyphicon-shopping-cart"></span> <s:message code="productlist.button.add"/>
@@ -114,11 +108,25 @@
 							</form>
 						</c:if>
 						<c:if test="${sessionScope.userType eq 'ADMIN'}">
-							<form id="editProductButton" action="${pageContext.request.contextPath}/products/edit/${product.id}" method="GET" >
-								<button class="btn btn-warning" type="submit">
-									<span class="glyphicon glyphicon-edit"></span> <s:message code="productlist.button.edit" />
-								</button>
-							</form>
+							<table>
+								<tr>
+									<td>
+										<form id="editProductButton" action="${pageContext.request.contextPath}/products/edit/${product.id}" method="GET" >
+											<button class="btn btn-warning" type="submit">
+												<span class="glyphicon glyphicon-edit"></span> <s:message code="productlist.button.edit" />
+											</button>
+											&nbsp
+										</form>
+									</td>
+									<td>
+										<form id="deleteProductButton" action="${pageContext.request.contextPath}/products/delete/${product.id}" method="GET" >
+											<button class="btn btn-danger" type="submit">
+												<span class="glyphicon glyphicon-trash"></span> <s:message code="productlist.button.delete" />
+											</button>
+										</form>
+									</td>	
+								</tr>
+							</table>
 						</c:if>	
 		  			</div>
 		  		</div>

@@ -4,6 +4,7 @@
 package com.atroshonok.dao;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,9 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Repository;
 
-import com.atroshonok.dao.dbutils.ErrorMessageManager;
-import com.atroshonok.dao.entities.ClientFilter;
 import com.atroshonok.dao.entities.Product;
+import com.atroshonok.dao.entities.vo.ClientFilter;
 import com.atroshonok.dao.exceptions.DaoException;
 
 /**
@@ -30,8 +30,8 @@ import com.atroshonok.dao.exceptions.DaoException;
  */
 
 @Repository
-public class ProductDaoImpl extends BaseDaoImpl<Product> implements IProductDao {
-    
+public class ProductDaoImpl extends DaoImpl<Product> implements IProductDao {
+
     @Autowired
     private MessageSource messageSource;
 
@@ -47,7 +47,7 @@ public class ProductDaoImpl extends BaseDaoImpl<Product> implements IProductDao 
     @SuppressWarnings("unchecked")
     @Override
     public List<Product> getProductsByCategoryId(Serializable categoryId) throws DaoException {
-	List<Product> products = null;
+	List<Product> products = new ArrayList<>();
 	try {
 	    String hql = "FROM Product p WHERE p.category.id=:productCategoryId";
 	    Query query = getSession().createQuery(hql);
@@ -100,28 +100,25 @@ public class ProductDaoImpl extends BaseDaoImpl<Product> implements IProductDao 
 	return results;
     }
 
-    // TODO refactor this method
     private void createCriteriaAccordingClientFilter(ClientFilter clientFilter, Criteria criteria) {
 	Disjunction disjun = Restrictions.disjunction();
-	String categoryAll = clientFilter.getCategoriesId().get(0);
-	if ((categoryAll == null) || (categoryAll.isEmpty())) {
-	    for (int i = 1; i < clientFilter.getCategoriesId().size(); i++) {
-		String categoryId = clientFilter.getCategoriesId().get(i);
-		if ((categoryId != null) && !(categoryId.isEmpty())) {
-		    Criterion criterion = (Criterion) Restrictions.eq("category.id", Long.parseLong(categoryId));
-		    disjun.add(criterion);
-		}
-	    }
+	for (int i = 0; i < clientFilter.getFilterCategoriesId().size(); i++) {
+	    Long categoryId = clientFilter.getFilterCategoriesId().get(i);
+	    Criterion criterion = (Criterion) Restrictions.eq("category.id", categoryId);
+	    disjun.add(criterion);
 	}
 	criteria.add(Restrictions.or(disjun));
 
-	if (clientFilter.getPriceFrom() > 0) {
-	    criteria.add(Restrictions.gt("price", clientFilter.getPriceFrom()));
+	Double priceFrom = clientFilter.getFilterPriceFrom();
+	Double priceTo = clientFilter.getFilterPriceTo();
+
+	if (priceFrom > 0) {
+	    criteria.add(Restrictions.gt("price", priceFrom));
 	}
-	if ((clientFilter.getPriceTo() > 0) && (clientFilter.getPriceTo() >= clientFilter.getPriceFrom())) {
-	    criteria.add(Restrictions.le("price", clientFilter.getPriceTo()));
+	if ((priceTo > 0) && (priceTo >= priceFrom)) {
+	    criteria.add(Restrictions.le("price", priceTo));
 	}
-	if ((clientFilter.getSorting() != null) && (clientFilter.getSorting() != 0)) {
+	if (clientFilter.getSorting() != 0) {
 	    if (clientFilter.getSorting() == 1) {
 		criteria.addOrder(Order.asc("price"));
 	    } else if (clientFilter.getSorting() == 2) {

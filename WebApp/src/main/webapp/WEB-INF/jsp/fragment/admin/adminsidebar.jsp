@@ -7,21 +7,16 @@
 		<i class="panel-title">Only for Administrator</i>
 	</div>
 	<div class="panel-body">
-	
-		<form id="showAllProductsButton" action="" method="" >
-			<input type="hidden" name="command" value="showallproducts" />
-			<input class="btn btn-default btn-block btn-danger" type="submit" value="Show all products" />
-		</form><br/>	
-	
-		<form id="showAllUsersButton" action="" method="" >
-			<input type="hidden" name="command" value="showallusers" />
+		<form id="showAllUsersButton" action="${pageContext.request.contextPath}/users/all" method="GET">
 			<input class="btn btn-default btn-block btn-danger" type="submit" value="Show all users" />
 		</form><br/>	
 	
-		<form id="addNewProductButton" action="" method="" >
-			<input type="hidden" name="command" value="addnewproduct" />
+		<form id="addNewProductButton" action="${pageContext.request.contextPath}/products/new" method="GET">
 			<input class="btn btn-default btn-block btn-danger" type="submit" value="Add new product" />
 		</form><br/>
 		
+		<form id="addNewProductCategoryButton" action="${pageContext.request.contextPath}/categories/new" method="GET">
+			<input class="btn btn-default btn-block btn-danger" type="submit" value="Add new product category" />
+		</form><br/>
 	</div>
 </div>

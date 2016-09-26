@@ -14,7 +14,7 @@
 			<th>Age</th>
 			<th>User Type</th>
 			<th>Black List (BL)</th>
-			<th>Action</th>
+			<!-- <th>Action</th> -->
 		</tr>
 	<c:forEach var="user" items="${usersList}" varStatus="status">
 		<tr>
@@ -35,7 +35,7 @@
 			<td><c:out value="${user.age}"/></td>
 			<td><c:out value="${user.userType}"/></td>
 			<td><c:out value="${user.isInBlackList}"/></td>
-			<td>
+			<%-- <td>
 				<form id="addInBlackListButton" action="controller" method="POST" >
 					<input type="hidden" name="command" value="blacklist" />
 					<input type="hidden" name="action" value="add" />
@@ -52,7 +52,7 @@
 						<span class="glyphicon glyphicon-minus"></span> Black List
 					</button>
 				</form>
-			</td>
+			</td> --%>
 		</tr>
 	</c:forEach>
 	</table>

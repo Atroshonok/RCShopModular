@@ -3,7 +3,6 @@ package com.atroshonok.controller;
 import java.util.List;
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -14,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.atroshonok.dao.entities.Cart;
 import com.atroshonok.dao.entities.Order;
@@ -23,13 +22,16 @@ import com.atroshonok.dao.entities.User;
 import com.atroshonok.services.IOrderService;
 import com.atroshonok.services.exceptions.ErrorSavingOrderServiceException;
 
+/**
+ * 
+ * @author Ivan Atroshonok
+ *
+ */
 @Controller
 public class OrderController {
 
     private static final String REQUEST_ATTR_NAME_MESSAGE = "orderInfoMessage";
-
     private static final String SESSION_ATTR_NAME_USER = "user";
-
     private static final String SESSION_ATTR_NAME_CART = "cart";
 
     private static Logger log = Logger.getLogger(OrderController.class);
@@ -38,46 +40,51 @@ public class OrderController {
     private IOrderService orderService;
     @Autowired
     private MessageSource messageSource;
-    @Autowired
-    private CookieLocaleResolver localeResolver;
 
-//    @RequestMapping(method = RequestMethod.GET)
-//    public String getUserOrdersPage() {
-//	return "redirect:orders";
-//    }
-
+    /**
+     * 
+     * @param userId
+     * @param model
+     * @param locale
+     * @return
+     */
     @RequestMapping(path = "/orders/all/{userId}", method = RequestMethod.GET)
-    public String showUserOrders(@PathVariable("userId") Integer userId, Model model, HttpServletRequest request) {
+    public String showUserOrders(@PathVariable("userId") Integer userId, Model model, Locale locale) {
 	List<Order> orders = orderService.getAllUserOrders(userId);
 	if (!orders.isEmpty() && (orders != null)) {
 	    model.addAttribute("orders", orders);
 	} else {
-	    Locale userLocale = localeResolver.resolveLocale(request);
-	    model.addAttribute("ordersInfoMessage", messageSource.getMessage("message.noorders", null, userLocale));
+	    model.addAttribute("ordersInfoMessage", messageSource.getMessage("message.noorders", null, locale));
 	}
 	return "orders";
     }
 
+    /**
+     * 
+     * @param session
+     * @param redirectAttributes
+     * @param locale
+     * @return
+     */
     @RequestMapping(path = "/orders/add", method = RequestMethod.POST)
-    public String addNewOrder(HttpServletRequest request, HttpSession session) {
-	Locale requestLocale = localeResolver.resolveLocale(request);
+    public String addNewOrder(HttpSession session, RedirectAttributes redirectAttributes, Locale locale) {
 	try {
 	    Cart cart = (Cart) session.getAttribute(SESSION_ATTR_NAME_CART);
 	    if (cart.getAllProductsCount() > 0) {
 		Order order = initNewOrder(session, cart);
 		orderService.saveOrderData(order);
-		//TODO
+		// TODO Проверка наличия товара на складе
 		cart = updateSessionCart(cart, order);
 		session.setAttribute(SESSION_ATTR_NAME_CART, cart);
-		request.setAttribute(REQUEST_ATTR_NAME_MESSAGE, messageSource.getMessage("message.orderadded", null, requestLocale));
+		redirectAttributes.addFlashAttribute(REQUEST_ATTR_NAME_MESSAGE, messageSource.getMessage("message.orderadded", null, locale));
 	    } else {
-		request.setAttribute(REQUEST_ATTR_NAME_MESSAGE, messageSource.getMessage("message.ordererror.addproduct", null, requestLocale));
+		redirectAttributes.addFlashAttribute(REQUEST_ATTR_NAME_MESSAGE, messageSource.getMessage("message.ordererror.addproduct", null, locale));
 	    }
 	} catch (ErrorSavingOrderServiceException e) {
 	    log.error("Error creating order: ", e);
-	    request.setAttribute(REQUEST_ATTR_NAME_MESSAGE, messageSource.getMessage("message.ordererror.tryagain", null, requestLocale));
+	    redirectAttributes.addFlashAttribute(REQUEST_ATTR_NAME_MESSAGE, messageSource.getMessage("message.ordererror.tryagain", null, locale));
 	}
-	return "cart";
+	return "redirect:/cart";
     }
 
     private Order initNewOrder(HttpSession session, Cart cart) {

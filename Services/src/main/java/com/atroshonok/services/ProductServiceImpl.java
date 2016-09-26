@@ -10,15 +10,17 @@ import java.util.Locale;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.atroshonok.dao.IProductDao;
-import com.atroshonok.dao.entities.ClientFilter;
 import com.atroshonok.dao.entities.Product;
+import com.atroshonok.dao.entities.vo.ClientFilter;
 import com.atroshonok.dao.exceptions.DaoException;
 import com.atroshonok.services.exceptions.ErrorAddingPoductServiceException;
 import com.atroshonok.services.exceptions.ErrorUpdatingPoductServiceException;
+import com.atroshonok.services.exceptions.ServiceException;
 
 /**
  * @author Atroshonok Ivan
@@ -85,16 +87,18 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public void addNewProductToDatabase(Product product) throws ErrorAddingPoductServiceException {
+    public Serializable addNewProductToDatabase(Product product) throws ErrorAddingPoductServiceException {
 	log.info("Starting method addNewProductToDatabase(Product product)");
+	Serializable id = null;
 	try {
-	    productDao.saveOrUpdate(product);
+	    id = productDao.save(product);
 	    log.info("Saved product to DB: " + product);
 	} catch (DaoException e) {
 	    log.error("Error saving product to database: ", e);
 	    throw new ErrorAddingPoductServiceException(messageSource.getMessage("error.save.product", null, Locale.getDefault()), e);
 	}
 	log.info("Ending method addNewProductToDatabase(Product product)");
+	return id;
     }
 
     @Override
@@ -116,5 +120,15 @@ public class ProductServiceImpl implements IProductService {
     public long getProductsCountAccordingClientFilter(ClientFilter clientFilter) {
 	long result = productDao.getProductsCountAccordingClientFilter(clientFilter);
 	return result;
+    }
+
+    @Override
+    public void deleteProduct(Product product) throws ServiceException {
+	try {
+	    productDao.delete(product);
+	} catch (DaoException e) {
+	    log.error("Error deleting product. ");
+	    throw new ServiceException(messageSource.getMessage("error.delete.product", null, Locale.getDefault()), e);
+	}
     }
 }

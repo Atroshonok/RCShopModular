@@ -17,7 +17,7 @@ import com.atroshonok.dao.entities.Order;
  */
 
 @Repository
-public class OrderDaoImpl extends BaseDaoImpl<Order> implements IOrderDao {
+public class OrderDaoImpl extends DaoImpl<Order> implements IOrderDao {
 
     @SuppressWarnings("unchecked")
     public List<Order> getOrdersByUserId(long userId) {

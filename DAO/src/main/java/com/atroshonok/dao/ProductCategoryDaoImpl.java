@@ -16,7 +16,7 @@ import com.atroshonok.dao.entities.ProductCategory;
  */
 
 @Repository
-public class ProductCategoryDaoImpl extends BaseDaoImpl<ProductCategory> implements IProductCategoryDao {
+public class ProductCategoryDaoImpl extends DaoImpl<ProductCategory> implements IProductCategoryDao {
 
     @SuppressWarnings("unchecked")
     @Override

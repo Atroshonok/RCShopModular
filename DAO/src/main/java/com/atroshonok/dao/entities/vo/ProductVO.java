@@ -1,8 +1,10 @@
-package com.atroshonok.dao.entities;
+package com.atroshonok.dao.entities.vo;
 
 import java.io.Serializable;
 
-public class ProductValueObject implements Serializable {
+import com.atroshonok.dao.entities.Product;
+
+public class ProductVO implements Serializable {
 
     private static final long serialVersionUID = -751155082317142262L;
 
@@ -13,11 +15,11 @@ public class ProductValueObject implements Serializable {
     private Integer count;
     private String description;
 
-    public ProductValueObject() {
+    public ProductVO() {
 	super();
     }
 
-    public ProductValueObject(Product product) {
+    public ProductVO(Product product) {
 	this.id = product.getId();
 	this.name = product.getName();
 	this.price = product.getPrice();
@@ -47,7 +49,7 @@ public class ProductValueObject implements Serializable {
 	    return false;
 	if (getClass() != obj.getClass())
 	    return false;
-	ProductValueObject other = (ProductValueObject) obj;
+	ProductVO other = (ProductVO) obj;
 	if (ProductCategoryId == null) {
 	    if (other.ProductCategoryId != null)
 		return false;

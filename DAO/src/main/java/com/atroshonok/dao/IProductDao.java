@@ -3,8 +3,8 @@ package com.atroshonok.dao;
 import java.io.Serializable;
 import java.util.List;
 
-import com.atroshonok.dao.entities.ClientFilter;
 import com.atroshonok.dao.entities.Product;
+import com.atroshonok.dao.entities.vo.ClientFilter;
 import com.atroshonok.dao.exceptions.DaoException;
 
 public interface IProductDao extends IDao<Product> {

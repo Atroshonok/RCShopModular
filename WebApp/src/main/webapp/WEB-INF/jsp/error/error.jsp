@@ -24,12 +24,14 @@
 		</div>	
 		<div class="rigthPart">
 			<p>Request from ${pageContext.errorData.requestURI} is failed</p>
-			<br/>
+			<br />
  			<p>Servlet name or type: ${pageContext.errorData.servletName}</p>
- 			<br/>
+ 			<br />
  			<p>Status code: ${pageContext.errorData.statusCode}</p>
- 			<br/>
+ 			<br />
  			<p>Exception: ${pageContext.errorData.throwable}</p>
+ 			<br />
+ 			<p>Error: ${error}</p>
 		
 			<c:if test="${requestScope.infoMessage != null}">
 				<div class="alert alert-info" role="alert">

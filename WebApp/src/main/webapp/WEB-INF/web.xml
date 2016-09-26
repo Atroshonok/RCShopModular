@@ -33,9 +33,10 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
+	<!-- Error pages -->
 	<error-page>
 		<error-code>404</error-code>
-		<location>/jsp/error/error.jsp</location>
+		<location>/WEB-INF/jsp/error/error.jsp</location>
 	</error-page>
 	<error-page>
 		<exception-type>java.lang.RuntimeException</exception-type>
@@ -46,6 +47,7 @@
 		<session-timeout>30</session-timeout>
 	</session-config>
 
+	<!-- Filters -->
 	<filter>
 		<filter-name>charsetFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

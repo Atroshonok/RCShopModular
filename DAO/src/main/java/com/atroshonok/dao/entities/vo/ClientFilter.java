@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.atroshonok.dao.entities;
+package com.atroshonok.dao.entities.vo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +11,9 @@ import java.util.List;
  */
 public class ClientFilter {
     // the default client filter values
-    private List<String> categoriesId = null;
-    private Double priceFrom = 0.0;
-    private Double priceTo = 100000.0;
+    private List<Long> filterCategoriesId = new ArrayList<>();
+    private Double filterPriceFrom = 0.0;
+    private Double filterPriceTo = 100000.0;
     private Integer itemsPerPage = 1;
     private Integer currentPage = 1;
     private Integer sorting = 0;
@@ -23,48 +23,48 @@ public class ClientFilter {
     }
 
     /**
-     * @return the categoriesId
+     * @return the filterCategoriesId
      */
-    public List<String> getCategoriesId() {
-	return categoriesId;
+    public List<Long> getFilterCategoriesId() {
+	return filterCategoriesId;
     }
 
     /**
      * @param categoriesId
-     *            the categoriesId to set
+     *            the filterCategoriesId to set
      */
-    public void setCategoriesId(List<String> categoriesId) {
-	this.categoriesId = categoriesId;
+    public void setFilterCategoriesId(List<Long> categoriesId) {
+	this.filterCategoriesId = categoriesId;
     }
 
     /**
-     * @return the priceFrom
+     * @return the filterPriceFrom
      */
-    public Double getPriceFrom() {
-	return priceFrom;
+    public Double getFilterPriceFrom() {
+	return filterPriceFrom;
     }
 
     /**
-     * @param priceFrom
-     *            the priceFrom to set
+     * @param filterPriceFrom
+     *            the filterPriceFrom to set
      */
-    public void setPriceFrom(Double priceFrom) {
-	this.priceFrom = priceFrom;
+    public void setFilterPriceFrom(Double filterPriceFrom) {
+	this.filterPriceFrom = filterPriceFrom;
     }
 
     /**
-     * @return the priceTo
+     * @return the filterPriceTo
      */
-    public Double getPriceTo() {
-	return priceTo;
+    public Double getFilterPriceTo() {
+	return filterPriceTo;
     }
 
     /**
-     * @param priceTo
-     *            the priceTo to set
+     * @param filterPriceTo
+     *            the filterPriceTo to set
      */
-    public void setPriceTo(Double priceTo) {
-	this.priceTo = priceTo;
+    public void setFilterPriceTo(Double filterPriceTo) {
+	this.filterPriceTo = filterPriceTo;
     }
 
     /**
@@ -75,7 +75,6 @@ public class ClientFilter {
     }
 
     /**
-     * 
      * @param itemsPerPage
      *            the itemsPerPage to set
      */
@@ -91,7 +90,6 @@ public class ClientFilter {
     }
 
     /**
-     * 
      * @param currentPage
      *            the currentPage to set
      */
@@ -99,10 +97,17 @@ public class ClientFilter {
 	this.currentPage = currentPage;
     }
 
+    /**
+     * @return the sorting
+     */
     public Integer getSorting() {
 	return sorting;
     }
 
+    /**
+     * @param sorting
+     *            the sorting to set
+     */
     public void setSorting(Integer sorting) {
 	this.sorting = sorting;
     }

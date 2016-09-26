@@ -17,12 +17,12 @@ import com.atroshonok.dao.exceptions.DaoException;
  */
 
 @Repository
-public class BaseDaoImpl<T> implements IDao<T> {
+public class DaoImpl<T> implements IDao<T> {
     protected Logger log = Logger.getLogger(getClass());
     @Autowired
     protected SessionFactory sessionFactory;
 
-    public BaseDaoImpl() {
+    public DaoImpl() {
 
     }
 

@@ -1,8 +1,8 @@
 E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\ProductDaoImpl.java
+E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\entities\vo\ProductVO.java
 E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\UserDaoImpl.java
 E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\entities\OrderLine.java
 E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\entities\Entity.java
-E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\entities\ProductValueObject.java
 E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\entities\UserType.java
 E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\ProductCategoryDaoImpl.java
 E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\BaseDaoImpl.java
@@ -11,8 +11,8 @@ E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\IUserDao.java
 E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\entities\Order.java
 E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\entities\User.java
 E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\IProductDao.java
+E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\entities\vo\ClientFilter.java
 E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\IOrderDao.java
-E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\entities\ClientFilter.java
 E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\IProductCategoryDao.java
 E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\entities\Cart.java
 E:\WORKSPACE\RCShopModular\DAO\src\main\java\com\atroshonok\dao\entities\ProductCategory.java

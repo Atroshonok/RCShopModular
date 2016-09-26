@@ -20,7 +20,7 @@
 		  	<c:if test="${sessionScope.userType eq 'CLIENT'}">
 				<a href="${pageContext.request.contextPath}/orders/all/${sessionScope.user.id}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> <s:message code="usergadget.all.orders"/></a><br/>
 				<s:message code="usergadget.session.orders"/>: <span class="badge">${sessionScope.cart.getOrders().size()}</span><br/>
-				<a href="${pageContext.request.contextPath}/products/cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> <s:message code="usergadget.cart"/></a><br/>
+				<a href="${pageContext.request.contextPath}/cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> <s:message code="usergadget.cart"/></a><br/>
 				<s:message code="usergadget.cart.products"/>: <span class="badge">${sessionScope.cart.getAllProductsCount()}</span><br/>
 			</c:if>
 			<c:if test="${(sessionScope.userType eq 'ADMIN') or (sessionScope.userType eq 'CLIENT')}">

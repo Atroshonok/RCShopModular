@@ -17,7 +17,7 @@
 				<td><c:out value="${orderLine.product.price}" /></td>
 				<td><c:out value="${orderLine.count}" /></td>
 				<td>
-					<form id="removeProductButton" action="${pageContext.request.contextPath}/products/remove/${orderLine.product.id}" method="GET" >
+					<form id="removeProductButton" action="${pageContext.request.contextPath}/cart/remove/${orderLine.product.id}" method="GET" >
 						<button class="btn btn-info" type="submit">
 							<span class="glyphicon glyphicon-minus"></span> <s:message code="orderedproducts.buttons.remove"/>
 						</button>

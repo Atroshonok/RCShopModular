@@ -25,7 +25,7 @@
 		<div class="rigthPart">
 			<c:if test="${registrInfoMessage ne null}">
 				<div class="alert alert-info" role="alert">
-					${registrInfoMessage}"
+					${registrInfoMessage}
 				</div>
 			</c:if>
 			<c:import url="/WEB-INF/jsp/fragment/registrform.jsp" />

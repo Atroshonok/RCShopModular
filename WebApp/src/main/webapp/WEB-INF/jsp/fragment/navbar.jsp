@@ -18,10 +18,10 @@
 				<s:message code="navbar.menuitem.products" />
 			</a>
 		</li>
-		<c:forEach var="category" items="${sessionScope.categories}" varStatus="status">
-			<li id="menuItem${category.id}">
-				<a href="${pageContext.request.contextPath}/products/all?filterCategoriesId[${category.id}]=${category.id}">
-					<s:message code="navbar.menuitem.${category.id}" />
+		<c:forEach var="productCategory" items="${sessionScope.categories}" varStatus="status">
+			<li id="menuItem${productCategory.id}">
+				<a href="${pageContext.request.contextPath}/products/all?isCategoriesChanged=true&filterCategoriesId[${productCategory.id - 1}]=${productCategory.id}">
+					<s:message code="navbar.menuitem.${productCategory.id}" text="${productCategory.categoryName}" />
 				</a>
 			</li>
 		</c:forEach>
@@ -30,6 +30,6 @@
 <br/>
 <div id="adminsidebar">
 	<c:if test="${sessionScope.userType eq 'ADMIN'}">
-		<c:import url="/WEB-INF/jsp/fragment/adminsidebar.jsp" />
+		<c:import url="/WEB-INF/jsp/fragment/admin/adminsidebar.jsp" />
 	</c:if>
 </div>

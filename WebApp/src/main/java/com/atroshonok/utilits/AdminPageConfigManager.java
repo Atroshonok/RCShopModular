@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 * Class takes an information from config.properties file
 */
 public class AdminPageConfigManager {
-  private final static ResourceBundle resourceBundle = ResourceBundle.getBundle("admin_fragmentpath_config");
+  private final static ResourceBundle resourceBundle = ResourceBundle.getBundle("admin_config");
 
   private AdminPageConfigManager() {
   }
