@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -24,7 +23,6 @@ public class ServletSecurityFilter implements Filter {
 	log.debug("method doFilter() works");
 
 	HttpServletRequest req = (HttpServletRequest) request;
-	HttpServletResponse resp = (HttpServletResponse) response;
 	HttpSession session = req.getSession();
 
 	UserType type = (UserType) session.getAttribute(SESSION_ATTR_USER_TYPE);
@@ -32,18 +30,17 @@ public class ServletSecurityFilter implements Filter {
 	if (type == null) {
 	    type = UserType.GUEST;
 	    session.setAttribute(SESSION_ATTR_USER_TYPE, type);
-	    resp.sendRedirect(req.getContextPath());
-	    return;
 	}
 	chain.doFilter(request, response);
+    }
+
+    @Override
+    public void init(FilterConfig arg0) throws ServletException {
     }
 
     @Override
     public void destroy() {
     }
 
-    @Override
-    public void init(FilterConfig arg0) throws ServletException {
-    }
 
 }

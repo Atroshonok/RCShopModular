@@ -33,7 +33,7 @@ import com.atroshonok.services.IProductService;
 import com.atroshonok.services.exceptions.ErrorAddingPoductServiceException;
 import com.atroshonok.services.exceptions.ErrorUpdatingPoductServiceException;
 import com.atroshonok.services.exceptions.ServiceException;
-import com.atroshonok.utilits.AdminPageConfigManager;
+import com.atroshonok.utilits.AdminConfigManager;
 
 /**
  * 
@@ -122,7 +122,7 @@ public class ProductController {
 	Product product = productService.getProductById(productId);
 	model.addAttribute("product", product);
 	model.addAttribute(REQUEST_ATTR_INFO_MESSAGE, getMessageByKey("message.product.before-deleting", locale) + product.toString());
-	model.addAttribute(ATTRIBUTE_FRAGMENT_PATH, AdminPageConfigManager.getProperty("path.fragment.delproductdialog"));
+	model.addAttribute(ATTRIBUTE_FRAGMENT_PATH, AdminConfigManager.getProperty("path.fragment.delproductdialog"));
 	return "admin";
     }
 
@@ -157,7 +157,7 @@ public class ProductController {
 	model.addAttribute("newProduct", newProduct);
 	List<ProductCategory> categoryList = productCategoryService.getAllProductCategories();
 	model.addAttribute(ATTRIBUTE_CATEGORY_LIST, categoryList);
-	model.addAttribute(ATTRIBUTE_FRAGMENT_PATH, AdminPageConfigManager.getProperty("path.fragment.addproductform"));
+	model.addAttribute(ATTRIBUTE_FRAGMENT_PATH, AdminConfigManager.getProperty("path.fragment.addproductform"));
 	return "admin";
     }
 
@@ -211,7 +211,7 @@ public class ProductController {
 	List<ProductCategory> categoryList = productCategoryService.getAllProductCategories();
 	model.addAttribute(ATTRIBUTE_CATEGORY_LIST, categoryList);
 	model.addAttribute("editedProduct", editedProduct);
-	model.addAttribute(ATTRIBUTE_FRAGMENT_PATH, AdminPageConfigManager.getProperty("path.fragment.editproductform"));
+	model.addAttribute(ATTRIBUTE_FRAGMENT_PATH, AdminConfigManager.getProperty("path.fragment.editproductform"));
 	return "admin";
     }
 
@@ -246,7 +246,7 @@ public class ProductController {
     }
     
     private void saveImage(String filename, MultipartFile image) throws IOException {
-	File file = new File(AdminPageConfigManager.getProperty("path.images") + filename);
+	File file = new File(AdminConfigManager.getProperty("path.images") + filename);
 	FileUtils.writeByteArrayToFile(file, image.getBytes());
     }
 

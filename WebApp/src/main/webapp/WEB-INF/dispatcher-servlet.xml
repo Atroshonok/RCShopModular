@@ -20,8 +20,8 @@
 
 	<!-- <import resource="classpath*:spring-services-config.xml" /> -->
 	<context:component-scan base-package="com.atroshonok.controller" />
+	<context:component-scan base-package="com.atroshonok.filter" />
 	<mvc:annotation-driven/>
-	
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	
 	<bean id="jspViewResolver" 

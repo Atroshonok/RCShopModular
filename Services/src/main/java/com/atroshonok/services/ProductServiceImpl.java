@@ -10,7 +10,7 @@ import java.util.Locale;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.NoSuchMessageException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,7 +44,7 @@ public class ProductServiceImpl implements IProductService {
 	List<Product> products = null;
 	try {
 	    products = productDao.getProductsByCategoryId(categoryId);
-	} catch (DaoException e) {
+	} catch (DataAccessException e) {
 	    log.error("Error getting products by category = " + categoryId);
 	}
 	log.info("Ending method getProductsByCategoryId(long categoryId)");
@@ -109,8 +109,8 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public Long getTotalProductsCount() {
-	Long totalCount = productDao.getTotalProductsCount();
+    public long getTotalProductsCount() {
+	long totalCount = productDao.getTotalProductsCount();
 	return totalCount;
     }
 

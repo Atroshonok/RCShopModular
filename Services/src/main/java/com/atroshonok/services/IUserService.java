@@ -11,11 +11,23 @@ import com.atroshonok.services.exceptions.ServiceException;
 
 public interface IUserService {
 
-    User getUserByLoginPassword(String login, String password) throws ServiceException;
+    /**
+     * Returns an user using the given login and password. Returns null if has
+     * found no one.
+     * 
+     * @param login
+     * @param password
+     * @return
+     * @throws ServiceException
+     */
+    User getUserByLoginPassword(String login, String password);
 
     /**
-     * Saves an user to the database. Throws {@code LoginAlreadyExistServiceException}
-     * if a user with so login already exist in the database.
+     * Saves the given user to the database. Throws
+     * com.atroshonok.services.exceptions.ServiceException if an user with so
+     * login already exist in the database. The method throws a
+     * com.atroshonok.services.exceptions.ErrorAddingUserServiceException if
+     * can't save the user.
      * 
      * @param user
      * @throws ErrorAddingUserServiceException
@@ -23,10 +35,32 @@ public interface IUserService {
      */
     void saveUserToDataBase(User user) throws ErrorAddingUserServiceException, LoginAlreadyExistServiceException;
 
+    /**
+     * Returns the all users list. Returns an empty collection if has found no
+     * one.
+     * 
+     * @return
+     * @throws ServiceException
+     */
     List<User> getAllUsers() throws ServiceException;
 
+    /**
+     * Returns an user using the given id. This method returns null if has found
+     * no one.
+     * 
+     * @param userId
+     * @return
+     */
     User getUserById(Serializable userId);
 
+    /**
+     * Updates the given user. The method throws a
+     * com.atroshonok.services.exceptions.ErrorUpdatingUserServiceException if
+     * can't update the user.
+     * 
+     * @param user
+     * @throws ErrorUpdatingUserServiceException
+     */
     void updateUserData(User user) throws ErrorUpdatingUserServiceException;
 
 }

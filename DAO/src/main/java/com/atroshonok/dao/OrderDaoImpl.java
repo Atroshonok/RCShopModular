@@ -3,6 +3,7 @@
  */
 package com.atroshonok.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -20,8 +21,8 @@ import com.atroshonok.dao.entities.Order;
 public class OrderDaoImpl extends DaoImpl<Order> implements IOrderDao {
 
     @SuppressWarnings("unchecked")
-    public List<Order> getOrdersByUserId(long userId) {
-	List<Order> orders = null;
+    public List<Order> getOrdersByUserId(Long userId) {
+	List<Order> orders = new ArrayList<>();
 	try {
 	    String hql = "FROM Order o WHERE o.user.id=:userId";
 	    Query query = getSession().createQuery(hql);

@@ -28,7 +28,7 @@ import com.atroshonok.services.IUserService;
 import com.atroshonok.services.exceptions.ErrorAddingUserServiceException;
 import com.atroshonok.services.exceptions.LoginAlreadyExistServiceException;
 import com.atroshonok.services.exceptions.ServiceException;
-import com.atroshonok.utilits.AdminPageConfigManager;
+import com.atroshonok.utilits.AdminConfigManager;
 import com.atroshonok.utilits.DataEncryptor;
 
 /**
@@ -133,7 +133,7 @@ public class UserController {
     public String getAllUsers(ModelMap model) throws ServiceException {
 	List<User> users = userService.getAllUsers();
 	model.addAttribute("usersList", users);
-	model.addAttribute(ATTRIBUTE_FRAGMENT_PATH, AdminPageConfigManager.getProperty("path.fragment.allusers"));
+	model.addAttribute(ATTRIBUTE_FRAGMENT_PATH, AdminConfigManager.getProperty("path.fragment.allusers"));
 	return "admin";
     }
 

@@ -9,15 +9,14 @@ com\atroshonok\dao\IProductDao.class
 com\atroshonok\dao\UserDaoImpl.class
 com\atroshonok\dao\IProductCategoryDao.class
 com\atroshonok\dao\ProductCategoryDaoImpl.class
-com\atroshonok\dao\dbutils\ErrorMessageManager.class
 com\atroshonok\dao\entities\vo\ProductVO.class
 com\atroshonok\dao\entities\User.class
 com\atroshonok\dao\ProductDaoImpl.class
+com\atroshonok\dao\DaoImpl.class
 com\atroshonok\dao\entities\OrderLine.class
 com\atroshonok\dao\entities\OrderState.class
 com\atroshonok\dao\IUserDao.class
 com\atroshonok\dao\IOrderDao.class
 com\atroshonok\dao\entities\Entity.class
 com\atroshonok\dao\entities\UserType.class
-com\atroshonok\dao\BaseDaoImpl.class
 com\atroshonok\dao\entities\Cart.class

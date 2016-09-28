@@ -83,53 +83,94 @@ public class ProductVO implements Serializable {
 	return true;
     }
 
+    /**
+     * @return the id
+     */
     public Long getId() {
-        return id;
+	return id;
     }
 
+    /**
+     * @param id
+     *            the id to set
+     */
     public void setId(Long id) {
-        this.id = id;
+	this.id = id;
     }
 
+    /**
+     * @return the name
+     */
     public String getName() {
-        return name;
+	return name;
     }
 
+    /**
+     * @param name
+     *            the name to set
+     */
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
+    /**
+     * @return the price
+     */
     public Double getPrice() {
-        return price;
+	return price;
     }
 
+    /**
+     * @param price
+     *            the price to set
+     */
     public void setPrice(Double price) {
-        this.price = price;
+	this.price = price;
     }
 
+    /**
+     * @return the productCategoryId
+     */
     public Long getProductCategoryId() {
-        return ProductCategoryId;
+	return ProductCategoryId;
     }
 
+    /**
+     * @param productCategoryId
+     *            the productCategoryId to set
+     */
     public void setProductCategoryId(Long productCategoryId) {
-        ProductCategoryId = productCategoryId;
+	ProductCategoryId = productCategoryId;
     }
 
+    /**
+     * @return the count
+     */
     public Integer getCount() {
-        return count;
+	return count;
     }
 
+    /**
+     * @param count
+     *            the count to set
+     */
     public void setCount(Integer count) {
-        this.count = count;
+	this.count = count;
     }
 
+    /**
+     * @return the description
+     */
     public String getDescription() {
-        return description;
+	return description;
     }
 
+    /**
+     * @param description
+     *            the description to set
+     */
     public void setDescription(String description) {
-        this.description = description;
+	this.description = description;
     }
 
-    
 }

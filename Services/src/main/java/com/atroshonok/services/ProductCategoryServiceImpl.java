@@ -4,11 +4,12 @@
 package com.atroshonok.services;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,6 @@ import com.atroshonok.dao.exceptions.DaoException;
  * @author Ivan Atroshonok
  *
  */
-// TODO remake Exceptions handling
 
 @Service
 @Transactional
@@ -44,10 +44,10 @@ public class ProductCategoryServiceImpl implements IProductCategoryService {
     @Override
     public List<ProductCategory> getAllProductCategories() {
 	log.info("Starting method getAllProductCategories()");
-	List<ProductCategory> categories = null;
+	List<ProductCategory> categories = new ArrayList<>();
 	try {
 	    categories = productCategoryDao.getAllProductCategories();
-	} catch (HibernateException e) {
+	} catch (DataAccessException e) {
 	    log.error("Error getting all product categories from database: ", e);
 	}
 	log.info("Ending method getAllProductCategories()");

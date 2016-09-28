@@ -26,6 +26,7 @@ public class DaoImpl<T> implements IDao<T> {
 
     }
 
+    @Override
     public void saveOrUpdate(T t) throws DaoException {
 	log.info("SaveOrUpdate entity: " + t.getClass().getName());
 	try {
@@ -37,6 +38,7 @@ public class DaoImpl<T> implements IDao<T> {
 	}
     }
 
+    @Override
     public Serializable save(T t) throws DaoException {
 	log.info("Save entity: " + t.getClass().getName());
 	Serializable id = null;
@@ -50,6 +52,7 @@ public class DaoImpl<T> implements IDao<T> {
 	return id;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public T get(Serializable id) throws DaoException {
 	log.info("Get entity by id: " + id);
@@ -64,6 +67,7 @@ public class DaoImpl<T> implements IDao<T> {
 	return t;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public T load(Serializable id) throws DaoException {
 	log.info("Load entity by id: " + id);
@@ -78,6 +82,7 @@ public class DaoImpl<T> implements IDao<T> {
 	return t;
     }
 
+    @Override
     public void delete(T t) throws DaoException {
 	log.info("Delete entity: " + t);
 	try {
@@ -88,14 +93,19 @@ public class DaoImpl<T> implements IDao<T> {
 	    throw new DaoException(e);
 	}
     }
-    
+
+    /**
+     * Returns the object of the current hibernate session.
+     * 
+     * @return
+     */
+    public Session getSession() {
+	return sessionFactory.getCurrentSession();
+    }
+
     @SuppressWarnings("unchecked")
     private Class<T> getPersistentClass() {
 	return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-    }
-    
-    public Session getSession() {
-	return sessionFactory.getCurrentSession();
     }
 
 }

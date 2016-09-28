@@ -9,10 +9,8 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.NoSuchMessageException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,14 +45,13 @@ public class UserServiceImpl implements IUserService {
      * @throws ServiceException
      */
     @Override
-    public User getUserByLoginPassword(String login, String password) throws ServiceException {
+    public User getUserByLoginPassword(String login, String password) {
 	log.info("Starting method getUserByLoginPassword(String login, String password)");
 	User user = null;
 	try {
 	    user = userDao.getUserByLoginPassword(login, password);
-	} catch (DaoException e) {
+	} catch (DataAccessException e) {
 	    log.error("Error getting user by login and password.");
-	    throw new ServiceException(e.getMessage(), e);
 	}
 	log.info("Ending method getUserByLoginPassword(String login, String password)");
 	return user;

@@ -24,10 +24,10 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `userID_FK` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`orderID`),
   KEY `userID_FK` (`userID_FK`),
-  CONSTRAINT `userID_FK` FOREIGN KEY (`userID_FK`) REFERENCES `users` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  CONSTRAINT `userID_FK` FOREIGN KEY (`userID_FK`) REFERENCES `users` (`userID`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Дамп данных таблицы rcshop_db.orders: ~16 rows (приблизительно)
+-- Дамп данных таблицы rcshop_db.orders: ~17 rows (приблизительно)
 DELETE FROM `orders`;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
 INSERT INTO `orders` (`orderID`, `orderState`, `sumPrice`, `userID_FK`) VALUES
@@ -46,20 +46,26 @@ INSERT INTO `orders` (`orderID`, `orderState`, `sumPrice`, `userID_FK`) VALUES
 	(16, 'OPEN', 1200, 2),
 	(17, 'OPEN', 1200, 2),
 	(18, 'OPEN', 1926.8, 2),
-	(19, 'OPEN', 707.36, 2);
+	(19, 'OPEN', 707.36, 2),
+	(20, 'OPEN', 300, 2),
+	(21, 'OPEN', 300, 2),
+	(22, 'OPEN', 300, 2),
+	(23, 'OPEN', 600, 2),
+	(24, 'OPEN', 600, 8),
+	(25, 'OPEN', 330, 2);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 
 -- Дамп структуры для таблица rcshop_db.orders_orderlines
 CREATE TABLE IF NOT EXISTS `orders_orderlines` (
-  `orderID_FK` bigint(20) NOT NULL,
-  `orderLineID_FK` bigint(20) NOT NULL,
+  `orderID_FK` bigint(20) NOT NULL DEFAULT '0',
+  `orderLineID_FK` bigint(20) NOT NULL DEFAULT '0',
   KEY `orderLineID_FK` (`orderLineID_FK`),
   KEY `orderID_FK` (`orderID_FK`),
-  CONSTRAINT `orderID_FK` FOREIGN KEY (`orderID_FK`) REFERENCES `orders` (`orderID`),
-  CONSTRAINT `orderLineID_FK` FOREIGN KEY (`orderLineID_FK`) REFERENCES `order_lines` (`OrderLineID`)
+  CONSTRAINT `FK_orders_orderlines_order_lines` FOREIGN KEY (`orderLineID_FK`) REFERENCES `order_lines` (`OrderLineID`),
+  CONSTRAINT `FK_orders_orderlines_orders` FOREIGN KEY (`orderID_FK`) REFERENCES `orders` (`orderID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Дамп данных таблицы rcshop_db.orders_orderlines: ~28 rows (приблизительно)
+-- Дамп данных таблицы rcshop_db.orders_orderlines: ~4 rows (приблизительно)
 DELETE FROM `orders_orderlines`;
 /*!40000 ALTER TABLE `orders_orderlines` DISABLE KEYS */;
 INSERT INTO `orders_orderlines` (`orderID_FK`, `orderLineID_FK`) VALUES
@@ -90,7 +96,13 @@ INSERT INTO `orders_orderlines` (`orderID_FK`, `orderLineID_FK`) VALUES
 	(18, 21),
 	(18, 22),
 	(19, 23),
-	(19, 24);
+	(19, 24),
+	(20, 25),
+	(21, 26),
+	(22, 27),
+	(23, 28),
+	(24, 29),
+	(25, 30);
 /*!40000 ALTER TABLE `orders_orderlines` ENABLE KEYS */;
 
 -- Дамп структуры для таблица rcshop_db.order_lines
@@ -100,10 +112,10 @@ CREATE TABLE IF NOT EXISTS `order_lines` (
   `productID_FK` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`OrderLineID`),
   KEY `productID_FK` (`productID_FK`),
-  CONSTRAINT `productID_FK` FOREIGN KEY (`productID_FK`) REFERENCES `products` (`productID`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  CONSTRAINT `productID_FK` FOREIGN KEY (`productID_FK`) REFERENCES `products` (`productID`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Дамп данных таблицы rcshop_db.order_lines: ~24 rows (приблизительно)
+-- Дамп данных таблицы rcshop_db.order_lines: ~25 rows (приблизительно)
 DELETE FROM `order_lines`;
 /*!40000 ALTER TABLE `order_lines` DISABLE KEYS */;
 INSERT INTO `order_lines` (`OrderLineID`, `count`, `productID_FK`) VALUES
@@ -130,7 +142,13 @@ INSERT INTO `order_lines` (`OrderLineID`, `count`, `productID_FK`) VALUES
 	(21, 1, 3),
 	(22, 1, 11),
 	(23, 2, 3),
-	(24, 1, 11);
+	(24, 1, 11),
+	(25, 1, 2),
+	(26, 1, 2),
+	(27, 1, 2),
+	(28, 2, 2),
+	(29, 2, 2),
+	(30, 1, 1);
 /*!40000 ALTER TABLE `order_lines` ENABLE KEYS */;
 
 -- Дамп структуры для таблица rcshop_db.products
@@ -143,15 +161,15 @@ CREATE TABLE IF NOT EXISTS `products` (
   `categoryID_FK` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`productID`),
   KEY `categoryID_FK` (`categoryID_FK`),
-  CONSTRAINT `categoryID_FK` FOREIGN KEY (`categoryID_FK`) REFERENCES `product_categories` (`categoryID`) ON DELETE NO ACTION ON UPDATE CASCADE
+  CONSTRAINT `categoryID_FK` FOREIGN KEY (`categoryID_FK`) REFERENCES `product_categories` (`categoryID`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Дамп данных таблицы rcshop_db.products: ~12 rows (приблизительно)
 DELETE FROM `products`;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
 INSERT INTO `products` (`productID`, `count`, `description`, `name`, `price`, `categoryID_FK`) VALUES
-	(1, 100, 'Remote controle airplane. Ready to fly.', 'Dynam Catalina', 330.00, 2),
-	(2, 31, 'Brushless electrical remote controle car for drift. Almost ready to go.', 'MST-01D', 300.00, 1),
+	(1, 50, 'Remote controle airplane. Ready to fly.', 'Dynam Catalina', 330.00, 2),
+	(2, 70, 'Brushless electrical remote controle car for drift. Almost ready to go.', 'MST-01D', 300.00, 1),
 	(3, 50, 'Remote controle airplane. Ready to fly.', 'Piper J3 Cup', 280.56, 2),
 	(4, 10, 'Brushed electrical remote control car for drift. Ready to go.', 'Maverick Strada DC', 250.00, 1),
 	(5, 3, 'Googles for First Person View flyings with head tracker.', 'FAT Shark Altitude', 409.00, 3),
@@ -160,7 +178,7 @@ INSERT INTO `products` (`productID`, `count`, `description`, `name`, `price`, `c
 	(8, 10, 'Remote controle airplane. Ready to fly.', 'Dynam Cesna', 250.75, 2),
 	(9, 10, 'Fly controller.', 'CC3D', 15.35, 4),
 	(10, 10, 'Remote controle transmitter.', 'Turnigy 9XR', 50.00, 4),
-	(11, 10, 'The Supermarine Spitfire is THE defining aircraft of World War 2 and following on from the Mk1a the Mk5 represents the pinnacle of early Spitfire development.   After the defensive campaign of the Battle of Britain, the RAF, RCAF and the USAAF moved steadily onto the offensive and the Mk5 became part of the spearhead of overall allied strategy, including air operations over France, North Africa and later during the Italian campaign.   Better armed, faster and more maneuverable, the Mk5 gave the RAF and other allied air forces including the USAAF, a decisive advantage over the Luftwaffe’s Bf109E and was on equal terms with the Bf109F, battling both of these axis aircraft in the ETO (European Theatre of Operations) as well as in the air war over the deserts of North Africa and the Mediterranean between 1941 and 1943.  Loved by its pilots and feared by the enemy, the Mk5 Spitfire’s reputation as a thoroughbred fighter was hard earned and well deserved and it will always have a special place in military aviation history as a result.', 'Durafly™ Spitfire Mk5 1100mm (PnF) Desert Scheme', 146.24, 2),
+	(11, 100, 'The Supermarine Spitfire is THE defining aircraft of World War 2 and following on from the Mk1a the Mk5 represents the pinnacle of early Spitfire development.   After the defensive campaign of the Battle of Britain, the RAF, RCAF and the USAAF moved steadily onto the offensive and the Mk5 became part of the spearhead of overall allied strategy, including air operations over France, North Africa and later during the Italian campaign.   Better armed, faster and more maneuverable, the Mk5 gave the RAF and other allied air forces including the USAAF, a decisive advantage over the Luftwaffe’s Bf109E and was on equal terms with the Bf109F, battling both of these axis aircraft in the ETO (European Theatre of Operations) as well as in the air war over the deserts of North Africa and the Mediterranean between 1941 and 1943.  Loved by its pilots and feared by the enemy, the Mk5 Spitfire’s reputation as a thoroughbred fighter was hard earned and well deserved and it will always have a special place in military aviation history as a result.', 'Durafly™ Spitfire Mk5 1100mm (PnF) Desert Scheme', 146.24, 2),
 	(12, 10, 'Racing quadrocopter.', 'ZMR250', 125.56, 2);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 
@@ -196,17 +214,20 @@ CREATE TABLE IF NOT EXISTS `users` (
   `userType` enum('ADMIN','CLIENT') COLLATE utf8_unicode_ci DEFAULT 'CLIENT',
   PRIMARY KEY (`userID`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Дамп данных таблицы rcshop_db.users: ~5 rows (приблизительно)
+-- Дамп данных таблицы rcshop_db.users: ~7 rows (приблизительно)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`userID`, `age`, `email`, `firstName`, `isInBlackList`, `lastName`, `login`, `password`, `registrDate`, `shippingAddress`, `userType`) VALUES
 	(1, 29, 'atrwanya@tut.by', 'Иван', 'N', 'Атрошонок', 'admin', '21232f297a57a5a743894a0e4a801fc3', '2016-06-02 00:00:00', 'Заславль', 'ADMIN'),
 	(2, 29, 'atrwanya@tut.by', 'Иван', 'N', 'Атрошонок', 'user', 'ee11cbb19052e40b07aac0ca060c23ee', '2016-06-02 00:00:00', 'Заславль', 'CLIENT'),
+	(3, 26, 'KLiapko@gmail.com', 'Ekaterina', 'N', 'Atroshonok', 'KLiapko', 'f8901d98ab94feaba726f8e3a8ec6d49', '2016-09-20 11:40:34', 'Zaslavl', 'CLIENT'),
+	(4, 33, 'victor@tut.by', 'victor', 'N', 'v', 'Victor', 'ffc150a160d37e92012c196b6af4160d', '2016-09-22 15:29:52', 'Moscow', 'CLIENT'),
 	(5, 29, 'iroman@tut.by', 'Roma', 'N', 'Игнатович', 'IRoman', 'e10adc3949ba59abbe56e057f20f883e', '2016-08-30 16:35:25', 'Минск', 'CLIENT'),
-	(12, 26, 'KLiapko@gmail.com', 'Ekaterina', 'N', 'Atroshonok', 'KLiapko', 'f8901d98ab94feaba726f8e3a8ec6d49', '2016-09-20 11:40:34', 'Zaslavl', 'CLIENT'),
-	(13, 33, 'victor@tut.by', 'victor', 'N', 'v', 'Victor', 'ffc150a160d37e92012c196b6af4160d', '2016-09-22 15:29:52', 'Moscow', 'CLIENT');
+	(6, 15, 'em@gmail.com', 'ghghf', 'N', 'jjhghf', 'Nina45', '96e79218965eb72c92a549dd5a330112', '2016-09-22 18:46:07', 'ggggg', 'CLIENT'),
+	(7, 50, 'johnuoren@tut.com', 'q', 'N', 'q', 'johnuoren', 'd6dacc3e6d7eb078eeb89211d463d1ff', '2016-09-22 19:43:21', 'q', 'CLIENT'),
+	(8, 45, 'victor@tut.by', 'v', 'N', 'u', 'Batman', 'ec0e2603172c73a8b644bb9456c1ff6e', '2016-09-27 00:09:39', 'r', 'CLIENT');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

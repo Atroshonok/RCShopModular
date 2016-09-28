@@ -16,7 +16,7 @@
   Create a database using one of SQL Scripts from the root folder of the project.
   rcshop_db_DAMP_DB_22_09_2016.sql - creates a database with the name "rcshop_db" and fills it the data.
   rcshop_db_TABLES_DAMP_DB_22_09_2016.sql - creates the only tables with data. In this case you must create a database yourselves.
-  
+     
   Open the RCShopModular\WebApp\src\main\webapp\WEB-INF\database.properties file and change the database settings.
   You need to change the username, password and url values.
  ************************************************************************************************** 
@@ -24,8 +24,11 @@
     jdbc.username = root
     jdbc.password = golfik3
  ************************************************************************************************** 
-  
   Here rcshop_db is a name of the database. You should specify your database name (in the case if you have used your name of database).
+
+  Open the \RCShopModular\DAO\src\test\resources\database-test.properties file and change the database settings.
+  You need to change the username, password and url values as you could see above.
+  
   Now you need to register a user in the tomcat-users.xml file (you can find this file in a folder conf of Tomcat server):
  **************************************************************************************************   
 	 <tomcat-users>
@@ -75,7 +78,7 @@
   Build the project, using a console command: 
 	mvn clean install
   Deploy the application, using a console command:
-    tomcat7: deploy
+    tomcat7:deploy
 	
   Now you can start the web application using next url in your web browser: http://localhost:8080/MRCShop/
   
@@ -83,5 +86,8 @@
   Change the settings of the database.properties file how it was shown above.
   Copy this file to the folder "conf" of Tomcat server.
   Start the server.
+  
+  Use the login "user" and the password "user" to have the role as client.
+  Use the login "admin" and the password "admin" to have the role as admin.
   
 	
