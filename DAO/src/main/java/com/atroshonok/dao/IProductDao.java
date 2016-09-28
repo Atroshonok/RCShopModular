@@ -38,7 +38,7 @@ public interface IProductDao extends IDao<Product> {
     List<Product> getProductsByClientFilter(ClientFilter clientFilter);
 
     /**
-     * Returns the number of products.
+     * Returns a number of the all products.
      * 
      * @return
      */
