@@ -23,6 +23,7 @@ public class ProductCategoryDaoImpl extends DaoImpl<ProductCategory> implements 
     public List<ProductCategory> getAllProductCategories() {
 	String hql = "FROM ProductCategory c";
 	Query query = getSession().createQuery(hql);
+        // you can return query list here (and in other similar cases) without saving it to temporary variable
 	List<ProductCategory> results = query.list();
 	return results;
     }

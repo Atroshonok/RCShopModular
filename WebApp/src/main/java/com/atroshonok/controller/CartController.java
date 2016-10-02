@@ -75,6 +75,8 @@ public class CartController {
     public String removeProductFromCart(@PathVariable("productId") Long productId, HttpSession session) {
 	Product product = productService.getProductById(productId);
 	Cart cart = (Cart) session.getAttribute(SESSION_ATTR_CART);
+		// what if allProductsCount was 0 or negative?
+		// this would be clearly error and it should be processed
 	if ((product != null) && (cart.getAllProductsCount() > 0)) {
 
 	    removeOrderedProduct(product, cart);
@@ -144,6 +146,8 @@ public class CartController {
 	if (allProductsCount > 0) {
 	    cart.setAllProductsCount(allProductsCount - 1);
 	}
+		// what if allProductsCount was 0 or negative?
+		// this would be clearly error and it should be processed
     }
 
     // Returns a message by key using a locale

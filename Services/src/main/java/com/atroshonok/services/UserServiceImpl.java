@@ -38,6 +38,7 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private MessageSource messageSource;
 
+	// java doc here and in lot of other cases is out of date
     /**
      * Returns an object of user class by login and password. If user is not
      * found in a database this method returns null
@@ -58,6 +59,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+	// ToDatabase is extra, please rename the method
     public void saveUserToDataBase(User user) throws ErrorAddingUserServiceException, LoginAlreadyExistServiceException {
 	log.info("Starting method saveUserToDataBase(User user)");
 	try {
@@ -102,6 +104,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+	// please rename to updateUser()
     public void updateUserData(User user) throws ErrorUpdatingUserServiceException {
 	log.info("Starting method updateUserData(User user)");
 	try {

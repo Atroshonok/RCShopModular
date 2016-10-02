@@ -87,9 +87,10 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+	// ToDatabase is extra. please rename the method
     public Serializable addNewProductToDatabase(Product product) throws ErrorAddingPoductServiceException {
 	log.info("Starting method addNewProductToDatabase(Product product)");
-	Serializable id = null;
+	Serializable id = null; //Warning:(93, 20) Variable 'id' initializer 'null' is redundant - thanks to mu Intellij IDEA
 	try {
 	    id = productDao.save(product);
 	    log.info("Saved product to DB: " + product);

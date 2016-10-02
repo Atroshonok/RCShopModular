@@ -1,3 +1,4 @@
+// such empty comments should be removed
 /**
  * 
  */
@@ -56,6 +57,7 @@ public class ProductDaoImpl extends DaoImpl<Product> implements IProductDao {
     }
 
     @Override
+	// what about getFilteredProductsCount
     public long getProductsCountAccordingClientFilter(ClientFilter clientFilter) {
 	Criteria criteria = getSession().createCriteria(Product.class);
 	createCriteriaAccordingClientFilter(clientFilter, criteria);
@@ -90,6 +92,14 @@ public class ProductDaoImpl extends DaoImpl<Product> implements IProductDao {
     }
 
     private void addSortingConditions(ClientFilter clientFilter, Criteria criteria) {
+	// ok, what if someone sets sorting to not 1,2,3? For instance by mistake
+	//
+	// moreover - it should not be number, but something more meaningful
+	// consider replacing it with polymorphism
+	// http://refactoring.com/catalog/replaceConditionalWithPolymorphism.html
+	//
+	// and moreover - order field and direction should be divided into different variables
+
 	if (clientFilter.getSorting() != 0) {
 	    if (clientFilter.getSorting() == 1) {
 		criteria.addOrder(Order.asc("price"));
@@ -115,6 +125,8 @@ public class ProductDaoImpl extends DaoImpl<Product> implements IProductDao {
 
     private void addCategoryIdRestrictions(ClientFilter clientFilter, Criteria criteria) {
 	Disjunction disjun = Restrictions.disjunction();
+		//consider using Java 8 Stream API here
+		// ad not only here - it's cool stuff
 	for (int i = 0; i < clientFilter.getFilterCategoriesId().size(); i++) {
 	    Long categoryId = clientFilter.getFilterCategoriesId().get(i);
 	    Criterion criterion = (Criterion) Restrictions.eq("category.id", categoryId);

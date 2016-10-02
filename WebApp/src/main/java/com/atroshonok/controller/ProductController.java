@@ -118,6 +118,7 @@ public class ProductController {
      * @return
      */
     @RequestMapping(path = "/delete/{productId}", method = RequestMethod.GET)
+	// typo - Delete
     public String getDeteteProductDialog(@PathVariable("productId") Long productId, Model model, Locale locale) {
 	Product product = productService.getProductById(productId);
 	model.addAttribute("product", product);
@@ -133,7 +134,7 @@ public class ProductController {
      * @param locale
      * @return
      */
-    @RequestMapping(path = "/delete/{productId}", method = RequestMethod.POST)
+    @RequestMapping(path = "/delete/{productId}", method = RequestMethod.POST) // should be DELETE method
     public String deteteProductFromDB(@PathVariable("productId") Long productId, RedirectAttributes redirectAttributes, Locale locale) {
 	Product product = productService.getProductById(productId);
 	try {
@@ -210,6 +211,7 @@ public class ProductController {
 	ProductVO editedProduct = new ProductVO(product);
 	List<ProductCategory> categoryList = productCategoryService.getAllProductCategories();
 	model.addAttribute(ATTRIBUTE_CATEGORY_LIST, categoryList);
+		// can be also extracted as constant
 	model.addAttribute("editedProduct", editedProduct);
 	model.addAttribute(ATTRIBUTE_FRAGMENT_PATH, AdminConfigManager.getProperty("path.fragment.editproductform"));
 	return "admin";
@@ -361,6 +363,7 @@ public class ProductController {
 	if (requestItemsPerPage != null) {
 	    newItemsPerPage = Integer.parseInt(requestItemsPerPage);
 	}
+		// Number objects are compared by != not bue equals
 	if ((newItemsPerPage != null) && (newItemsPerPage != clientFilter.getItemsPerPage())) {
 	    Integer oldStartPosition = (clientFilter.getCurrentPage() - 1) * clientFilter.getItemsPerPage();
 	    Integer newCurrentPage = (oldStartPosition / newItemsPerPage) + 1;
@@ -379,6 +382,7 @@ public class ProductController {
     }
 
     // Returns the list of the page numbers for the pagination
+	// do you really need the list for number of pages only only 1 number - the count of it?
     private List<Integer> createPageNumberList(long totalPages, HttpServletRequest request, ClientFilter clientFilter) {
 	List<Integer> list = new ArrayList<>();
 	long length = totalPages / clientFilter.getItemsPerPage();
@@ -391,6 +395,7 @@ public class ProductController {
 	return list;
     }
 
+	// bad method name. consider renaming as populateProduct()
     private void changheProductFields(Product product, ProductVO editedProduct) {
 	product.setName(editedProduct.getName());
 	product.setPrice(editedProduct.getPrice());

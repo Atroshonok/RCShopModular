@@ -51,6 +51,7 @@ public class OrderController {
     @RequestMapping(path = "/orders/all/{userId}", method = RequestMethod.GET)
     public String showUserOrders(@PathVariable("userId") Integer userId, Model model, Locale locale) {
 	List<Order> orders = orderService.getAllUserOrders(userId);
+	// please change conditions, first you need to check for null and only after that if it's empty
 	if (!orders.isEmpty() && (orders != null)) {
 	    model.addAttribute("orders", orders);
 	} else {
@@ -70,10 +71,12 @@ public class OrderController {
     public String addNewOrder(HttpSession session, RedirectAttributes redirectAttributes, Locale locale) {
 	try {
 	    Cart cart = (Cart) session.getAttribute(SESSION_ATTR_NAME_CART);
+		// consider refactoring
+		// you can output below block of code to a method that returns
 	    if (cart.getAllProductsCount() > 0) {
 		Order order = initNewOrder(session, cart);
 		orderService.saveOrderData(order);
-		// TODO Проверка наличия товара на складе
+		// TODO Проверка наличия товара на складе // please use English :)
 		cart = updateSessionCart(cart, order);
 		session.setAttribute(SESSION_ATTR_NAME_CART, cart);
 		redirectAttributes.addFlashAttribute(REQUEST_ATTR_NAME_MESSAGE, messageSource.getMessage("message.orderadded", null, locale));
@@ -96,11 +99,16 @@ public class OrderController {
 	    order.setOrderState(OrderState.OPEN);
 	    order.setOrderLines(cart.getOrderLines());
 	}
+		// what if user is null?
+		// is that application error?
+		// if so - it should be precessed here
 	return order;
     }
 
     private Cart updateSessionCart(Cart cart, Order order) {
-	List<Order> tempOrders = cart.getOrders();
+		// why are you returning new Cart object here?
+		// you should just update existing cart and return nothing
+		List<Order> tempOrders = cart.getOrders();
 	tempOrders.add(order);
 	cart = new Cart();
 	cart.setOrders(tempOrders);

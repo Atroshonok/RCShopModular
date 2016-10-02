@@ -47,6 +47,8 @@ public class AccessLevelSecurityFilter implements Filter {
 	String requestedURI = httpRequest.getRequestURI();
 	log.debug("Requested URI: " + requestedURI);
 
+		// consider extracting conditions to a method
+		// http://refactoring.com/catalog/decomposeConditional.html
 	if ((deniedClientURIs.contains(requestedURI) && userType.equals(UserType.CLIENT)) || 
 		(deniedAdminURIs.contains(requestedURI) && userType.equals(UserType.ADMIN)) || 
 			(deniedGuestURIs.contains(requestedURI) && userType.equals(UserType.GUEST))) {
