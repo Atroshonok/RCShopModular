@@ -11,11 +11,13 @@ import java.util.List;
  */
 public class ClientFilter {
     // the default client filter values
+    // you can omit filter prefix in these varialbes, i.e. categoryIds, priceFrom, priceTo
     private List<Long> filterCategoriesId = new ArrayList<>();
     private Double filterPriceFrom = 0.0;
     private Double filterPriceTo = 100000.0;
     private Integer itemsPerPage = 1;
     private Integer currentPage = 1;
+    // consider renaming to orderBy
     private Integer sorting = 0;
 
     public ClientFilter() {

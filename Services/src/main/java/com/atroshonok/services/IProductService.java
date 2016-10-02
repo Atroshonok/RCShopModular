@@ -56,6 +56,7 @@ public interface IProductService {
      * @return
      * @throws ErrorAddingPoductServiceException
      */
+    // ToDatabase is extra, please rename
     Serializable addNewProductToDatabase(Product product) throws ErrorAddingPoductServiceException;
 
     /**

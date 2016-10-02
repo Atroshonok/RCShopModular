@@ -11,6 +11,7 @@ public class ProductVO implements Serializable {
     private Long id;
     private String name;
     private Double price;
+	// variable name should start with lowercase
     private Long ProductCategoryId;
     private Integer count;
     private String description;
@@ -19,6 +20,7 @@ public class ProductVO implements Serializable {
 	super();
     }
 
+	//bad formatting, please add alignment
     public ProductVO(Product product) {
 	this.id = product.getId();
 	this.name = product.getName();
@@ -30,6 +32,7 @@ public class ProductVO implements Serializable {
 
     @Override
     public int hashCode() {
+		//bad formatting, please add indent here and in other classes
 	final int prime = 31;
 	int result = 1;
 	result = prime * result + ((ProductCategoryId == null) ? 0 : ProductCategoryId.hashCode());

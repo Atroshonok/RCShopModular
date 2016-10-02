@@ -166,6 +166,7 @@ public class UserController {
 	session.setAttribute(SESSION_ATTR_USER, client);
     }
 
+	// consider renaming to authenticate()
     private User getUserByRequestParam(User user) throws ServiceException {
 	String enteredLogin = user.getLogin();
 	String enteredPass = user.getPassword();

@@ -32,6 +32,8 @@ public interface IUserDao extends IDao<User> {
      * @param login
      * @return
      */
+    // why do you return list from this method?
+    // shouldn't it be singular object?
     List<User> getUsersByLogin(String login);
 
 }

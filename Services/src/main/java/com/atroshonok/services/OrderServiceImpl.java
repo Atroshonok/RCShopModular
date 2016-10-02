@@ -41,6 +41,7 @@ public class OrderServiceImpl implements IOrderService {
 	try {
 	    orders = orderDao.getOrdersByUserId(userId);
 	} catch (DataAccessException e) {
+		// hiding exceptions is bad practise
 	    log.error("Error getting user orders by user id = " + userId, e);
 	}
 	log.info("Ending method getAllUserOrders(long userId)");
@@ -49,6 +50,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
+	// consider renaming to saveOrder()
     public void saveOrderData(Order order) throws ErrorSavingOrderServiceException {
 	log.info("Starting method saveOrderData(Order order)");
 	try {
