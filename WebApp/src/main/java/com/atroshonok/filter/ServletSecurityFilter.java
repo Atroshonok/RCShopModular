@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import com.atroshonok.dao.entities.UserType;
+import com.atroshonok.dao.enums.UserType;
 
 public class ServletSecurityFilter implements Filter {
     private static final String SESSION_ATTR_USER_TYPE = "userType";
@@ -41,6 +41,5 @@ public class ServletSecurityFilter implements Filter {
     @Override
     public void destroy() {
     }
-
 
 }

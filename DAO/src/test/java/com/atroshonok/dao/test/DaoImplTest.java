@@ -26,7 +26,7 @@ public class DaoImplTest {
     private IProductCategoryDao productCategoryDao;
     @Autowired
     private SessionFactory sessionFactory;
-    
+
     private Session session;
     private ProductCategory categoryA;
     private ProductCategory categoryB;
@@ -34,20 +34,19 @@ public class DaoImplTest {
     private ProductCategory categoryD;
     private ProductCategory categoryE;
 
-
     @Test
     public void testSaveOrUpdate() throws DaoException {
 	categoryA = TestEntityFactory.createProductCategory("Planes");
 	session = sessionFactory.getCurrentSession();
 	session.save(categoryA);
 	flushAndClearSession();
-	
+
 	categoryA.setCategoryName("Helicopters");
 	productCategoryDao.saveOrUpdate(categoryA);
-	
+
 	flushAndClearSession();
 	ProductCategory actualCategoryA = (ProductCategory) session.get(ProductCategory.class, categoryA.getId());
-	
+
 	assertEquals(categoryA, actualCategoryA);
     }
 
@@ -62,12 +61,12 @@ public class DaoImplTest {
 	categoryB = TestEntityFactory.createProductCategory("Phones");
 	Long categoryId = (Long) productCategoryDao.save(categoryB);
 	categoryB.setId(categoryId);
-	
+
 	flushAndClearSession();
 	ProductCategory actualCategoryB = (ProductCategory) session.get(ProductCategory.class, categoryId);
-	
+
 	assertEquals(categoryB, actualCategoryB);
-	
+
 	flushAndClearSession();
     }
 
@@ -79,7 +78,7 @@ public class DaoImplTest {
 	flushAndClearSession();
 	ProductCategory actualCategoryC = productCategoryDao.get(categoryC.getId());
 	assertEquals(categoryC, actualCategoryC);
-	
+
 	ProductCategory actualCategoryC1 = productCategoryDao.get(WRONG_CATEGORY_ID);
 	assertNull(actualCategoryC1);
     }
@@ -93,7 +92,7 @@ public class DaoImplTest {
 	ProductCategory actualCategoryD = productCategoryDao.load(categoryD.getId());
 	assertEquals(categoryD, actualCategoryD);
     }
-    
+
     @Test(expected = DaoException.class)
     public void testLoadWrong() throws DaoException {
 	productCategoryDao.load(WRONG_CATEGORY_ID);
@@ -106,12 +105,12 @@ public class DaoImplTest {
 	session.save(categoryE);
 	flushAndClearSession();
 	categoryE = (ProductCategory) session.get(ProductCategory.class, categoryE.getId());
-	
+
 	productCategoryDao.delete(categoryE);
 	flushAndClearSession();
-	
+
 	ProductCategory actualCategoryE = (ProductCategory) session.get(ProductCategory.class, categoryE.getId());
-	
+
 	assertNull(actualCategoryE);
     }
 

@@ -12,6 +12,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
 
+import com.atroshonok.dao.enums.UserType;
+
 /**
  * @author Ivan Atroshonok
  *
@@ -122,7 +124,7 @@ public class User implements Serializable, Entity {
     @Override
     public String toString() {
 	return "User [id=" + id + ", registrDate=" + registrDate + ", login=" + login + ", password=" + password + ", email=" + email + ", firstname=" + firstname + ", lastname=" + lastname + ", shippingAddress=" + shippingAddress + ", age=" + age + ", userType=" + userType + ", isInBlackList="
-		+ isInBlackList + "]";
+	        + isInBlackList + "]";
     }
 
     @Override
@@ -201,46 +203,90 @@ public class User implements Serializable, Entity {
 	return true;
     }
 
+    /**
+     * @param id
+     *            the id to set
+     */
     public void setId(Long id) {
 	this.id = id;
     }
 
+    /**
+     * @param registrDate
+     *            the registrDate to set
+     */
     public void setRegistrDate(Date registrDate) {
 	this.registrDate = registrDate;
     }
 
+    /**
+     * @param login
+     *            the login to set
+     */
     public void setLogin(String login) {
 	this.login = login;
     }
 
+    /**
+     * @param password
+     *            the password to set
+     */
     public void setPassword(String password) {
 	this.password = password;
     }
 
+    /**
+     * @param email
+     *            the email to set
+     */
     public void setEmail(String email) {
 	this.email = email;
     }
 
+    /**
+     * @param firstname
+     *            the firstname to set
+     */
     public void setFirstname(String firstname) {
 	this.firstname = firstname;
     }
 
+    /**
+     * @param lastname
+     *            the lastname to set
+     */
     public void setLastname(String lastname) {
 	this.lastname = lastname;
     }
 
+    /**
+     * @param shippingAddress
+     *            the shippingAddress to set
+     */
     public void setShippingAddress(String shippingAddress) {
 	this.shippingAddress = shippingAddress;
     }
 
+    /**
+     * @param age
+     *            the age to set
+     */
     public void setAge(Integer age) {
 	this.age = age;
     }
 
+    /**
+     * @param userType
+     *            the userType to set
+     */
     public void setUserType(UserType userType) {
 	this.userType = userType;
     }
 
+    /**
+     * @param isInBlackList
+     *            the isInBlackList to set
+     */
     public void setIsInBlackList(Boolean isInBlackList) {
 	this.isInBlackList = isInBlackList;
     }

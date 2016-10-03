@@ -78,9 +78,10 @@ public class ProductController {
      * @param request
      * @param session
      * @return
+     * @throws ServiceException
      */
     @RequestMapping(path = "/all", method = RequestMethod.GET)
-    public String showProducts(HttpServletRequest request, HttpSession session) {
+    public String showProducts(HttpServletRequest request, HttpSession session) throws ServiceException {
 
 	List<ProductCategory> categories = productCategoryService.getAllProductCategories();
 	session.setAttribute(SESSION_ATTR_PRODUCT_CATEGORIES, categories);
@@ -170,14 +171,15 @@ public class ProductController {
      * @return
      */
     @RequestMapping(path = "/new", method = RequestMethod.POST)
-    public String saveNewProduct(ProductVO newProduct, @RequestParam(value = "productImage", required = false) MultipartFile image, RedirectAttributes redirectAttributes, Locale locale) {
+    public String saveNewProduct(ProductVO newProduct, @RequestParam(value = "productImage", required = false) MultipartFile image, RedirectAttributes redirectAttributes, HttpServletRequest request, Locale locale) {
 	Product product = new Product();
 	setProductFields(product, newProduct);
 	try {
 	    Long productId = (Long) productService.addNewProductToDatabase(product);
 	    if ((image != null) && !image.isEmpty()) {
 		validateImage(image);
-		saveImage("product-" + productId + ".jpg", image);
+		String imageName = "product-" + productId + ".jpg";
+		saveImage(imageName, image, request);
 	    }
 	    redirectAttributes.addFlashAttribute(REQUEST_ATTR_INFO_MESSAGE, getMessageByKey("message.newproductadded", locale));
 	} catch (IOException e) {
@@ -235,7 +237,7 @@ public class ProductController {
 	    log.error("Error updating product: " + product, e);
 	    redirectAttributes.addFlashAttribute(REQUEST_ATTR_INFO_MESSAGE, getMessageByKey("message.error.updateproduct", locale));
 	}
-	return "redirect:admin";
+	return "redirect:edit/" + product.getId();
     }
 
     @ExceptionHandler(Exception.class)
@@ -246,9 +248,11 @@ public class ProductController {
 	mav.setViewName("error/error");
 	return mav;
     }
-    
-    private void saveImage(String filename, MultipartFile image) throws IOException {
-	File file = new File(AdminConfigManager.getProperty("path.images") + filename);
+
+    private void saveImage(String filename, MultipartFile image, HttpServletRequest request) throws IOException {
+	String imagePath = request.getServletContext().getRealPath("/") + AdminConfigManager.getProperty("path.images.relative") + filename;
+
+	File file = new File(imagePath);
 	FileUtils.writeByteArrayToFile(file, image.getBytes());
     }
 

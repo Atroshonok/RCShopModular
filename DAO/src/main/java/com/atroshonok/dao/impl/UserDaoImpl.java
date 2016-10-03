@@ -1,13 +1,14 @@
 /**
  * 
  */
-package com.atroshonok.dao;
+package com.atroshonok.dao.impl;
 
 import java.util.List;
 
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
+import com.atroshonok.dao.IUserDao;
 import com.atroshonok.dao.entities.User;
 
 /**
@@ -20,7 +21,6 @@ public class UserDaoImpl extends DaoImpl<User> implements IUserDao {
 
     private static final String NAMED_PARAM_USER_LOGIN = "userLogin";
 
-    
     @Override
     public User getUserByLoginPassword(String login, String password) {
 	String hql = "SELECT u FROM User u WHERE u.login=:userLogin AND u.password=:userPassword";

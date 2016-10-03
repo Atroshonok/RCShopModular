@@ -11,8 +11,7 @@ public class ProductVO implements Serializable {
     private Long id;
     private String name;
     private Double price;
-	// variable name should start with lowercase
-    private Long ProductCategoryId;
+    private Long productCategoryId;
     private Integer count;
     private String description;
 
@@ -25,9 +24,19 @@ public class ProductVO implements Serializable {
 	this.id = product.getId();
 	this.name = product.getName();
 	this.price = product.getPrice();
-	this.ProductCategoryId = product.getCategory().getId();
+	this.productCategoryId = product.getCategory().getId();
 	this.count = product.getCount();
 	this.description = product.getDescription();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+	return "ProductVO [id=" + id + ", name=" + name + ", price=" + price + ", productCategoryId=" + productCategoryId + ", count=" + count + "]";
     }
 
     @Override
@@ -35,7 +44,7 @@ public class ProductVO implements Serializable {
 		//bad formatting, please add indent here and in other classes
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + ((ProductCategoryId == null) ? 0 : ProductCategoryId.hashCode());
+	result = prime * result + ((productCategoryId == null) ? 0 : productCategoryId.hashCode());
 	result = prime * result + ((count == null) ? 0 : count.hashCode());
 	result = prime * result + ((description == null) ? 0 : description.hashCode());
 	result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -53,10 +62,10 @@ public class ProductVO implements Serializable {
 	if (getClass() != obj.getClass())
 	    return false;
 	ProductVO other = (ProductVO) obj;
-	if (ProductCategoryId == null) {
-	    if (other.ProductCategoryId != null)
+	if (productCategoryId == null) {
+	    if (other.productCategoryId != null)
 		return false;
-	} else if (!ProductCategoryId.equals(other.ProductCategoryId))
+	} else if (!productCategoryId.equals(other.productCategoryId))
 	    return false;
 	if (count == null) {
 	    if (other.count != null)
@@ -135,7 +144,7 @@ public class ProductVO implements Serializable {
      * @return the productCategoryId
      */
     public Long getProductCategoryId() {
-	return ProductCategoryId;
+	return productCategoryId;
     }
 
     /**
@@ -143,7 +152,7 @@ public class ProductVO implements Serializable {
      *            the productCategoryId to set
      */
     public void setProductCategoryId(Long productCategoryId) {
-	ProductCategoryId = productCategoryId;
+	this.productCategoryId = productCategoryId;
     }
 
     /**

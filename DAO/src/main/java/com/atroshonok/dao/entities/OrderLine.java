@@ -18,30 +18,33 @@ import org.hibernate.annotations.Proxy;
 @Table(name = "order_lines")
 @Proxy(lazy = false)
 public class OrderLine implements Serializable, Entity {
-    
+
     private static final long serialVersionUID = 8812610388003827339L;
-    
+
     private Long id;
+
     @Id
     @Column(name = "OrderLineID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
-        return id;
+	return id;
     }
-    
+
     private Product product;
+
     @OneToOne
     @JoinColumn(name = "productID_FK", referencedColumnName = "productID")
     public Product getProduct() {
-        return product;
+	return product;
     }
-    
+
     private Integer count;
+
     @Column(name = "count")
     public Integer getCount() {
-        return count;
+	return count;
     }
-   
+
     public OrderLine() {
 	super();
     }
@@ -88,15 +91,28 @@ public class OrderLine implements Serializable, Entity {
 	return true;
     }
 
+    /**
+     * @param id
+     *            the id to set
+     */
     public void setId(Long id) {
-        this.id = id;
+	this.id = id;
     }
 
+    /**
+     * @param product
+     *            the product to set
+     */
     public void setProduct(Product product) {
-        this.product = product;
+	this.product = product;
     }
 
+    /**
+     * @param count
+     *            the count to set
+     */
     public void setCount(Integer count) {
-        this.count = count;
+	this.count = count;
     }
+
 }

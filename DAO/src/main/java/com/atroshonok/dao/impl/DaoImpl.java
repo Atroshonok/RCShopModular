@@ -1,4 +1,4 @@
-package com.atroshonok.dao;
+package com.atroshonok.dao.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.atroshonok.dao.IDao;
 import com.atroshonok.dao.exceptions.DaoException;
 
 /**

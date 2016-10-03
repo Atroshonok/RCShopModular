@@ -23,9 +23,9 @@
 			<c:import url="/WEB-INF/jsp/fragment/navbar.jsp" />
 		</div>	
 		<div class="rigthPart">
-			<c:if test="${registrInfoMessage ne null}">
+			<c:if test="${infoMessage ne null}">
 				<div class="alert alert-info" role="alert">
-					${registrInfoMessage}
+					${infoMessage}
 				</div>
 			</c:if>
 			<c:import url="/WEB-INF/jsp/fragment/registrform.jsp" />

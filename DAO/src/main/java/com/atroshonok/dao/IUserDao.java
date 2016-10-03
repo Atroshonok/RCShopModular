@@ -7,7 +7,7 @@ import com.atroshonok.dao.entities.User;
 public interface IUserDao extends IDao<User> {
 
     /**
-     * Returns user using the given login and password. Returns null if has
+     * Returns an user using the given login and password. Returns null if has
      * found no one.
      * 
      * @param login
@@ -26,7 +26,7 @@ public interface IUserDao extends IDao<User> {
 
     /**
      * Returns a list of the users if they have the same login like a method
-     * parameter. If there are not any matchings this method returns an empty
+     * parameter. If there are no any matchings this method returns an empty
      * collection.
      * 
      * @param login

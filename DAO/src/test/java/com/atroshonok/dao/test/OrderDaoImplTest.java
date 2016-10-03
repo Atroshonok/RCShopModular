@@ -20,9 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.atroshonok.dao.IOrderDao;
 import com.atroshonok.dao.IUserDao;
 import com.atroshonok.dao.entities.Order;
-import com.atroshonok.dao.entities.OrderState;
 import com.atroshonok.dao.entities.User;
-import com.atroshonok.dao.entities.UserType;
+import com.atroshonok.dao.enums.OrderState;
+import com.atroshonok.dao.enums.UserType;
 import com.atroshonok.dao.exceptions.DaoException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,7 +37,6 @@ public class OrderDaoImplTest {
 
     private Long userId;
     private List<Order> expectedsOrders = new ArrayList<>();
-
 
     @Before
     public void setUp() throws Exception {

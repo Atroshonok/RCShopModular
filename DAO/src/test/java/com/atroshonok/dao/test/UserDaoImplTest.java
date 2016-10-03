@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.atroshonok.dao.IUserDao;
 import com.atroshonok.dao.entities.User;
-import com.atroshonok.dao.entities.UserType;
+import com.atroshonok.dao.enums.UserType;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/spring-dao-test-config.xml")
@@ -37,7 +37,6 @@ public class UserDaoImplTest {
     private SessionFactory sessionFactory;
 
     private Session session;
-
 
     @Before
     public void setUp() throws Exception {
@@ -63,16 +62,16 @@ public class UserDaoImplTest {
     public void testGetAllUsers() {
 	User userB1 = createUser("LoginB1", "PasswordB1");
 	saveUserAndClearSession(userB1);
-	
+
 	User userB2 = createUser("LoginB2", "PasswordB2");
 	saveUserAndClearSession(userB2);
-	
+
 	User userB3 = createUser("LoginB3", "PasswordB3");
 	saveUserAndClearSession(userB3);
-	
+
 	List<User> actualUsers = userDao.getAllUsers();
 	assertTrue(actualUsers.size() >= 3);
-	
+
     }
 
     @Test

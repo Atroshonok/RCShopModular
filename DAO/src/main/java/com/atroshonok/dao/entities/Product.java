@@ -52,6 +52,7 @@ public class Product implements Serializable, Entity {
     }
 
     private ProductCategory category;
+
     @OneToOne
     @JoinColumn(name = "categoryID_FK", referencedColumnName = "categoryID")
     public ProductCategory getCategory() {
@@ -89,7 +90,6 @@ public class Product implements Serializable, Entity {
 	this.price = price;
     }
 
-    
     public Product(String name, Double price, ProductCategory category, Integer count, String description) {
 	super();
 	this.name = name;
@@ -98,7 +98,6 @@ public class Product implements Serializable, Entity {
 	this.count = count;
 	this.description = description;
     }
-
 
     @Override
     public String toString() {
@@ -160,26 +159,50 @@ public class Product implements Serializable, Entity {
 	return true;
     }
 
+    /**
+     * @param id
+     *            the id to set
+     */
     public void setId(Long id) {
 	this.id = id;
     }
 
+    /**
+     * @param name
+     *            the name to set
+     */
     public void setName(String name) {
 	this.name = name;
     }
 
+    /**
+     * @param price
+     *            the price to set
+     */
     public void setPrice(Double price) {
 	this.price = price;
     }
 
+    /**
+     * @param category
+     *            the category to set
+     */
     public void setCategory(ProductCategory category) {
 	this.category = category;
     }
 
+    /**
+     * @param count
+     *            the count to set
+     */
     public void setCount(Integer count) {
 	this.count = count;
     }
 
+    /**
+     * @param description
+     *            the description to set
+     */
     public void setDescription(String description) {
 	this.description = description;
     }

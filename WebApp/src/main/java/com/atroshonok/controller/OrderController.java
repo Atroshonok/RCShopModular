@@ -17,8 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.atroshonok.dao.entities.Cart;
 import com.atroshonok.dao.entities.Order;
-import com.atroshonok.dao.entities.OrderState;
 import com.atroshonok.dao.entities.User;
+import com.atroshonok.dao.enums.OrderState;
 import com.atroshonok.services.IOrderService;
 import com.atroshonok.services.exceptions.ErrorSavingOrderServiceException;
 

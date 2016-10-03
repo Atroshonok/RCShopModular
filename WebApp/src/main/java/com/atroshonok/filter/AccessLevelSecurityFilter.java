@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import com.atroshonok.dao.entities.UserType;
+import com.atroshonok.dao.enums.UserType;
 import com.atroshonok.utilits.MessageManager;
 
 /**

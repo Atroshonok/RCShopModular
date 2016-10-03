@@ -2,7 +2,7 @@
 /**
  * 
  */
-package com.atroshonok.dao;
+package com.atroshonok.dao.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import com.atroshonok.dao.IProductDao;
 import com.atroshonok.dao.entities.Product;
 import com.atroshonok.dao.entities.vo.ClientFilter;
 
@@ -77,7 +78,6 @@ public class ProductDaoImpl extends DaoImpl<Product> implements IProductDao {
 
 	int maxResult = clientFilter.getItemsPerPage();
 	criteria.setMaxResults(maxResult);
-
 	List<Product> results = criteria.list();
 	return results;
     }
@@ -114,7 +114,7 @@ public class ProductDaoImpl extends DaoImpl<Product> implements IProductDao {
     private void addPriceRestriction(ClientFilter clientFilter, Criteria criteria) {
 	Double priceFrom = clientFilter.getFilterPriceFrom();
 	if (priceFrom > 0) {
-	    criteria.add(Restrictions.gt("price", priceFrom));
+	    criteria.add(Restrictions.ge("price", priceFrom));
 	}
 	
 	Double priceTo = clientFilter.getFilterPriceTo();

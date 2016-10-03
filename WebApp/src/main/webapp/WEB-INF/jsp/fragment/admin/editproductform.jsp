@@ -34,7 +34,7 @@
 		   			<label for="productPriceData" class="control-label">Product Price:</label>
 				</div>
 				<div class="col-xs-5">
-					<sf:input id="productPriceData" path="price" class="form-control" type="text" name="price" required="required" pattern="[1-9][0-9]+\.[0-9]{1,2}"/>
+					<sf:input id="productPriceData" path="price" class="form-control" type="text" name="price" required="required" pattern="[0-9]+\.?[0-9]?{1,2}"/>
 				</div>
 	    	</div>
 	    	

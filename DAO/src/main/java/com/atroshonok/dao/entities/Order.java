@@ -23,6 +23,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Proxy;
 
+import com.atroshonok.dao.enums.OrderState;
+
 /**
  * @author Atroshonok Ivan
  *
@@ -36,47 +38,47 @@ public class Order implements Entity {
     private static final long serialVersionUID = 2178928344941296596L;
 
     private Long id;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "orderID")
     public Long getId() {
-        return id;
+	return id;
     }
-    
+
     private User user;
+
     @OneToOne
-    @JoinColumn(name = "userID_FK", referencedColumnName = "userID")    
+    @JoinColumn(name = "userID_FK", referencedColumnName = "userID")
     public User getUser() {
-        return user;
+	return user;
     }
 
     private Double sumPrice;
+
     @Column(name = "sumPrice", precision = 10, scale = 2)
     public Double getSumPrice() {
-        return sumPrice;
+	return sumPrice;
     }
 
     private OrderState orderState;
+
     @Column(name = "orderState", columnDefinition = "enum('PROCESSING','PROCESSED','OPEN')")
     @Enumerated(EnumType.STRING)
     public OrderState getOrderState() {
-        return orderState;
+	return orderState;
     }
-   
+
     private List<OrderLine> orderLines;
+
     @OneToMany
-    @JoinTable(
-	    name = "orders_orderlines", 
-	    joinColumns = 
-	    @JoinColumn(name = "orderID_FK", referencedColumnName = "orderID"),
-	    inverseJoinColumns =
-	    @JoinColumn(name = "orderLineID_FK", referencedColumnName = "OrderLineID"))
-    @Cascade(value = {CascadeType.SAVE_UPDATE})
+    @JoinTable(name = "orders_orderlines", joinColumns = @JoinColumn(name = "orderID_FK", referencedColumnName = "orderID"), inverseJoinColumns = @JoinColumn(name = "orderLineID_FK", referencedColumnName = "OrderLineID"))
+    @Cascade(value = { CascadeType.SAVE_UPDATE })
     @LazyCollection(LazyCollectionOption.FALSE)
     public List<OrderLine> getOrderLines() {
-        return orderLines;
+	return orderLines;
     }
-   
+
     public Order() {
 	super();
     }
@@ -126,23 +128,44 @@ public class Order implements Entity {
 	return true;
     }
 
+    /**
+     * @param id
+     *            the id to set
+     */
     public void setId(Long id) {
-        this.id = id;
+	this.id = id;
     }
 
+    /**
+     * @param user
+     *            the user to set
+     */
     public void setUser(User user) {
-        this.user = user;
+	this.user = user;
     }
 
+    /**
+     * @param sumPrice
+     *            the sumPrice to set
+     */
     public void setSumPrice(Double sumPrice) {
-        this.sumPrice = sumPrice;
+	this.sumPrice = sumPrice;
     }
 
+    /**
+     * @param orderState
+     *            the orderState to set
+     */
     public void setOrderState(OrderState orderState) {
-        this.orderState = orderState;
+	this.orderState = orderState;
     }
 
+    /**
+     * @param orderLines
+     *            the orderLines to set
+     */
     public void setOrderLines(List<OrderLine> orderLines) {
-        this.orderLines = orderLines;
+	this.orderLines = orderLines;
     }
+
 }

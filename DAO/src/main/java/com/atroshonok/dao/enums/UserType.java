@@ -1,4 +1,4 @@
-package com.atroshonok.dao.entities;
+package com.atroshonok.dao.enums;
 
 public enum UserType {
     GUEST, CLIENT, ADMIN

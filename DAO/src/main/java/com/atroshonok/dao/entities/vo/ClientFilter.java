@@ -15,7 +15,7 @@ public class ClientFilter {
     private List<Long> filterCategoriesId = new ArrayList<>();
     private Double filterPriceFrom = 0.0;
     private Double filterPriceTo = 100000.0;
-    private Integer itemsPerPage = 1;
+    private Integer itemsPerPage = 6;
     private Integer currentPage = 1;
     // consider renaming to orderBy
     private Integer sorting = 0;

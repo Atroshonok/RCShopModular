@@ -1,7 +1,4 @@
-/**
- * 
- */
-package com.atroshonok.services;
+package com.atroshonok.services.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.atroshonok.dao.IUserDao;
 import com.atroshonok.dao.entities.User;
 import com.atroshonok.dao.exceptions.DaoException;
+import com.atroshonok.services.IUserService;
 import com.atroshonok.services.exceptions.ErrorAddingUserServiceException;
 import com.atroshonok.services.exceptions.ErrorUpdatingUserServiceException;
 import com.atroshonok.services.exceptions.LoginAlreadyExistServiceException;
@@ -31,6 +29,11 @@ import com.atroshonok.services.exceptions.ServiceException;
 @Service
 @Transactional
 public class UserServiceImpl implements IUserService {
+    private static final String ERR_MSG_WRONG_LOGIN = "User with the same login already exist.";
+    private static final String ERR_MSG_SAVE = "Error saving user to database.";
+    private static final String ERR_MSG_GET_ALL = "Error getting all users from database.";
+    private static final String ERR_MSG_UPDATE = "Error updating user.";
+
     private static Logger log = Logger.getLogger(UserServiceImpl.class);
 
     @Autowired
@@ -38,13 +41,6 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private MessageSource messageSource;
 
-	// java doc here and in lot of other cases is out of date
-    /**
-     * Returns an object of user class by login and password. If user is not
-     * found in a database this method returns null
-     * 
-     * @throws ServiceException
-     */
     @Override
     public User getUserByLoginPassword(String login, String password) {
 	log.info("Starting method getUserByLoginPassword(String login, String password)");
@@ -66,11 +62,12 @@ public class UserServiceImpl implements IUserService {
 	    List<User> users = userDao.getUsersByLogin(user.getLogin());
 	    if (users.isEmpty()) {
 		userDao.save(user);
-	    } else throw new LoginAlreadyExistServiceException(messageSource.getMessage("error.user.already-exist", null, Locale.getDefault()));
+	    } else
+		throw new LoginAlreadyExistServiceException(messageSource.getMessage("error.user.already-exist", null, ERR_MSG_WRONG_LOGIN, Locale.getDefault()));
 	    log.info("Saved user to DB: " + user);
 	} catch (DaoException e) {
 	    log.error("Error saving user to database.");
-	    throw new ErrorAddingUserServiceException(messageSource.getMessage("error.user.save", null, Locale.getDefault()), e);
+	    throw new ErrorAddingUserServiceException(messageSource.getMessage("error.user.save", null, ERR_MSG_SAVE, Locale.getDefault()), e);
 	}
 	log.info("Ending method saveUserToDataBase(User user)");
     }
@@ -82,8 +79,8 @@ public class UserServiceImpl implements IUserService {
 	try {
 	    users = userDao.getAllUsers();
 	} catch (DataAccessException e) {
-	    log.error("Error getting all users from database");
-	    throw new ServiceException(messageSource.getMessage("error.users.get", null, Locale.getDefault()), e);
+	    log.error("Error getting all users from database.");
+	    throw new ServiceException(messageSource.getMessage("error.users.get", null, ERR_MSG_GET_ALL, Locale.getDefault()), e);
 	}
 	log.info("Ending method getAllUsers()");
 	return users;
@@ -112,7 +109,7 @@ public class UserServiceImpl implements IUserService {
 	    log.info("Updated user: " + user);
 	} catch (DaoException e) {
 	    log.error("Error updating user.");
-	    throw new ErrorUpdatingUserServiceException(messageSource.getMessage("error.user.update", null, Locale.getDefault()), e);
+	    throw new ErrorUpdatingUserServiceException(messageSource.getMessage("error.user.update", null, ERR_MSG_UPDATE, Locale.getDefault()), e);
 	}
 	log.info("Ending method updateUserData(User user)");
     }

@@ -23,7 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.atroshonok.dao.entities.Cart;
 import com.atroshonok.dao.entities.User;
-import com.atroshonok.dao.entities.UserType;
+import com.atroshonok.dao.enums.UserType;
 import com.atroshonok.services.IUserService;
 import com.atroshonok.services.exceptions.ErrorAddingUserServiceException;
 import com.atroshonok.services.exceptions.LoginAlreadyExistServiceException;
@@ -38,7 +38,7 @@ import com.atroshonok.utilits.DataEncryptor;
  */
 @Controller
 public class UserController {
-    private static final String ATTRIBUTE_REGISTR_INFO_MESSAGE = "registrInfoMessage";
+    private static final String ATTRIBUTE_INFO_MESSAGE = "infoMessage";
     private static final String ERROR_LOGIN_PASS_MESSAGE = "errorLoginPassMessage";
     private static final String SESSION_ATTR_CART = "cart";
     private static final String SESSION_ATTR_USER = "user";
@@ -81,17 +81,17 @@ public class UserController {
 	try {
 	    userService.saveUserToDataBase(user);
 	    log.info("User: " + user + "is saved to DB successfully.");
-	    redirectAttributes.addFlashAttribute(ATTRIBUTE_REGISTR_INFO_MESSAGE, getMessageByKey("message.goodregistration", locale));
+	    redirectAttributes.addFlashAttribute(ATTRIBUTE_INFO_MESSAGE, getMessageByKey("message.goodregistration", locale));
 	} catch (LoginAlreadyExistServiceException e) {
 	    log.error("Error adding new user to DB: " + e.getMessage());
-	    request.setAttribute(ATTRIBUTE_REGISTR_INFO_MESSAGE, getMessageByKey("message.loginisnotfree", locale));
+	    request.setAttribute(ATTRIBUTE_INFO_MESSAGE, getMessageByKey("message.loginisnotfree", locale));
 	    return "registration";
 	} catch (ErrorAddingUserServiceException e) {
 	    log.error("Error adding new user: " + user + " to DB.", e);
-	    request.getSession().setAttribute(ATTRIBUTE_REGISTR_INFO_MESSAGE, getMessageByKey("message.error.registration", locale));
+	    request.getSession().setAttribute(ATTRIBUTE_INFO_MESSAGE, getMessageByKey("message.error.registration", locale));
 	    return "registration";
 	}
-	return "redirect:/users/registration";
+	return "redirect:/productss/all";
     }
 
     /**

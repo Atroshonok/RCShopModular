@@ -18,14 +18,13 @@ public interface IUserService {
      * @param login
      * @param password
      * @return
-     * @throws ServiceException
      */
     User getUserByLoginPassword(String login, String password);
 
     /**
-     * Saves the given user to the database. Throws
-     * com.atroshonok.services.exceptions.ServiceException if an user with so
-     * login already exist in the database. The method throws a
+     * Saves the given user. Throws
+     * com.atroshonok.services.exceptions.LoginAlreadyExistServiceException if
+     * an user with so login already exist. The method throws a
      * com.atroshonok.services.exceptions.ErrorAddingUserServiceException if
      * can't save the user.
      * 

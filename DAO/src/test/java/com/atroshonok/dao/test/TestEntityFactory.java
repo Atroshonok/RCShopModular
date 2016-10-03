@@ -16,19 +16,19 @@ import com.atroshonok.dao.entities.vo.ClientFilter;
  *
  */
 public class TestEntityFactory {
-    
-    public static ClientFilter createClientFilter(Long ...categoriesId) {
+
+    public static ClientFilter createClientFilter(Long... categoriesId) {
 	ClientFilter clientFilter = new ClientFilter();
 	List<Long> categoriesIdList = new ArrayList<>();
 	categoriesIdList.addAll(Arrays.asList(categoriesId));
-	
+
 	clientFilter.setFilterCategoriesId(categoriesIdList);
 	Integer itemsPerPage = 1;
 	clientFilter.setItemsPerPage(itemsPerPage);
-	
+
 	return clientFilter;
     }
-    
+
     public static Product createProduct(ProductCategory productCategory, String name) {
 	Product product = new Product();
 	product.setCategory(productCategory);

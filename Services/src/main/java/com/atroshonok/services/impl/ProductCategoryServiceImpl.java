@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.atroshonok.services;
+package com.atroshonok.services.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.atroshonok.dao.IProductCategoryDao;
 import com.atroshonok.dao.entities.ProductCategory;
 import com.atroshonok.dao.exceptions.DaoException;
+import com.atroshonok.services.IProductCategoryService;
 
 /**
  * @author Ivan Atroshonok

@@ -61,32 +61,38 @@ public interface IProductService {
 
     /**
      * Returns the products list according to the client filter parameters. This
-     * method returns an empty collection if has not found any.
+     * method returns an empty collection if has not found any. The method
+     * throws the com.atroshonok.services.exceptions.ServiceException if the
+     * given client filter contains an invalid data.
      * 
      * @param clientFilter
      * @return
+     * @throws ServiceException
      */
-    List<Product> getProductsByClientFilter(ClientFilter clientFilter);
+    List<Product> getProductsByClientFilter(ClientFilter clientFilter) throws ServiceException;
 
     /**
-     * Returns the number of products.
+     * Returns the count of products.
      * 
      * @return
      */
     long getTotalProductsCount();
 
     /**
-     * Returns the number of products according to the client filter parameters.
+     * Returns the count of products according to the client filter parameters.
      * 
      * @param clientFilter
      * @return
+     * @throws ServiceException
      */
-    long getProductsCountAccordingClientFilter(ClientFilter clientFilter);
+    long getProductsCountAccordingClientFilter(ClientFilter clientFilter) throws ServiceException;
 
     /**
      * Deletes the given product. The method throws a
      * com.atroshonok.services.exceptions.ServiceException if can't delete the
-     * product.
+     * product. The method throws the
+     * com.atroshonok.services.exceptions.ServiceException if the given client
+     * filter contains an invalid data.
      * 
      * @param product
      * @throws ServiceException

@@ -20,6 +20,7 @@ public class ProductCategory implements Entity {
     private static final long serialVersionUID = 2438212583980527672L;
 
     private Long id;
+
     @Id
     @Column(name = "categoryID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +29,7 @@ public class ProductCategory implements Entity {
     }
 
     private String categoryName;
+
     @Column(name = "categoryName")
     public String getCategoryName() {
 	return categoryName;
@@ -35,18 +37,16 @@ public class ProductCategory implements Entity {
 
     public ProductCategory() {
     }
-    
+
     public ProductCategory(String categoryName) {
 	super();
 	this.categoryName = categoryName;
     }
 
-    
     public ProductCategory(Long id) {
 	super();
 	this.id = id;
     }
-
 
     @Override
     public String toString() {
@@ -84,10 +84,18 @@ public class ProductCategory implements Entity {
 	return true;
     }
 
+    /**
+     * @param id
+     *            the id to set
+     */
     public void setId(Long id) {
 	this.id = id;
     }
 
+    /**
+     * @param categoryName
+     *            the categoryName to set
+     */
     public void setCategoryName(String categoryName) {
 	this.categoryName = categoryName;
     }

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.atroshonok.services;
+package com.atroshonok.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.atroshonok.dao.IOrderDao;
 import com.atroshonok.dao.entities.Order;
 import com.atroshonok.dao.exceptions.DaoException;
+import com.atroshonok.services.IOrderService;
 import com.atroshonok.services.exceptions.ErrorSavingOrderServiceException;
 
 /**
@@ -27,6 +28,8 @@ import com.atroshonok.services.exceptions.ErrorSavingOrderServiceException;
 @Service
 @Transactional
 public class OrderServiceImpl implements IOrderService {
+    private static final String ERR_MSG_SAVE = "Error saving order.";
+
     private static Logger log = Logger.getLogger(OrderServiceImpl.class);
 
     @Autowired
@@ -58,7 +61,7 @@ public class OrderServiceImpl implements IOrderService {
 	    log.info("Saved order: " + order);
 	} catch (DaoException e) {
 	    log.error("Error saving order.");
-	    throw new ErrorSavingOrderServiceException(messageSource.getMessage("error.save.order", null, Locale.getDefault()), e);
+	    throw new ErrorSavingOrderServiceException(messageSource.getMessage("error.save.order", null, ERR_MSG_SAVE, Locale.getDefault()), e);
 	}
 	log.info("Ending method saveOrderData(Order order)");
     }

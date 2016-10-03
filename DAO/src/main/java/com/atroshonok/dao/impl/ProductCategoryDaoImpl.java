@@ -1,13 +1,14 @@
 /**
  * 
  */
-package com.atroshonok.dao;
+package com.atroshonok.dao.impl;
 
 import java.util.List;
 
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
+import com.atroshonok.dao.IProductCategoryDao;
 import com.atroshonok.dao.entities.ProductCategory;
 
 /**

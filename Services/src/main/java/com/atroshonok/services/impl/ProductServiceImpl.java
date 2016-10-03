@@ -1,9 +1,10 @@
 /**
  * 
  */
-package com.atroshonok.services;
+package com.atroshonok.services.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -18,6 +19,7 @@ import com.atroshonok.dao.IProductDao;
 import com.atroshonok.dao.entities.Product;
 import com.atroshonok.dao.entities.vo.ClientFilter;
 import com.atroshonok.dao.exceptions.DaoException;
+import com.atroshonok.services.IProductService;
 import com.atroshonok.services.exceptions.ErrorAddingPoductServiceException;
 import com.atroshonok.services.exceptions.ErrorUpdatingPoductServiceException;
 import com.atroshonok.services.exceptions.ServiceException;
@@ -27,21 +29,26 @@ import com.atroshonok.services.exceptions.ServiceException;
  *
  */
 
-//TODO exception handling
 @Service
 @Transactional
 public class ProductServiceImpl implements IProductService {
+    private static final String ERR_MSG_FILTER_INVALID = "The given client filter contains an invalid data!";
+    private static final String ERR_MSG_DEL_PRODUCT = "Error deleting a product!";
+    private static final String ERR_MSG_SAVE_PRODUCT = "Error saving a product!";
+    private static final String ERR_MSG_UPDATE_PRODUCT = "Error updating a product!";
+
     private static Logger log = Logger.getLogger(ProductServiceImpl.class);
 
     @Autowired
     private IProductDao productDao;
     @Autowired
     private MessageSource messageSource;
-    
+
     @Override
     public List<Product> getProductsByCategoryId(Serializable categoryId) {
 	log.info("Starting method getProductsByCategoryId(long categoryId)");
-	List<Product> products = null;
+	List<Product> products = new ArrayList<>();
+	;
 	try {
 	    products = productDao.getProductsByCategoryId(categoryId);
 	} catch (DataAccessException e) {
@@ -80,8 +87,8 @@ public class ProductServiceImpl implements IProductService {
 	    productDao.saveOrUpdate(product);
 	    log.info("Updated product: " + product);
 	} catch (DaoException e) {
-	    log.error("Error updating product in class: " + ProductServiceImpl.class, e);
-	    throw new ErrorUpdatingPoductServiceException(messageSource.getMessage("error.update.product", null, Locale.getDefault()), e);
+	    log.error("Error updating the product: " + product, e);
+	    throw new ErrorUpdatingPoductServiceException(messageSource.getMessage("error.update.product", null, ERR_MSG_UPDATE_PRODUCT, Locale.getDefault()), e);
 	}
 	log.info("Ending method updateProductInDatabase(Product product)");
     }
@@ -95,17 +102,57 @@ public class ProductServiceImpl implements IProductService {
 	    id = productDao.save(product);
 	    log.info("Saved product to DB: " + product);
 	} catch (DaoException e) {
-	    log.error("Error saving product to database: ", e);
-	    throw new ErrorAddingPoductServiceException(messageSource.getMessage("error.save.product", null, Locale.getDefault()), e);
+	    log.error("Error saving the product: " + product, e);
+	    throw new ErrorAddingPoductServiceException(messageSource.getMessage("error.save.product", null, ERR_MSG_SAVE_PRODUCT, Locale.getDefault()), e);
 	}
 	log.info("Ending method addNewProductToDatabase(Product product)");
 	return id;
     }
 
     @Override
-    public List<Product> getProductsByClientFilter(ClientFilter clientFilter) {
-	List<Product> results = productDao.getProductsByClientFilter(clientFilter);
+    public List<Product> getProductsByClientFilter(ClientFilter clientFilter) throws ServiceException {
+	boolean isValidFilter = validateClientFilterFields(clientFilter);
+	List<Product> results = new ArrayList<>();
+	try {
+	    if (isValidFilter) {
+		results = productDao.getProductsByClientFilter(clientFilter);
+	    } else {
+		throw new ServiceException(messageSource.getMessage("client.filter.wrong", null, ERR_MSG_FILTER_INVALID, Locale.getDefault()));
+	    }
+	} catch (DataAccessException e) {
+	    log.error("Error gettting products by client filter. ", e);
+	}
 	return results;
+    }
+
+    private boolean validateClientFilterFields(ClientFilter clientFilter) {
+	if (clientFilter == null) {
+	    return false;
+	}
+	List<Long> categories = clientFilter.getFilterCategoriesId();
+	Double priceFrom = clientFilter.getFilterPriceFrom();
+	Double priceTo = clientFilter.getFilterPriceTo();
+	if (categories == null) {
+	    return false;
+	} else if (categories.isEmpty()) {
+	    return false;
+	}
+	if (clientFilter.getCurrentPage() <= 0) {
+	    return false;
+	}
+	if (priceFrom < 0) {
+	    return false;
+	}
+	if ((priceTo < 0) || (priceTo < priceFrom)) {
+	    return false;
+	}
+	if (clientFilter.getItemsPerPage() <= 0) {
+	    return false;
+	}
+	if (clientFilter.getSorting() < 0) {
+	    return false;
+	}
+	return true;
     }
 
     @Override
@@ -118,8 +165,14 @@ public class ProductServiceImpl implements IProductService {
     // for pagination
     @Override
     @Transactional(readOnly = true)
-    public long getProductsCountAccordingClientFilter(ClientFilter clientFilter) {
-	long result = productDao.getProductsCountAccordingClientFilter(clientFilter);
+    public long getProductsCountAccordingClientFilter(ClientFilter clientFilter) throws ServiceException {
+	boolean isValidFilter = validateClientFilterFields(clientFilter);
+	long result = 0;
+	if (isValidFilter) {
+	    result = productDao.getProductsCountAccordingClientFilter(clientFilter);
+	} else {
+	    throw new ServiceException(messageSource.getMessage("client.filter.wrong", null, ERR_MSG_FILTER_INVALID, Locale.getDefault()));
+	}
 	return result;
     }
 
@@ -129,7 +182,7 @@ public class ProductServiceImpl implements IProductService {
 	    productDao.delete(product);
 	} catch (DaoException e) {
 	    log.error("Error deleting product. ");
-	    throw new ServiceException(messageSource.getMessage("error.delete.product", null, Locale.getDefault()), e);
+	    throw new ServiceException(messageSource.getMessage("error.delete.product", null, ERR_MSG_DEL_PRODUCT, Locale.getDefault()), e);
 	}
     }
 }

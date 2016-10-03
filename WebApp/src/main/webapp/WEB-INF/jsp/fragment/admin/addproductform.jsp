@@ -21,7 +21,7 @@
 	   			<label for="productPriceData" class="control-label">Product Price:</label>
 			</div>
 			<div class="col-xs-5">
-				<sf:input id="productPriceData" path="price" class="form-control" type="text" name="price" required="required" pattern="[1-9][0-9]+\.?[0-9]{1,2}?"/>
+				<sf:input id="productPriceData" path="price" class="form-control" type="text" name="price" required="required" pattern="[0-9]+\.?[0-9]?{1,2}"/>
 			</div>
     	</div>
     	
@@ -51,7 +51,7 @@
 	   			<label for="productDescriptData" class="control-label">Product description:</label>
 			</div>
 			<div class="col-xs-5">
-				<sf:textarea id="productDescriptData" path="description" name="description" rows="10" cols="50"></sf:textarea> 
+				<sf:textarea id="productDescriptData" path="description" class="form-control" name="description" rows="10" cols="50"></sf:textarea> 
 			</div>
     	</div>
     	<div class="form-group">

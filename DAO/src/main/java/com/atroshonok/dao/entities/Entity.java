@@ -8,8 +8,9 @@ package com.atroshonok.dao.entities;
  *
  */
 public interface Entity {
-    
+
     Long getId();
+
     void setId(Long id);
 
 }
