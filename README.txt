@@ -89,5 +89,3 @@
   
   Use the login "user" and the password "user" to have the role as client.
   Use the login "admin" and the password "admin" to have the role as admin.
-  
-	
